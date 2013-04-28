@@ -28,7 +28,28 @@ namespace GrabTheMoment
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
             bmpScreenShot.Save(idodatum + ".png", ImageFormat.Png);
-            notifyIcon1.ShowBalloonTip(5000, "Screenshot készült", idodatum, ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
+        }
+
+        public void WindowPs(Rectangle rectangle)
+        {
+            string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
+            int xcoord = rectangle.X;
+            int ycoord = rectangle.Y;
+            int windowwidth = rectangle.Width - xcoord;
+            int windowheight = rectangle.Height - ycoord;
+            if (xcoord == -8 && ycoord == -8)
+            {
+                xcoord += 8;
+                ycoord += 8;
+                windowwidth -= 16;
+                windowheight -= 16;
+            }
+            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
+            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
+            gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
+            bmpScreenShot.Save(idodatum + ".png", ImageFormat.Png);
+            //notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)

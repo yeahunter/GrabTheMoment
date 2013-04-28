@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace GrabTheMoment
 {
@@ -58,10 +59,13 @@ namespace GrabTheMoment
                     {
                         windowsform.FullPS();
                     }
-                    //else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
-                    //{
-                        
-                    //}
+                    else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
+                    {
+                        IntPtr hWnd = GetForegroundWindow();
+                        Rectangle rect;
+                        GetWindowRect(hWnd, out rect);
+                        windowsform.WindowPs(rect);
+                    }
                 }
 
             }
@@ -82,6 +86,12 @@ namespace GrabTheMoment
             IntPtr wParam, IntPtr lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName); 
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern int GetWindowRect(IntPtr hWnd, out Rectangle rect);
     }
 }
