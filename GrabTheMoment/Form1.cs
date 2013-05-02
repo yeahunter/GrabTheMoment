@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using System.Drawing.Imaging;
+using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
 {
@@ -17,6 +18,7 @@ namespace GrabTheMoment
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = Settings.Default.SaveLocation;
         }
 
         public void FullPS()
@@ -27,7 +29,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
-            bmpScreenShot.Save(idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -48,7 +50,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -69,7 +71,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -99,8 +101,12 @@ namespace GrabTheMoment
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 secondForm = new Form2();
-            secondForm.Show();
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = folderBrowserDialog1.SelectedPath;
+                Settings.Default.SaveLocation = textBox1.Text;
+                Settings.Default.Save();
+            }
         }
     }
 }
