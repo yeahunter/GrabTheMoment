@@ -52,10 +52,12 @@ namespace GrabTheMoment
             if (nCode >= 0)
             {
                 Keys number = (Keys)Marshal.ReadInt32(lParam);
+                //MessageBox.Show(nCode.ToString() + " | " + wParam.ToString() + " | " + lParam.ToString());
+                //MessageBox.Show(Control.ModifierKeys.ToString());
                 if (number == Keys.PrintScreen)
                 {
-                    //MessageBox.Show(wParam.ToString());
-                    if ((wParam == (IntPtr)256 && number == Keys.PrintScreen))
+                    //MessageBox.Show(lParam.ToString());
+                    if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
                         windowsform.FullPS();
                     }
@@ -66,6 +68,12 @@ namespace GrabTheMoment
                         GetWindowRect(hWnd, out rect);
                         windowsform.WindowPs(rect);
                     }
+                    // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
+                    //else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
+                    //{
+                    //    Form2 secondForm = new Form2();
+                    //    secondForm.Show();
+                    //}
                 }
 
             }
