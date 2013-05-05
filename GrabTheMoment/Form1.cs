@@ -79,13 +79,20 @@ namespace GrabTheMoment
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
+                //this.Show();
                 this.WindowState = FormWindowState.Normal;
-                this.Activate();
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                //this.Activate();
             }
-            else
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
+            //else
+            //{
+            //    this.ShowInTaskbar = false;
+            //    //this.Hide();
+            //    this.WindowState = FormWindowState.Minimized;
+            //    this.WindowState = FormWindowState.Normal;
+
+            //}
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -106,6 +113,17 @@ namespace GrabTheMoment
                 textBox1.Text = folderBrowserDialog1.SelectedPath;
                 Settings.Default.SaveLocation = textBox1.Text;
                 Settings.Default.Save();
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == this.WindowState)
+            {
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
+                //this.Hide();
+                //this.WindowState = FormWindowState.Normal;
             }
         }
     }
