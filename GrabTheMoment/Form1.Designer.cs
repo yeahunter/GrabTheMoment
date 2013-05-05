@@ -40,6 +40,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.fTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,7 +88,8 @@
             // saveModeToolStripMenuItem
             // 
             this.saveModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.localToolStripMenuItem});
+            this.localToolStripMenuItem,
+            this.fTPToolStripMenuItem});
             this.saveModeToolStripMenuItem.Name = "saveModeToolStripMenuItem";
             this.saveModeToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.saveModeToolStripMenuItem.Text = "Save mode";
@@ -120,6 +122,7 @@
             this.checkBox2.TabIndex = 6;
             this.checkBox2.Text = "FTP";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // checkBox3
             // 
@@ -131,6 +134,14 @@
             this.checkBox3.TabIndex = 7;
             this.checkBox3.Text = "Dropbox";
             this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // fTPToolStripMenuItem
+            // 
+            this.fTPToolStripMenuItem.Enabled = false;
+            this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
+            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fTPToolStripMenuItem.Text = "FTP";
+            this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -170,6 +181,7 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.ToolStripMenuItem fTPToolStripMenuItem;
     }
 }
 

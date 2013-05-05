@@ -19,3 +19,4 @@ D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.csproj.Generat
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.exe
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.local.resources
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.FTP.resources

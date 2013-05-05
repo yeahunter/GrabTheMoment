@@ -61,7 +61,7 @@ namespace GrabTheMoment.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("felhasznalod")]
         public string MFtp_user {
             get {
                 return ((string)(this["MFtp_user"]));
@@ -73,7 +73,7 @@ namespace GrabTheMoment.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("jelszavad")]
         public string MFtp_password {
             get {
                 return ((string)(this["MFtp_password"]));
@@ -85,7 +85,7 @@ namespace GrabTheMoment.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftpszerver.hu")]
         public string MFtp_address {
             get {
                 return ((string)(this["MFtp_address"]));
@@ -109,13 +109,25 @@ namespace GrabTheMoment.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://oldalahovafeltoltom.hu/mappa/ahovaakarommenteni")]
         public string MFtp_path {
             get {
                 return ((string)(this["MFtp_path"]));
             }
             set {
                 this["MFtp_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mappa/ahovaakarommenteni")]
+        public string MFtp_remotedir {
+            get {
+                return ((string)(this["MFtp_remotedir"]));
+            }
+            set {
+                this["MFtp_remotedir"] = value;
             }
         }
     }

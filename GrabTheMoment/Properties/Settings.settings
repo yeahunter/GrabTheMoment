@@ -12,19 +12,22 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MFtp_user" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">felhasznalod</Value>
     </Setting>
     <Setting Name="MFtp_password" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">jelszavad</Value>
     </Setting>
     <Setting Name="MFtp_address" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">ftpszerver.hu</Value>
     </Setting>
     <Setting Name="MFtp_port" Type="System.String" Scope="User">
       <Value Profile="(Default)">21</Value>
     </Setting>
     <Setting Name="MFtp_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">http://oldalahovafeltoltom.hu/mappa/ahovaakarommenteni</Value>
+    </Setting>
+    <Setting Name="MFtp_remotedir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mappa/ahovaakarommenteni</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
+using System.IO;
+using System.Net;
 
 namespace GrabTheMoment
 {
@@ -19,7 +21,9 @@ namespace GrabTheMoment
         {
             InitializeComponent();
             checkBox1.Checked = Settings.Default.MLocal;
+            checkBox2.Checked = Settings.Default.MFtp;
             localToolStripMenuItem.Enabled = Settings.Default.MLocal;
+            fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
         }
         //public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         //{
@@ -29,6 +33,29 @@ namespace GrabTheMoment
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
             bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
+        }
+
+        public void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
+        {
+            neve = neve + ".png";
+            FtpWebRequest req = (FtpWebRequest)WebRequest.Create("ftp://" + Settings.Default.MFtp_address + "/" + Settings.Default.MFtp_remotedir + "/" + neve);
+            req.UseBinary = true;
+            req.UsePassive = true;
+            req.Method = WebRequestMethods.Ftp.UploadFile;
+            req.Credentials = new NetworkCredential(Settings.Default.MFtp_user, Settings.Default.MFtp_password);
+            byte[] filedata = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                bmpScreenShot.Save(stream, ImageFormat.Png);
+                stream.Close();
+
+                filedata = stream.ToArray();
+            }
+            req.ContentLength = filedata.Length;
+            Stream reqStream = req.GetRequestStream();
+            reqStream.Write(filedata, 0, filedata.Length);
+            reqStream.Close();
+            Clipboard.SetText(Settings.Default.MFtp_path + "/" + neve);
         }
 
         public void FullPS()
@@ -41,6 +68,8 @@ namespace GrabTheMoment
             gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
             if (Settings.Default.MLocal)
                 MLocal_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MFtp)
+                MFtp_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -63,6 +92,8 @@ namespace GrabTheMoment
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
             if (Settings.Default.MLocal)
                 MLocal_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MFtp)
+                MFtp_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -140,6 +171,19 @@ namespace GrabTheMoment
             Settings.Default.MLocal = checkBox1.Checked;
             localToolStripMenuItem.Enabled = Settings.Default.MLocal;
             Settings.Default.Save();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.MFtp = checkBox2.Checked;
+            fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
+            Settings.Default.Save();
+        }
+
+        private void fTPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Savemode.FTP ftpForm = new Savemode.FTP();
+            ftpForm.Show();
         }
     }
 }
