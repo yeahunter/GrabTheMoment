@@ -18,6 +18,17 @@ namespace GrabTheMoment
         public Form1()
         {
             InitializeComponent();
+            checkBox1.Checked = Settings.Default.MLocal;
+            localToolStripMenuItem.Enabled = Settings.Default.MLocal;
+        }
+        //public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
+        //{
+        //    notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext, tipicon);
+        //}
+
+        public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
+        {
+            bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
         }
 
         public void FullPS()
@@ -28,7 +39,8 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
-            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
+            if (Settings.Default.MLocal)
+                MLocal_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -49,7 +61,8 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
+            if (Settings.Default.MLocal)
+                MLocal_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -70,7 +83,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -120,6 +133,13 @@ namespace GrabTheMoment
         {
             Savemode.local localForm = new Savemode.local();
             localForm.Show();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.MLocal = checkBox1.Checked;
+            localToolStripMenuItem.Enabled = Settings.Default.MLocal;
+            Settings.Default.Save();
         }
     }
 }
