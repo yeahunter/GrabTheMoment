@@ -18,7 +18,6 @@ namespace GrabTheMoment
         public Form1()
         {
             InitializeComponent();
-            textBox1.Text = Settings.Default.SaveLocation;
         }
 
         public void FullPS()
@@ -29,7 +28,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
-            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -50,7 +49,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -71,7 +70,7 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(textBox1.Text + "\\" + idodatum + ".png", ImageFormat.Png);
+            bmpScreenShot.Save(Settings.Default.SaveLocation + "\\" + idodatum + ".png", ImageFormat.Png);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -106,16 +105,6 @@ namespace GrabTheMoment
                 contextMenuStrip1.Show(Control.MousePosition);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBox1.Text = folderBrowserDialog1.SelectedPath;
-                Settings.Default.SaveLocation = textBox1.Text;
-                Settings.Default.Save();
-            }
-        }
-
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
@@ -125,6 +114,12 @@ namespace GrabTheMoment
                 //this.Hide();
                 //this.WindowState = FormWindowState.Normal;
             }
+        }
+
+        private void localToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Savemode.local localForm = new Savemode.local();
+            localForm.Show();
         }
     }
 }

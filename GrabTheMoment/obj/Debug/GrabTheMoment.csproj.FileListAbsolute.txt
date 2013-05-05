@@ -8,3 +8,14 @@ D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMome
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form1.resources
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form2.resources
+D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.exe.config
+D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.exe
+D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.pdb
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.csprojResolveAssemblyReference.cache
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Form1.resources
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Form2.resources
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Properties.Resources.resources
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.csproj.GenerateResource.Cache
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.exe
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
+D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.local.resources
