@@ -12,6 +12,8 @@ using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
 using System.IO;
 using System.Net;
+using System.Web;
+using System.Diagnostics;
 
 namespace GrabTheMoment
 {
@@ -22,17 +24,86 @@ namespace GrabTheMoment
             InitializeComponent();
             checkBox1.Checked = Settings.Default.MLocal;
             checkBox2.Checked = Settings.Default.MFtp;
+            checkBox3.Checked = Settings.Default.MDropbox;
             localToolStripMenuItem.Enabled = Settings.Default.MLocal;
             fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
+
+            var dbPath = System.IO.Path.Combine(
+         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
+            if (File.Exists(dbPath))
+            {
+                checkBox3.Enabled = true;
+            }
+            else
+            {
+                checkBox3.Text += " (Nincs)";
+                checkBox3.Enabled = false;
+                checkBox3.Checked = false;
+                if (Settings.Default.MDropbox)
+                {
+                    Settings.Default.MDropbox = false;
+                    Settings.Default.Save();
+                }
+            }
         }
         //public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         //{
         //    notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext, tipicon);
         //}
 
+        public void apitoken()
+        {
+            var consumerKey = "";
+            var consumerSecret = "";
+            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
+
+            // Generate a signature
+            API.OAuth.OAuthBase oAuth = new API.OAuth.OAuthBase();
+            string nonce = oAuth.GenerateNonce();
+            string timeStamp = oAuth.GenerateTimeStamp();
+            string parameters;
+            string normalizedUrl;
+            string signature = oAuth.GenerateSignature(uri, consumerKey, consumerSecret,
+                String.Empty, String.Empty, "GET", timeStamp, nonce, API.OAuth.OAuthBase.SignatureTypes.HMACSHA1,
+                out normalizedUrl, out parameters);
+
+            signature = HttpUtility.UrlEncode(signature);
+
+            StringBuilder requestUri = new StringBuilder(uri.ToString());
+            requestUri.AppendFormat("?oauth_consumer_key={0}&", consumerKey);
+            requestUri.AppendFormat("oauth_nonce={0}&", nonce);
+            requestUri.AppendFormat("oauth_timestamp={0}&", timeStamp);
+            requestUri.AppendFormat("oauth_signature_method={0}&", "HMAC-SHA1");
+            requestUri.AppendFormat("oauth_version={0}&", "1.0");
+            requestUri.AppendFormat("oauth_signature={0}", signature);
+
+            var request = (HttpWebRequest)WebRequest.Create(new Uri(requestUri.ToString()));
+            request.Method = WebRequestMethods.Http.Get;
+
+            var response = request.GetResponse();
+
+            var queryString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            var parts = queryString.Split('&');
+            var token = parts[1].Substring(parts[1].IndexOf('=') + 1);
+            var tokenSecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
+
+            Settings.Default.oauth_token = token;
+            Settings.Default.oauth_token_secret = tokenSecret;
+            Settings.Default.Save();
+        }
+
+
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
             bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
+        }
+
+        public void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
+        {
+            if (!File.Exists(Settings.Default.MDropbox_path))
+                System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
+            bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
         }
 
         public void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
@@ -70,6 +141,8 @@ namespace GrabTheMoment
                 MLocal_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MFtp)
                 MFtp_SavePS(bmpScreenShot, idodatum);
+            //if (Settings.Default.MDropbox)
+            //    MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -184,6 +257,43 @@ namespace GrabTheMoment
         {
             Savemode.FTP ftpForm = new Savemode.FTP();
             ftpForm.Show();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.MDropbox = checkBox3.Checked;
+
+            var dbPath = System.IO.Path.Combine(
+Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
+            string[] lines = System.IO.File.ReadAllLines(dbPath);
+            byte[] dbBase64Text = Convert.FromBase64String(lines[1]);
+            string holadropbox = System.Text.ASCIIEncoding.ASCII.GetString(dbBase64Text);
+            string pathString = System.IO.Path.Combine(holadropbox, "GrabTheMoment");
+            if (!File.Exists(pathString))
+                System.IO.Directory.CreateDirectory(pathString);
+            if (Settings.Default.MDropbox_path == "")
+            {
+                Settings.Default.MDropbox_path = pathString;
+                Settings.Default.Save();
+            }
+
+            //dropboxToolStripMenuItem.Enabled = Settings.Default.MDropbox;
+            //Settings.Default.Save();
+        }
+
+        private void dropboxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Savemode.Dropbox dropboxForm = new Savemode.Dropbox();
+            dropboxForm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //apitoken();
+            label1.Text = Settings.Default.oauth_token;
+            var queryString = String.Format("oauth_token={0}", Settings.Default.oauth_token);
+            var authorizeUrl = "https://www.dropbox.com/1/oauth/authorize?" + queryString;
+            Process.Start(authorizeUrl);
         }
     }
 }

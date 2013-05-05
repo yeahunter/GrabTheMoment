@@ -29,5 +29,17 @@
     <Setting Name="MFtp_remotedir" Type="System.String" Scope="User">
       <Value Profile="(Default)">mappa/ahovaakarommenteni</Value>
     </Setting>
+    <Setting Name="MDropbox" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MDropbox_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="oauth_token" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="oauth_token_secret" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

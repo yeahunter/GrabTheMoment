@@ -130,5 +130,53 @@ namespace GrabTheMoment.Properties {
                 this["MFtp_remotedir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MDropbox {
+            get {
+                return ((bool)(this["MDropbox"]));
+            }
+            set {
+                this["MDropbox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MDropbox_path {
+            get {
+                return ((string)(this["MDropbox_path"]));
+            }
+            set {
+                this["MDropbox_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string oauth_token {
+            get {
+                return ((string)(this["oauth_token"]));
+            }
+            set {
+                this["oauth_token"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string oauth_token_secret {
+            get {
+                return ((string)(this["oauth_token_secret"]));
+            }
+            set {
+                this["oauth_token_secret"] = value;
+            }
+        }
     }
 }
