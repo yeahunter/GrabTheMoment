@@ -37,11 +37,11 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dropboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.fTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dropboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
@@ -106,6 +106,23 @@
             this.localToolStripMenuItem.Text = "Local";
             this.localToolStripMenuItem.Click += new System.EventHandler(this.localToolStripMenuItem_Click);
             // 
+            // fTPToolStripMenuItem
+            // 
+            this.fTPToolStripMenuItem.Enabled = false;
+            this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
+            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fTPToolStripMenuItem.Text = "FTP";
+            this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
+            // 
+            // dropboxToolStripMenuItem
+            // 
+            this.dropboxToolStripMenuItem.Enabled = false;
+            this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
+            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropboxToolStripMenuItem.Text = "Dropbox";
+            this.dropboxToolStripMenuItem.Visible = false;
+            this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -138,24 +155,8 @@
             this.checkBox3.TabIndex = 7;
             this.checkBox3.Text = "Dropbox";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.Visible = false;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // fTPToolStripMenuItem
-            // 
-            this.fTPToolStripMenuItem.Enabled = false;
-            this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
-            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fTPToolStripMenuItem.Text = "FTP";
-            this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
-            // 
-            // dropboxToolStripMenuItem
-            // 
-            this.dropboxToolStripMenuItem.Enabled = false;
-            this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
-            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.dropboxToolStripMenuItem.Text = "Dropbox";
-            this.dropboxToolStripMenuItem.Visible = false;
-            this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -165,6 +166,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
@@ -175,6 +177,7 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "label1";
+            this.label1.Visible = false;
             // 
             // Form1
             // 
