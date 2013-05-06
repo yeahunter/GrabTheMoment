@@ -25,7 +25,7 @@ namespace GrabTheMoment
             Application.Run(windowsform);
             UnhookWindowsHookEx(_hookID);  
         }
-
+#if !__MonoCS__
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int VK_F1 = 0x70;
@@ -101,5 +101,7 @@ namespace GrabTheMoment
 
         [DllImport("user32.dll")]
         static extern int GetWindowRect(IntPtr hWnd, out Rectangle rect);
+        #else
+#endif
     }
 }
