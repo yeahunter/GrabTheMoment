@@ -14,6 +14,8 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Xml;
 
 namespace GrabTheMoment
 {
@@ -25,6 +27,7 @@ namespace GrabTheMoment
             checkBox1.Checked = Settings.Default.MLocal;
             checkBox2.Checked = Settings.Default.MFtp;
             checkBox3.Checked = Settings.Default.MDropbox;
+            checkBox4.Checked = Settings.Default.MImgur;
             localToolStripMenuItem.Enabled = Settings.Default.MLocal;
             fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
 
@@ -129,6 +132,53 @@ namespace GrabTheMoment
             Clipboard.SetText(Settings.Default.MFtp_path + "/" + neve);
         }
 
+        public void MImgur_SavePS(Bitmap bmpScreenShot, string neve)
+        {
+            neve = neve + ".png";
+
+            string holakep = "";
+
+            byte[] filedata = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                bmpScreenShot.Save(stream, ImageFormat.Png);
+                stream.Close();
+
+                filedata = stream.ToArray();
+            }
+
+            byte[] response;
+            using (var w = new WebClient())
+            {
+                w.Headers.Add("Authorization", "Client-ID ac06aa80956fe83");
+                var values = new NameValueCollection
+                {
+                    { "image", Convert.ToBase64String(filedata) },
+                    { "type", "base64" },
+                    { "name", neve },
+                    { "title", "GrabTheMoment - " + neve }
+                };
+
+                response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
+            }
+            
+            using (XmlReader reader = XmlReader.Create(new MemoryStream(response)))
+            {
+                reader.ReadToFollowing("data");
+                reader.MoveToAttribute("status");
+                string stat = reader.Value;
+                if (stat != "200")
+                    return;
+
+                reader.ReadToFollowing("deletehash");
+                string odelete = reader.ReadElementContentAsString();
+                reader.ReadToFollowing("link");
+                holakep = reader.ReadElementContentAsString();
+            }
+
+            Clipboard.SetText(holakep);
+        }
+
         public void FullPS()
         {
             string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
@@ -143,6 +193,8 @@ namespace GrabTheMoment
                 MFtp_SavePS(bmpScreenShot, idodatum);
             //if (Settings.Default.MDropbox)
             //    MDropbox_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MImgur)
+                MImgur_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "FullPS", idodatum, ToolTipIcon.Info);
         }
 
@@ -167,6 +219,8 @@ namespace GrabTheMoment
                 MLocal_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MFtp)
                 MFtp_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MImgur)
+                MImgur_SavePS(bmpScreenShot, idodatum);
             notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
@@ -294,6 +348,12 @@ Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\
             var queryString = String.Format("oauth_token={0}", Settings.Default.oauth_token);
             var authorizeUrl = "https://www.dropbox.com/1/oauth/authorize?" + queryString;
             Process.Start(authorizeUrl);
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.MImgur = checkBox4.Checked;
+            Settings.Default.Save();
         }
     }
 }

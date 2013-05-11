@@ -103,7 +103,7 @@
             // 
             this.localToolStripMenuItem.Enabled = false;
             this.localToolStripMenuItem.Name = "localToolStripMenuItem";
-            this.localToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.localToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.localToolStripMenuItem.Text = "Local";
             this.localToolStripMenuItem.Click += new System.EventHandler(this.localToolStripMenuItem_Click);
             // 
@@ -111,7 +111,7 @@
             // 
             this.fTPToolStripMenuItem.Enabled = false;
             this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
-            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.fTPToolStripMenuItem.Text = "FTP";
             this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
             // 
@@ -119,7 +119,7 @@
             // 
             this.dropboxToolStripMenuItem.Enabled = false;
             this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
-            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.dropboxToolStripMenuItem.Text = "Dropbox";
             this.dropboxToolStripMenuItem.Visible = false;
             this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
@@ -183,12 +183,13 @@
             // checkBox4
             // 
             this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(13, 100);
+            this.checkBox4.Location = new System.Drawing.Point(13, 99);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(51, 17);
+            this.checkBox4.Size = new System.Drawing.Size(52, 17);
             this.checkBox4.TabIndex = 10;
-            this.checkBox4.Text = "imgur";
+            this.checkBox4.Text = "Imgur";
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // Form1
             // 
