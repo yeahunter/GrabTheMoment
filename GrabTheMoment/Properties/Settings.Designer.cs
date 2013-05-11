@@ -190,5 +190,17 @@ namespace GrabTheMoment.Properties {
                 this["MImgur"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CopyLink {
+            get {
+                return ((int)(this["CopyLink"]));
+            }
+            set {
+                this["CopyLink"] = value;
+            }
+        }
     }
 }
