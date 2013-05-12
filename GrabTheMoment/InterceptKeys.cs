@@ -16,11 +16,33 @@ namespace GrabTheMoment
         private static IntPtr _hookID = IntPtr.Zero;
 
         private static Form1 windowsform = null;
+        private static Screenmode.allmode screenmode = null;
 
         public static void Hook(Form1 formegy)
         {
             windowsform = formegy;
+            screenmode = new Screenmode.allmode();
             _hookID = SetHook(_proc);
+        }
+
+        public static Form1 windowsformoscucc
+        {
+            get
+            {
+                return windowsform;
+            }
+        }
+
+        public static Screenmode.allmode smode
+        {
+            get
+            {
+                return screenmode;
+            }
+            set
+            {
+                screenmode = value;
+            }
         }
 
 #if !__MonoCS__
@@ -56,7 +78,7 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        windowsform.FullPS();
+                        screenmode.FullPS();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -64,14 +86,14 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        windowsform.WindowPs(rect);
+                        screenmode.WindowPs(rect);
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
-                    //else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
-                    //{
-                    //    Form2 secondForm = new Form2();
-                    //    secondForm.Show();
-                    //}
+                    else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
+                    {
+                        Form2 secondForm = new Form2();
+                        secondForm.Show();
+                    }
                 }
 
             }

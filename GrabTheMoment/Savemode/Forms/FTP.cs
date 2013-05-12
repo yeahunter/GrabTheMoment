@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
-namespace GrabTheMoment.Savemode
+namespace GrabTheMoment.Savemode.Forms
 {
     public partial class FTP : Form
     {

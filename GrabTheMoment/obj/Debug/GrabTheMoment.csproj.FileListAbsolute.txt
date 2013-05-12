@@ -21,6 +21,6 @@ D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.local.resources
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.FTP.resources
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Dropbox.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Dropbox.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.FTP.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.local.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.Dropbox.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.FTP.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.local.resources

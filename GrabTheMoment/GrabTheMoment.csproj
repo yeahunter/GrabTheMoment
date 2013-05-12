@@ -81,24 +81,26 @@
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Savemode\Dropbox.cs">
+    <Compile Include="Savemode\allmode.cs" />
+    <Compile Include="Savemode\Forms\Dropbox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Savemode\Dropbox.Designer.cs">
+    <Compile Include="Savemode\Forms\Dropbox.Designer.cs">
       <DependentUpon>Dropbox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Savemode\FTP.cs">
+    <Compile Include="Savemode\Forms\FTP.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Savemode\FTP.Designer.cs">
+    <Compile Include="Savemode\Forms\FTP.Designer.cs">
       <DependentUpon>FTP.cs</DependentUpon>
     </Compile>
-    <Compile Include="Savemode\local.cs">
+    <Compile Include="Savemode\Forms\local.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Savemode\local.Designer.cs">
+    <Compile Include="Savemode\Forms\local.Designer.cs">
       <DependentUpon>local.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screenmode\allmode.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,13 +116,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Savemode\Dropbox.resx">
+    <EmbeddedResource Include="Savemode\Forms\Dropbox.resx">
       <DependentUpon>Dropbox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Savemode\FTP.resx">
+    <EmbeddedResource Include="Savemode\Forms\FTP.resx">
       <DependentUpon>FTP.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Savemode\local.resx">
+    <EmbeddedResource Include="Savemode\Forms\local.resx">
       <DependentUpon>local.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -156,6 +158,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

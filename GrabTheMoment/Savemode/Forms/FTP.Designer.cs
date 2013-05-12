@@ -1,4 +1,4 @@
-﻿namespace GrabTheMoment.Savemode
+﻿namespace GrabTheMoment.Savemode.Forms
 {
     partial class FTP
     {

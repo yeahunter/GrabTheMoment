@@ -68,10 +68,6 @@ namespace GrabTheMoment
                     break;
             }
         }
-        //public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
-        //{
-        //    notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext, tipicon);
-        //}
 
         public void apitoken()
         {
@@ -113,238 +109,6 @@ namespace GrabTheMoment
             Settings.Default.oauth_token = token;
             Settings.Default.oauth_token_secret = tokenSecret;
             Settings.Default.Save();
-        }
-
-        public string WhatClipboard()
-        {
-            string visszater = "";
-            switch (Settings.Default.CopyLink)
-            {
-                case 0:
-                    visszater = "NincsCopy";
-                    break;
-                case 1:
-                    visszater = "LocalCopy";
-                    break;
-                case 2:
-                    visszater = "FTPCopy";
-                    break;
-                case 3:
-                    visszater = "DropboxCopy";
-                    break;
-                case 4:
-                    visszater = "ImgurCopy";
-                    break;
-                default:
-                    visszater = "???Copy";
-                    break;
-            }
-            return visszater;
-        }
-
-        public void DrawWatermark(Graphics gfx)
-        {
-            Font font = new Font("Arial", 70, FontStyle.Bold, GraphicsUnit.Pixel);
-            Color color = Color.FromArgb(50, 127, 127, 127);
-            SolidBrush brush = new SolidBrush(color);
-
-            String theString = "gtm.peti.info";
-            SizeF sz = gfx.VisibleClipBounds.Size;
-            gfx.TranslateTransform(sz.Width / 2, sz.Height / 2);
-            gfx.RotateTransform(-45);
-            sz = gfx.MeasureString(theString, font);
-            //Offset the Drawstring method so that the center of the string matches the center.
-            gfx.DrawString(theString, font, brush, -(sz.Width/2), -(sz.Height/2));
-            //Reset the graphics object Transformations.
-            gfx.ResetTransform();
-        }
-
-
-        public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
-        {
-            try
-            {
-                bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
-                if (Settings.Default.CopyLink == 1)
-                    Clipboard.SetText(Settings.Default.MDropbox_path + "\\" + neve + ".png");
-            }
-            catch (Exception e)
-            {
-                log.WriteExceptionEvent(e, "Form1/MLocal_SavePS: ");
-            }
-        }
-
-        public void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
-        {
-            if (!File.Exists(Settings.Default.MDropbox_path))
-                System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
-            bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
-        }
-
-        public void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
-        {
-            try
-            {
-                neve = neve + ".png";
-                FtpWebRequest req = (FtpWebRequest)WebRequest.Create("ftp://" + Settings.Default.MFtp_address + "/" + Settings.Default.MFtp_remotedir + "/" + neve);
-                req.UseBinary = true;
-                req.UsePassive = true;
-                req.Method = WebRequestMethods.Ftp.UploadFile;
-                req.Credentials = new NetworkCredential(Settings.Default.MFtp_user, Settings.Default.MFtp_password);
-                byte[] filedata = new byte[0];
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    bmpScreenShot.Save(stream, ImageFormat.Png);
-                    stream.Close();
-
-                    filedata = stream.ToArray();
-                }
-                req.ContentLength = filedata.Length;
-                Stream reqStream = req.GetRequestStream();
-                reqStream.Write(filedata, 0, filedata.Length);
-                reqStream.Close();
-                if (Settings.Default.CopyLink == 2)
-                    Clipboard.SetText(Settings.Default.MFtp_path + "/" + neve);
-            }
-            catch (Exception e)
-            {
-                log.WriteExceptionEvent(e, "Form1/MFtp_SavePS: ");
-            }
-        }
-
-        public void MImgur_SavePS(Bitmap bmpScreenShot, string neve)
-        {
-            try
-            {
-                neve = neve + ".png";
-
-                string holakep = "";
-
-                byte[] filedata = new byte[0];
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    bmpScreenShot.Save(stream, ImageFormat.Png);
-                    stream.Close();
-
-                    filedata = stream.ToArray();
-                }
-
-                byte[] response;
-                using (var w = new WebClient())
-                {
-                    w.Headers.Add("Authorization", "Client-ID ac06aa80956fe83");
-                    var values = new NameValueCollection
-                    {
-                        { "image", Convert.ToBase64String(filedata) },
-                        { "type", "base64" },
-                        { "name", neve },
-                        { "title", "GrabTheMoment - " + neve }
-                    };
-
-                    response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
-                }
-
-                XmlDocument xdoc = new XmlDocument();
-                try
-                {
-                    xdoc.Load(new MemoryStream(response));
-                    //string stat = xdoc.GetElementsByTagName("data")[0].Attributes.GetNamedItem("status").Value;
-                    //string odeletehash = xdoc.GetElementsByTagName("deletehash")[0].InnerText;
-                    holakep = xdoc.GetElementsByTagName("link")[0].InnerText;
-                }
-                catch
-                {
-                    log.WriteEvent("Form1/MImgur_SavePS: Rossz response!");
-                }
-
-                if (Settings.Default.CopyLink == 4)
-                    Clipboard.SetText(holakep);
-            }
-            catch (Exception e)
-            {
-                log.WriteExceptionEvent(e, "Form1/MImgur_SavePS: ");
-            }
-        }
-
-        public void FullPS()
-        {
-            try
-            {
-                string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-                int screenheight = Screen.PrimaryScreen.Bounds.Height;
-                int screenwidth = Screen.PrimaryScreen.Bounds.Width;
-                Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
-                Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-                gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
-
-                DrawWatermark(gfx);
-
-                if (Settings.Default.MLocal)
-                    MLocal_SavePS(bmpScreenShot, idodatum);
-                if (Settings.Default.MFtp)
-                    MFtp_SavePS(bmpScreenShot, idodatum);
-                //if (Settings.Default.MDropbox)
-                //    MDropbox_SavePS(bmpScreenShot, idodatum);
-                if (Settings.Default.MImgur)
-                    MImgur_SavePS(bmpScreenShot, idodatum);
-                notifyIcon1.ShowBalloonTip(5000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-                log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
-            }
-            catch (Exception e)
-            {
-                log.WriteExceptionEvent(e, "Form1/FullPS: ");
-            }
-        }
-
-        public void WindowPs(Rectangle rectangle)
-        {
-            string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-            int xcoord = rectangle.X;
-            int ycoord = rectangle.Y;
-            int windowwidth = rectangle.Width - xcoord;
-            int windowheight = rectangle.Height - ycoord;
-            if (xcoord == -8 && ycoord == -8)
-            {
-                xcoord += 8;
-                ycoord += 8;
-                windowwidth -= 16;
-                windowheight -= 16;
-            }
-            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-            gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-
-            DrawWatermark(gfx);
-
-            if (Settings.Default.MLocal)
-                MLocal_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MFtp)
-                MFtp_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MImgur)
-                MImgur_SavePS(bmpScreenShot, idodatum);
-            notifyIcon1.ShowBalloonTip(5000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-            log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
-        }
-
-        public void AreaPs(Rectangle rectangle)
-        {
-            string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-            int xcoord = rectangle.X;
-            int ycoord = rectangle.Y;
-            int windowwidth = rectangle.Width - xcoord;
-            int windowheight = rectangle.Height - ycoord;
-            if (xcoord == -8 && ycoord == -8)
-            {
-                xcoord += 8;
-                ycoord += 8;
-                windowwidth -= 16;
-                windowheight -= 16;
-            }
-            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-            gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-            bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + idodatum + ".png", ImageFormat.Png);
-            notifyIcon1.ShowBalloonTip(5000, "WindowPs", idodatum, ToolTipIcon.Info);
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -391,7 +155,7 @@ namespace GrabTheMoment
 
         private void localToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.local localForm = new Savemode.local();
+            Savemode.Forms.local localForm = new Savemode.Forms.local();
             localForm.Show();
         }
 
@@ -413,7 +177,7 @@ namespace GrabTheMoment
 
         private void fTPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.FTP ftpForm = new Savemode.FTP();
+            Savemode.Forms.FTP ftpForm = new Savemode.Forms.FTP();
             ftpForm.Show();
         }
 
@@ -441,7 +205,7 @@ Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\
 
         private void dropboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.Dropbox dropboxForm = new Savemode.Dropbox();
+            Savemode.Forms.Dropbox dropboxForm = new Savemode.Forms.Dropbox();
             dropboxForm.Show();
         }
 

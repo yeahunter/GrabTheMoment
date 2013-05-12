@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
 
-namespace GrabTheMoment.Savemode
+namespace GrabTheMoment.Savemode.Forms
 {
     public partial class local : Form
     {

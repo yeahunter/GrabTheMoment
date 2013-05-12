@@ -13,10 +13,12 @@ namespace GrabTheMoment
 {
     public partial class Form2 : Form
     {
+        Screenmode.allmode smode;
         System.Drawing.Graphics formGraphics;
         bool isDown = false;
         int initialX;
         int initialY;
+        Rectangle rect;
 
         public Form2()
         {
@@ -27,6 +29,7 @@ namespace GrabTheMoment
             this.BackColor = System.Drawing.Color.Transparent;
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
+            smode = InterceptKeys.smode;
         }
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
@@ -56,7 +59,7 @@ namespace GrabTheMoment
                 //Pen backPen = new Pen(Color.Red, penwidth);
                 int width = e.X - initialX;
                 int height = e.Y - initialY;
-                Rectangle rect = new Rectangle(Math.Min(e.X, initialX),
+                rect = new Rectangle(Math.Min(e.X, initialX),
                                Math.Min(e.Y, initialY),
                                Math.Abs(width),
                                Math.Abs(height));
@@ -77,6 +80,8 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
+            smode.AreaPs(rect);
+            this.Close();
         }
     }
     public class WinApi
