@@ -142,6 +142,23 @@ namespace GrabTheMoment
             return visszater;
         }
 
+        public void DrawWatermark(Graphics gfx)
+        {
+            Font font = new Font("Arial", 70, FontStyle.Bold, GraphicsUnit.Pixel);
+            Color color = Color.FromArgb(50, 127, 127, 127);
+            SolidBrush brush = new SolidBrush(color);
+
+            String theString = "gtm.peti.info";
+            SizeF sz = gfx.VisibleClipBounds.Size;
+            gfx.TranslateTransform(sz.Width / 2, sz.Height / 2);
+            gfx.RotateTransform(-45);
+            sz = gfx.MeasureString(theString, font);
+            //Offset the Drawstring method so that the center of the string matches the center.
+            gfx.DrawString(theString, font, brush, -(sz.Width/2), -(sz.Height/2));
+            //Reset the graphics object Transformations.
+            gfx.ResetTransform();
+        }
+
 
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
@@ -251,22 +268,32 @@ namespace GrabTheMoment
 
         public void FullPS()
         {
-            string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-            int screenheight = Screen.PrimaryScreen.Bounds.Height;
-            int screenwidth = Screen.PrimaryScreen.Bounds.Width;
-            Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-            gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
-            if (Settings.Default.MLocal)
-                MLocal_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MFtp)
-                MFtp_SavePS(bmpScreenShot, idodatum);
-            //if (Settings.Default.MDropbox)
-            //    MDropbox_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MImgur)
-                MImgur_SavePS(bmpScreenShot, idodatum);
-            notifyIcon1.ShowBalloonTip(5000, "FullPS" + " " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-            log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
+            try
+            {
+                string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
+                int screenheight = Screen.PrimaryScreen.Bounds.Height;
+                int screenwidth = Screen.PrimaryScreen.Bounds.Width;
+                Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
+                Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
+                gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
+
+                DrawWatermark(gfx);
+
+                if (Settings.Default.MLocal)
+                    MLocal_SavePS(bmpScreenShot, idodatum);
+                if (Settings.Default.MFtp)
+                    MFtp_SavePS(bmpScreenShot, idodatum);
+                //if (Settings.Default.MDropbox)
+                //    MDropbox_SavePS(bmpScreenShot, idodatum);
+                if (Settings.Default.MImgur)
+                    MImgur_SavePS(bmpScreenShot, idodatum);
+                notifyIcon1.ShowBalloonTip(5000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
+                log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
+            }
+            catch (Exception e)
+            {
+                log.WriteExceptionEvent(e, "Form1/FullPS: ");
+            }
         }
 
         public void WindowPs(Rectangle rectangle)
@@ -286,13 +313,16 @@ namespace GrabTheMoment
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
+
+            DrawWatermark(gfx);
+
             if (Settings.Default.MLocal)
                 MLocal_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MFtp)
                 MFtp_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MImgur)
                 MImgur_SavePS(bmpScreenShot, idodatum);
-            notifyIcon1.ShowBalloonTip(5000, "WindowPs" + " " + WhatClipboard(), idodatum, ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(5000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
         }
 
@@ -367,15 +397,17 @@ namespace GrabTheMoment
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.MLocal = checkBox5.Enabled = checkBox1.Checked;
-            localToolStripMenuItem.Enabled = Settings.Default.MLocal;
+            Settings.Default.MLocal = checkBox5.Enabled = localToolStripMenuItem.Enabled = checkBox1.Checked;
+            if (!checkBox5.Enabled)
+                checkBox5.Checked = false;
             Settings.Default.Save();
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.MFtp = checkBox6.Enabled = checkBox2.Checked;
-            fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
+            Settings.Default.MFtp = checkBox6.Enabled = fTPToolStripMenuItem.Enabled = checkBox2.Checked;
+            if (!checkBox6.Enabled)
+                checkBox6.Checked = false;
             Settings.Default.Save();
         }
 
@@ -425,6 +457,8 @@ Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.MImgur = checkBox8.Enabled = checkBox4.Checked;
+            if (!checkBox8.Enabled)
+                checkBox8.Checked = false;
             Settings.Default.Save();
         }
 

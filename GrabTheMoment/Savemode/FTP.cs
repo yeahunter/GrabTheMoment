@@ -23,7 +23,7 @@ namespace GrabTheMoment.Savemode
             textBox5.Text = Settings.Default.MFtp_path;
         }
 
-        private void FTP_FormClosed(object sender, FormClosedEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             Settings.Default.MFtp_user = textBox1.Text;
             Settings.Default.MFtp_password = textBox2.Text;
@@ -31,6 +31,8 @@ namespace GrabTheMoment.Savemode
             Settings.Default.MFtp_remotedir = textBox4.Text;
             Settings.Default.MFtp_path = textBox5.Text;
             Settings.Default.Save();
+            button1.Enabled = false;
+            button1.Text = "Mentve!";
         }
     }
 }

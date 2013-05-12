@@ -56,7 +56,7 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        //windowsform.FullPS();
+                        windowsform.FullPS();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
