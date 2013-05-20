@@ -17,12 +17,27 @@ namespace GrabTheMoment
 
         private static Form1 windowsform = null;
         private static Screenmode.allmode screenmode = null;
+        private static Log logol = new Log();
+        private static string clipboard = null;
 
         public static void Hook(Form1 formegy)
         {
             windowsform = formegy;
             screenmode = new Screenmode.allmode();
             _hookID = SetHook(_proc);
+        }
+
+        public static void Klipbood()
+        {
+            Clipboard.SetText(clipboard);
+            logol.WriteEvent("Klipbood-0arg: " + clipboard);
+        }
+
+        public static void Klipbood(string clipboord)
+        {
+            clipboard = clipboord;
+            Clipboard.SetText(clipboard);
+            logol.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
         public static Form1 windowsformoscucc

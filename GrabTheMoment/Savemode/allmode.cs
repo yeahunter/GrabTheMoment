@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows;
 using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
@@ -23,13 +22,14 @@ namespace GrabTheMoment.Savemode
     class allmode
     {
         Log log = new Log();
+
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
                 bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
                 if (Settings.Default.CopyLink == 1)
-                    Clipboard.SetText(Settings.Default.MDropbox_path + "\\" + neve + ".png");
+                    InterceptKeys.Klipbood(Settings.Default.MLocal_path + "\\" + neve + ".png");
             }
             catch (Exception e)
             {
@@ -49,9 +49,11 @@ namespace GrabTheMoment.Savemode
             try
             {
                 neve = neve + ".png";
+                string ezittapath = Settings.Default.MFtp_path + "/" + neve;
                 FtpWebRequest req = (FtpWebRequest)WebRequest.Create("ftp://" + Settings.Default.MFtp_address + "/" + Settings.Default.MFtp_remotedir + "/" + neve);
                 req.UseBinary = true;
-                req.UsePassive = true;
+                //req.UsePassive = true;
+                req.KeepAlive = false;
                 req.Method = WebRequestMethods.Ftp.UploadFile;
                 req.Credentials = new NetworkCredential(Settings.Default.MFtp_user, Settings.Default.MFtp_password);
                 byte[] filedata = new byte[0];
@@ -66,8 +68,16 @@ namespace GrabTheMoment.Savemode
                 Stream reqStream = req.GetRequestStream();
                 reqStream.Write(filedata, 0, filedata.Length);
                 reqStream.Close();
+                reqStream.Dispose();
+
+                FtpWebResponse resp = (FtpWebResponse)req.GetResponse();
+                log.WriteEvent("Upload File Complete, status " + resp.StatusDescription);
+
+                resp.Close();
+                resp.Dispose();
+
                 if (Settings.Default.CopyLink == 2)
-                    Clipboard.SetText(Settings.Default.MFtp_path + "/" + neve);
+                    InterceptKeys.Klipbood(ezittapath);
             }
             catch (Exception e)
             {
@@ -121,7 +131,7 @@ namespace GrabTheMoment.Savemode
                 }
 
                 if (Settings.Default.CopyLink == 4)
-                    Clipboard.SetText(holakep);
+                    InterceptKeys.Klipbood(holakep);
             }
             catch (Exception e)
             {

@@ -67,6 +67,7 @@ namespace GrabTheMoment
                     checkBox8.Checked = true;
                     break;
             }
+
         }
 
         public void apitoken()
@@ -271,6 +272,11 @@ Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\
             else
                 Settings.Default.CopyLink = 0;
             Settings.Default.Save();
+        }
+
+        private void lastLinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InterceptKeys.Klipbood();
         }
     }
 }

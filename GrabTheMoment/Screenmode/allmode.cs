@@ -91,7 +91,10 @@ namespace GrabTheMoment.Screenmode
                 if (Settings.Default.MLocal)
                     savemode.MLocal_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MFtp)
+                {
+                    System.Threading.Thread.Sleep(5000);
                     savemode.MFtp_SavePS(bmpScreenShot, idodatum);
+                }
                 //if (Settings.Default.MDropbox)
                 //    MDropbox_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MImgur)
@@ -128,10 +131,14 @@ namespace GrabTheMoment.Screenmode
             if (Settings.Default.MLocal)
                 savemode.MLocal_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MFtp)
+            {
+                System.Threading.Thread.Sleep(5000);
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
+            }
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
             notifyIcon(5000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
+            log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
             log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
         }
 
