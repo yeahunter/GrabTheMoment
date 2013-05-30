@@ -36,7 +36,6 @@ namespace GrabTheMoment
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
-            Clipboard.SetText(clipboard);
             logol.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
@@ -93,7 +92,7 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        screenmode.FullPS();
+                        new System.Threading.Thread(() => screenmode.FullPS()).Start();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -101,7 +100,7 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        screenmode.WindowPs(rect);
+                        new System.Threading.Thread(() => screenmode.WindowPs(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))

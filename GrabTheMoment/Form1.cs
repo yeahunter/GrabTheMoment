@@ -278,5 +278,10 @@ Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\
         {
             InterceptKeys.Klipbood();
         }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            InterceptKeys.Klipbood();
+        }
     }
 }

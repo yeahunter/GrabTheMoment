@@ -61,7 +61,10 @@ namespace GrabTheMoment.Screenmode
             String theString = "gtm.peti.info";
             SizeF sz = gfx.VisibleClipBounds.Size;
             gfx.TranslateTransform(sz.Width / 2, sz.Height / 2);
-            gfx.RotateTransform(-45);
+            float fok = -45;
+            fok *= sz.Height / sz.Width;
+
+            gfx.RotateTransform(fok);
             sz = gfx.MeasureString(theString, font);
             //Offset the Drawstring method so that the center of the string matches the center.
             gfx.DrawString(theString, font, brush, -(sz.Width / 2), -(sz.Height / 2));
@@ -72,7 +75,7 @@ namespace GrabTheMoment.Screenmode
         public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
             Form1 fone = InterceptKeys.windowsformoscucc;
-            fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext, tipicon);
+            fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
         }
 
         public void FullPS()
@@ -92,14 +95,14 @@ namespace GrabTheMoment.Screenmode
                     savemode.MLocal_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MFtp)
                 {
-                    System.Threading.Thread.Sleep(5000);
+                    //System.Threading.Thread.Sleep(5000);
                     savemode.MFtp_SavePS(bmpScreenShot, idodatum);
                 }
                 //if (Settings.Default.MDropbox)
                 //    MDropbox_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MImgur)
                     savemode.MImgur_SavePS(bmpScreenShot, idodatum);
-                notifyIcon(5000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
+                notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
                 log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
             }
             catch (Exception e)
@@ -132,12 +135,12 @@ namespace GrabTheMoment.Screenmode
                 savemode.MLocal_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MFtp)
             {
-                System.Threading.Thread.Sleep(5000);
+                //System.Threading.Thread.Sleep(5000);
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
             }
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
-            notifyIcon(5000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
+            notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
             log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
         }

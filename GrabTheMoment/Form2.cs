@@ -80,7 +80,7 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            smode.AreaPs(rect);
+            new System.Threading.Thread(() => smode.AreaPs(rect)).Start();
             this.Close();
         }
     }
