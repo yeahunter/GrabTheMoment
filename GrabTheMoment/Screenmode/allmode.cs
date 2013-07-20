@@ -51,6 +51,22 @@ namespace GrabTheMoment.Screenmode
             return visszater;
         }
 
+        public int x;
+        public int y;
+
+        public void mekkoraazxesazy()
+        {
+            foreach (Screen asztal in System.Windows.Forms.Screen.AllScreens)
+            {
+                int iksz = asztal.Bounds.X;
+                if (asztal.Bounds.X < x)
+                    x = iksz;
+                int ipszilon = asztal.Bounds.Y;
+                if (ipszilon < y)
+                    y = ipszilon;
+            }
+        }
+
         public void DrawWatermark(Graphics gfx)
         {
             int mekkorabetuk = (int)(Math.Pow(gfx.VisibleClipBounds.Width * gfx.VisibleClipBounds.Height, (1.0 / 3.3)));
@@ -83,11 +99,14 @@ namespace GrabTheMoment.Screenmode
             try
             {
                 string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-                int screenheight = Screen.PrimaryScreen.Bounds.Height;
-                int screenwidth = Screen.PrimaryScreen.Bounds.Width;
+                int screenheight = SystemInformation.VirtualScreen.Height;
+                int screenwidth = SystemInformation.VirtualScreen.Width;
+
+                mekkoraazxesazy();
+
                 Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
                 Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-                gfx.CopyFromScreen(0, 0, 0, 0, new Size(screenwidth, screenheight));
+                gfx.CopyFromScreen(x, y, 0, 0, new Size(screenwidth, screenheight));
 
                 DrawWatermark(gfx);
 
@@ -152,7 +171,7 @@ namespace GrabTheMoment.Screenmode
             int xcoord = rectangle.X + 1, ycoord = rectangle.Y + 1, windowwidth = rectangle.Width -1, windowheight = rectangle.Height - 1;
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
             Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-            gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
+            gfx.CopyFromScreen(x + xcoord, y + ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
             DrawWatermark(gfx);
             if (Settings.Default.MLocal)
                 savemode.MLocal_SavePS(bmpScreenShot, idodatum);

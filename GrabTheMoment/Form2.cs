@@ -23,13 +23,14 @@ namespace GrabTheMoment
         public Form2()
         {
             InitializeComponent();
-            WinApi.SetWinFullScreen(this.Handle);
+            smode = InterceptKeys.smode;
+            smode.mekkoraazxesazy();
+            WinApi.SetWinFullScreen(this.Handle, smode.x, smode.y);
             this.Activate();
             this.SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = System.Drawing.Color.Transparent;
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
-            smode = InterceptKeys.smode;
         }
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
@@ -109,9 +110,9 @@ namespace GrabTheMoment
             get { return GetSystemMetrics(SM_CYSCREEN); }
         }
 
-        public static void SetWinFullScreen(IntPtr hwnd)
+        public static void SetWinFullScreen(IntPtr hwnd, int x, int y)
         {
-            SetWindowPos(hwnd, HWND_TOP, 0, 0, ScreenX, ScreenY, SWP_SHOWWINDOW);
+            SetWindowPos(hwnd, HWND_TOP, x, y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, SWP_SHOWWINDOW);
         }
     }
 }
