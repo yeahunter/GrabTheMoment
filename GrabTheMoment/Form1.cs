@@ -70,48 +70,6 @@ namespace GrabTheMoment
 
         }
 
-        public void apitoken()
-        {
-            var consumerKey = "";
-            var consumerSecret = "";
-            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
-
-            // Generate a signature
-            API.OAuth.OAuthBase oAuth = new API.OAuth.OAuthBase();
-            string nonce = oAuth.GenerateNonce();
-            string timeStamp = oAuth.GenerateTimeStamp();
-            string parameters;
-            string normalizedUrl;
-            string signature = oAuth.GenerateSignature(uri, consumerKey, consumerSecret,
-                String.Empty, String.Empty, "GET", timeStamp, nonce, API.OAuth.OAuthBase.SignatureTypes.HMACSHA1,
-                out normalizedUrl, out parameters);
-
-            signature = HttpUtility.UrlEncode(signature);
-
-            StringBuilder requestUri = new StringBuilder(uri.ToString());
-            requestUri.AppendFormat("?oauth_consumer_key={0}&", consumerKey);
-            requestUri.AppendFormat("oauth_nonce={0}&", nonce);
-            requestUri.AppendFormat("oauth_timestamp={0}&", timeStamp);
-            requestUri.AppendFormat("oauth_signature_method={0}&", "HMAC-SHA1");
-            requestUri.AppendFormat("oauth_version={0}&", "1.0");
-            requestUri.AppendFormat("oauth_signature={0}", signature);
-
-            var request = (HttpWebRequest)WebRequest.Create(new Uri(requestUri.ToString()));
-            request.Method = WebRequestMethods.Http.Get;
-
-            var response = request.GetResponse();
-
-            var queryString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            var parts = queryString.Split('&');
-            var token = parts[1].Substring(parts[1].IndexOf('=') + 1);
-            var tokenSecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
-
-            Settings.Default.oauth_token = token;
-            Settings.Default.oauth_token_secret = tokenSecret;
-            Settings.Default.Save();
-        }
-
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -184,21 +142,21 @@ namespace GrabTheMoment
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.MDropbox = checkBox3.Checked;
+//            Settings.Default.MDropbox = checkBox3.Checked;
 
-            var dbPath = System.IO.Path.Combine(
-Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
-            string[] lines = System.IO.File.ReadAllLines(dbPath);
-            byte[] dbBase64Text = Convert.FromBase64String(lines[1]);
-            string holadropbox = System.Text.ASCIIEncoding.ASCII.GetString(dbBase64Text);
-            string pathString = System.IO.Path.Combine(holadropbox, "GrabTheMoment");
-            if (!File.Exists(pathString))
-                System.IO.Directory.CreateDirectory(pathString);
-            if (Settings.Default.MDropbox_path == "")
-            {
-                Settings.Default.MDropbox_path = pathString;
-                Settings.Default.Save();
-            }
+//            var dbPath = System.IO.Path.Combine(
+//Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
+//            string[] lines = System.IO.File.ReadAllLines(dbPath);
+//            byte[] dbBase64Text = Convert.FromBase64String(lines[1]);
+//            string holadropbox = System.Text.ASCIIEncoding.ASCII.GetString(dbBase64Text);
+//            string pathString = System.IO.Path.Combine(holadropbox, "GrabTheMoment");
+//            if (!File.Exists(pathString))
+//                System.IO.Directory.CreateDirectory(pathString);
+//            if (Settings.Default.MDropbox_path == "")
+//            {
+//                Settings.Default.MDropbox_path = pathString;
+//                Settings.Default.Save();
+//            }
 
             //dropboxToolStripMenuItem.Enabled = Settings.Default.MDropbox;
             //Settings.Default.Save();

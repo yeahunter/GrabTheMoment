@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 
-namespace GrabTheMoment.API.OAuth
+namespace GrabTheMoment.API
 {
     public class OAuthBase
     {

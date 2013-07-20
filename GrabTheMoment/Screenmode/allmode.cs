@@ -121,6 +121,8 @@ namespace GrabTheMoment.Screenmode
                 //    MDropbox_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MImgur)
                     savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+                if (Settings.Default.MDropbox)
+                    savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
                 notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
                 log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
             }
@@ -159,6 +161,8 @@ namespace GrabTheMoment.Screenmode
             }
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MDropbox)
+                savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
             log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
@@ -179,6 +183,8 @@ namespace GrabTheMoment.Screenmode
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+            if (Settings.Default.MDropbox)
+                savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(5000, "AreaPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/AreaPs: " + idodatum + " elkészült!");
         }

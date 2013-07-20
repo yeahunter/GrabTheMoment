@@ -119,7 +119,7 @@
             // 
             this.localToolStripMenuItem.Enabled = false;
             this.localToolStripMenuItem.Name = "localToolStripMenuItem";
-            this.localToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.localToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.localToolStripMenuItem.Text = "Local";
             this.localToolStripMenuItem.Click += new System.EventHandler(this.localToolStripMenuItem_Click);
             // 
@@ -127,17 +127,15 @@
             // 
             this.fTPToolStripMenuItem.Enabled = false;
             this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
-            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fTPToolStripMenuItem.Text = "FTP";
             this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
             // 
             // dropboxToolStripMenuItem
             // 
-            this.dropboxToolStripMenuItem.Enabled = false;
             this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
-            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dropboxToolStripMenuItem.Text = "Dropbox";
-            this.dropboxToolStripMenuItem.Visible = false;
             this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
             // 
             // checkBox1

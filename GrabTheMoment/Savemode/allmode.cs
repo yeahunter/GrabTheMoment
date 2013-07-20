@@ -39,9 +39,26 @@ namespace GrabTheMoment.Savemode
 
         public void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
         {
-            if (!File.Exists(Settings.Default.MDropbox_path))
-                System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
-            bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
+            try
+            {
+                neve = neve + ".png";
+                byte[] filedata = new byte[0];
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    bmpScreenShot.Save(stream, ImageFormat.Png);
+                    stream.Close();
+
+                    filedata = stream.ToArray();
+                }
+                API.Dropbox.Upload(filedata, neve);
+            }
+            catch (Exception e)
+            {
+                log.WriteExceptionEvent(e, "Form1/MDropbox_SavePS: ");
+            }
+            //if (!File.Exists(Settings.Default.MDropbox_path))
+            //    System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
+            //bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
         }
 
         public void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
@@ -57,13 +74,6 @@ namespace GrabTheMoment.Savemode
                 req.Method = WebRequestMethods.Ftp.UploadFile;
                 req.Credentials = new NetworkCredential(Settings.Default.MFtp_user, Settings.Default.MFtp_password);
                 byte[] filedata = new byte[0];
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    bmpScreenShot.Save(stream, ImageFormat.Png);
-                    stream.Close();
-
-                    filedata = stream.ToArray();
-                }
                 req.ContentLength = filedata.Length;
                 Stream reqStream = req.GetRequestStream();
                 reqStream.Write(filedata, 0, filedata.Length);

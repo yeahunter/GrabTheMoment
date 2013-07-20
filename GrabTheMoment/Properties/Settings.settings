@@ -32,9 +32,6 @@
     <Setting Name="MDropbox" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MDropbox_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="oauth_token" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -46,6 +43,12 @@
     </Setting>
     <Setting Name="CopyLink" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MDropbox_accesstoken" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MDropbox_accesssecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
