@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using GrabTheMoment.Properties;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GrabTheMoment.API
 {
@@ -193,6 +195,62 @@ namespace GrabTheMoment.API
             var json = reader.ReadToEnd();
 
             log.WriteEvent("Dropbox/Upload: json: " + json.ToString());
+        }
+
+        public static string Share(string fajlneve)
+        {
+            log.WriteEvent("Dropbox/Share: Elindultam");
+            fajlneve = UpperCaseUrlEncode(fajlneve);
+            var uri = new Uri(new Uri("https://api.dropbox.com/1/"),
+                String.Format("shares/{0}/{1}?short_url=true",
+                "sandbox", fajlneve));
+
+            var request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Headers.Add("Authorization", "OAuth oauth_version=1.0, oauth_signature_method=PLAINTEXT, oauth_consumer_key=" + consumerKey + ", oauth_token=" + Settings.Default.MDropbox_accesstoken + ", oauth_signature=" + consumerSecret + "&" + Settings.Default.MDropbox_accesssecret);
+            request.Method = WebRequestMethods.Http.Get;
+            request.KeepAlive = true;
+
+            var response = request.GetResponse();
+            var reader = new StreamReader(response.GetResponseStream());
+            var json = reader.ReadToEnd();
+
+            JObject o = JObject.Parse(json.ToString());
+
+            log.WriteEvent("Dropbox/Share: fajlneve: " + fajlneve + " rovidurl: " + o["url"].ToString());
+
+            return o["url"].ToString();
+        }
+
+        public static void AccInf()
+        {
+            var uri = new Uri("https://api.dropbox.com/1/account/info");
+
+            OAuthBase oAuth = new OAuthBase();
+            var nonce = oAuth.GenerateNonce();
+            var timestamp = oAuth.GenerateTimeStamp();
+            string parameters;
+            string normalizedUrl;
+
+            var signature = oAuth.GenerateSignature(
+                uri, consumerKey, consumerSecret,
+                Settings.Default.MDropbox_accesstoken, Settings.Default.MDropbox_accesssecret, "GET", timestamp,
+                nonce, OAuthBase.SignatureTypes.HMACSHA1,
+                out normalizedUrl, out parameters);
+
+            var requestUri = String.Format("{0}?{1}&oauth_signature={2}",
+                normalizedUrl, parameters, HttpUtility.UrlEncode(signature));
+
+            var request = (HttpWebRequest)WebRequest.Create(requestUri);
+            request.Method = WebRequestMethods.Http.Get;
+            request.KeepAlive = true;
+
+            var response = request.GetResponse();
+            var reader = new StreamReader(response.GetResponseStream());
+            var json = reader.ReadToEnd();
+
+
+            Console.WriteLine(HttpUtility.HtmlDecode(json.ToString()));
+            Console.ReadLine();
         }
     }
 }

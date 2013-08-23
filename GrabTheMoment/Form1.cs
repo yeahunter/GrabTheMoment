@@ -26,31 +26,10 @@ namespace GrabTheMoment
         public Form1()
         {
             InitializeComponent();
-            checkBox5.Enabled = checkBox1.Checked = Settings.Default.MLocal;
-            checkBox6.Enabled = checkBox2.Checked = Settings.Default.MFtp;
-            checkBox3.Checked = Settings.Default.MDropbox;
+            localToolStripMenuItem.Enabled      = checkBox5.Enabled = checkBox1.Checked = Settings.Default.MLocal;
+            fTPToolStripMenuItem.Enabled        = checkBox6.Enabled = checkBox2.Checked = Settings.Default.MFtp;
+            dropboxToolStripMenuItem.Enabled    = checkBox7.Enabled = checkBox3.Checked = Settings.Default.MDropbox;
             checkBox8.Enabled = checkBox4.Checked = Settings.Default.MImgur;
-            localToolStripMenuItem.Enabled = Settings.Default.MLocal;
-            fTPToolStripMenuItem.Enabled = Settings.Default.MFtp;
-
-            var dbPath = System.IO.Path.Combine(
-         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
-            if (File.Exists(dbPath))
-            {
-                checkBox3.Enabled = true;
-            }
-            else
-            {
-                checkBox3.Text += " (Nincs)";
-                checkBox3.Enabled = false;
-                checkBox3.Checked = false;
-                if (Settings.Default.MDropbox)
-                {
-                    Settings.Default.MDropbox = false;
-                    Settings.Default.Save();
-                }
-            }
-
 
             switch (Settings.Default.CopyLink)
             {
@@ -61,7 +40,7 @@ namespace GrabTheMoment
                     checkBox6.Checked = true;
                     break;
                 case 3:
-                    
+                    checkBox7.Checked = true;
                     break;
                 case 4:
                     checkBox8.Checked = true;
@@ -142,39 +121,16 @@ namespace GrabTheMoment
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-//            Settings.Default.MDropbox = checkBox3.Checked;
-
-//            var dbPath = System.IO.Path.Combine(
-//Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Dropbox\\host.db");
-//            string[] lines = System.IO.File.ReadAllLines(dbPath);
-//            byte[] dbBase64Text = Convert.FromBase64String(lines[1]);
-//            string holadropbox = System.Text.ASCIIEncoding.ASCII.GetString(dbBase64Text);
-//            string pathString = System.IO.Path.Combine(holadropbox, "GrabTheMoment");
-//            if (!File.Exists(pathString))
-//                System.IO.Directory.CreateDirectory(pathString);
-//            if (Settings.Default.MDropbox_path == "")
-//            {
-//                Settings.Default.MDropbox_path = pathString;
-//                Settings.Default.Save();
-//            }
-
-            //dropboxToolStripMenuItem.Enabled = Settings.Default.MDropbox;
-            //Settings.Default.Save();
+            Settings.Default.MDropbox = checkBox7.Enabled = dropboxToolStripMenuItem.Enabled = checkBox3.Checked;
+            if (!checkBox7.Enabled)
+                checkBox7.Checked = false;
+            Settings.Default.Save();
         }
 
         private void dropboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Savemode.Forms.Dropbox dropboxForm = new Savemode.Forms.Dropbox();
             dropboxForm.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //apitoken();
-            label1.Text = Settings.Default.oauth_token;
-            var queryString = String.Format("oauth_token={0}", Settings.Default.oauth_token);
-            var authorizeUrl = "https://www.dropbox.com/1/oauth/authorize?" + queryString;
-            Process.Start(authorizeUrl);
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
@@ -215,7 +171,16 @@ namespace GrabTheMoment
 
         private void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (checkBox7.Checked)
+            {
+                checkBox5.Checked = false;
+                checkBox6.Checked = false;
+                checkBox8.Checked = false;
+                Settings.Default.CopyLink = 3;
+            }
+            else
+                Settings.Default.CopyLink = 0;
+            Settings.Default.Save();
         }
 
         private void checkBox8_CheckedChanged(object sender, EventArgs e)

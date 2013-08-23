@@ -51,8 +51,7 @@ namespace GrabTheMoment.Screenmode
             return visszater;
         }
 
-        public int x;
-        public int y;
+        public int x, y;
 
         public void mekkoraazxesazy()
         {
@@ -71,7 +70,7 @@ namespace GrabTheMoment.Screenmode
         {
             int mekkorabetuk = (int)(Math.Pow(gfx.VisibleClipBounds.Width * gfx.VisibleClipBounds.Height, (1.0 / 3.3)));
             Font font = new Font("Arial", mekkorabetuk, FontStyle.Bold, GraphicsUnit.Pixel);
-            Color color = Color.FromArgb(50, 127, 127, 127);
+            Color color = Color.FromArgb(25, 127, 127, 127);
             SolidBrush brush = new SolidBrush(color);
 
             String theString = "gtm.peti.info";
@@ -121,7 +120,7 @@ namespace GrabTheMoment.Screenmode
                 //    MDropbox_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MImgur)
                     savemode.MImgur_SavePS(bmpScreenShot, idodatum);
-                if (Settings.Default.MDropbox)
+                if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                     savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
                 notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
                 log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
@@ -161,7 +160,7 @@ namespace GrabTheMoment.Screenmode
             }
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MDropbox)
+            if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
@@ -183,7 +182,7 @@ namespace GrabTheMoment.Screenmode
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
-            if (Settings.Default.MDropbox)
+            if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(5000, "AreaPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             log.WriteEvent("Form1/AreaPs: " + idodatum + " elkészült!");

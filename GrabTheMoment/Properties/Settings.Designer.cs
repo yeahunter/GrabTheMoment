@@ -214,5 +214,17 @@ namespace GrabTheMoment.Properties {
                 this["MDropbox_accesssecret"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MDropbox_upload {
+            get {
+                return ((bool)(this["MDropbox_upload"]));
+            }
+            set {
+                this["MDropbox_upload"] = value;
+            }
+        }
     }
 }
