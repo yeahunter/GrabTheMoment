@@ -74,6 +74,7 @@
             // 
             // lastLinkToolStripMenuItem
             // 
+            this.lastLinkToolStripMenuItem.Enabled = false;
             this.lastLinkToolStripMenuItem.Name = "lastLinkToolStripMenuItem";
             this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.lastLinkToolStripMenuItem.Text = "Last link";
@@ -133,7 +134,7 @@
             // 
             this.dropboxToolStripMenuItem.Enabled = false;
             this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
-            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.dropboxToolStripMenuItem.Text = "Dropbox";
             this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
             // 
@@ -297,7 +298,7 @@
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
     }
 }
 

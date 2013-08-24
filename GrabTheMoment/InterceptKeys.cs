@@ -29,13 +29,19 @@ namespace GrabTheMoment
 
         public static void Klipbood()
         {
-            Clipboard.SetText(clipboard);
-            logol.WriteEvent("Klipbood-0arg: " + clipboard);
+            if (clipboard != null && windowsform.lastLinkToolStripMenuItem.Enabled)
+            {
+                Clipboard.SetText(clipboard);
+                logol.WriteEvent("Klipbood-0arg: " + clipboard);
+            }
+            else
+                logol.WriteEvent("Klipbood-0arg ures clipboard valtozo");
         }
 
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
+            windowsform.lastLinkToolStripMenuItem.Enabled = true;
             logol.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
