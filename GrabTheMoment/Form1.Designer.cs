@@ -50,6 +50,7 @@
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.tesztToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,23 +68,24 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tesztToolStripMenuItem,
             this.lastLinkToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(118, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 92);
             // 
             // lastLinkToolStripMenuItem
             // 
             this.lastLinkToolStripMenuItem.Enabled = false;
             this.lastLinkToolStripMenuItem.Name = "lastLinkToolStripMenuItem";
-            this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lastLinkToolStripMenuItem.Text = "Last link";
             this.lastLinkToolStripMenuItem.Click += new System.EventHandler(this.lastLinkToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -244,6 +246,14 @@
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
+            // tesztToolStripMenuItem
+            // 
+            this.tesztToolStripMenuItem.Name = "tesztToolStripMenuItem";
+            this.tesztToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tesztToolStripMenuItem.Text = "Teszt";
+            this.tesztToolStripMenuItem.Visible = false;
+            this.tesztToolStripMenuItem.Click += new System.EventHandler(this.tesztToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +309,7 @@
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox8;
         public System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tesztToolStripMenuItem;
     }
 }
 

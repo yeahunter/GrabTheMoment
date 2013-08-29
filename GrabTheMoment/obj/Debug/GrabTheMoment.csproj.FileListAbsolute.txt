@@ -1,13 +1,3 @@
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.exe.config
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.exe
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.pdb
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.csprojResolveAssemblyReference.cache
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Properties.Resources.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.csproj.GenerateResource.Cache
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.exe
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form1.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form2.resources
 D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.exe.config
 D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.exe
 D:\User\Documents\repoz\gtm\GrabTheMoment\bin\Debug\GrabTheMoment.pdb
@@ -21,7 +11,16 @@ D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.local.resources
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.FTP.resources
 D:\User\Documents\repoz\gtm\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Dropbox.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.exe.config
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.exe
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\GrabTheMoment.pdb
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\Newtonsoft.Json.dll
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form1.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Form2.resources
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Properties.Resources.resources
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.Dropbox.resources
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.FTP.resources
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.Savemode.Forms.local.resources
-D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\bin\Debug\Newtonsoft.Json.dll
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.csproj.GenerateResource.Cache
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.exe
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.pdb

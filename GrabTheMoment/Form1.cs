@@ -206,5 +206,10 @@ namespace GrabTheMoment
         {
             InterceptKeys.Klipbood();
         }
+
+        private void tesztToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(System.Reflection.Assembly.GetExecutingAssembly().GetType().GUID.ToString());
+        }
     }
 }
