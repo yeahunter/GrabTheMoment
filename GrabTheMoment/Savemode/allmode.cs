@@ -50,10 +50,10 @@ namespace GrabTheMoment.Savemode
 
                     filedata = stream.ToArray();
                 }
-                API.Dropbox.Upload(filedata, neve);
+                API.Dropbox_oauth1.Upload(filedata, neve);
 
                 if (Settings.Default.CopyLink == 3)
-                    InterceptKeys.Klipbood(API.Dropbox.Share(neve));
+                    InterceptKeys.Klipbood(API.Dropbox_oauth1.Share(neve));
             }
             catch (Exception e)
             {

@@ -68,7 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Dropbox.cs" />
+    <Compile Include="API\Dropbox_oauth1.cs" />
     <Compile Include="API\OAuthBase.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GrabTheMoment.API
 {
-    class Dropbox
+    class Dropbox_oauth1
     {
         static Log log = new Log();
         public static string consumerKey = "r9vddy92mkc1sqd";
@@ -49,14 +49,14 @@ namespace GrabTheMoment.API
             var response = request.GetResponse();
 
             var queryString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            log.WriteEvent("Dropbox/requestToken: requestToken: " + queryString);
+            log.WriteEvent("Dropbox_oauth1/requestToken: requestToken: " + queryString);
             Console.WriteLine(queryString);
 
             var parts = queryString.Split('&');
             reqtoken = parts[1].Substring(parts[1].IndexOf('=') + 1);
             reqsecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
 
-            log.WriteEvent("Dropbox/requestToken: reqtoken:" + reqtoken + " reqsecret:" + reqsecret);
+            log.WriteEvent("Dropbox_oauth1/requestToken: reqtoken:" + reqtoken + " reqsecret:" + reqsecret);
         }
 
         public static void Authorize(string token)
@@ -100,12 +100,12 @@ namespace GrabTheMoment.API
                 var reader = new StreamReader(response.GetResponseStream());
                 var accessToken = reader.ReadToEnd();
 
-                log.WriteEvent("Dropbox/AccessToken: accessToken: " + accessToken);
+                log.WriteEvent("Dropbox_oauth1/AccessToken: accessToken: " + accessToken);
 
                 var parts = accessToken.Split('&');
                 var actoken = parts[1].Substring(parts[1].IndexOf('=') + 1);
                 var acsecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
-                log.WriteEvent("Dropbox/AccessToken: actoken: " + actoken + " acsecret: " + acsecret);
+                log.WriteEvent("Dropbox_oauth1/AccessToken: actoken: " + actoken + " acsecret: " + acsecret);
                 eventecske = "OK";
                 Settings.Default.MDropbox_accesstoken = actoken;
                 Settings.Default.MDropbox_accesssecret = acsecret;
@@ -118,13 +118,13 @@ namespace GrabTheMoment.API
                     var resp = (HttpWebResponse)ex.Response;
                     if (resp.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        log.WriteEvent("Dropbox/AccessToken: 401 Unauthorized");
+                        log.WriteEvent("Dropbox_oauth1/AccessToken: 401 Unauthorized");
                         //requestToken();
                         //Authorize();
                     }
                 }
                 else
-                    log.WriteExceptionEvent(ex, "Dropbox/AccessToken: ");
+                    log.WriteExceptionEvent(ex, "Dropbox_oauth1/AccessToken: ");
                 eventecske = "Hiba!";
             }
         }
@@ -158,8 +158,8 @@ namespace GrabTheMoment.API
 
         public static void Upload(byte[] filedata, string fajlneve)
         {
-            log.WriteEvent("Dropbox/Upload: Elindultam");
-            log.WriteEvent("Dropbox/Upload: accesstoken: " + Settings.Default.MDropbox_accesstoken + " accesssecret: " + Settings.Default.MDropbox_accesssecret);
+            log.WriteEvent("Dropbox_oauth1/Upload: Elindultam");
+            log.WriteEvent("Dropbox_oauth1/Upload: accesstoken: " + Settings.Default.MDropbox_accesstoken + " accesssecret: " + Settings.Default.MDropbox_accesssecret);
             fajlneve = UpperCaseUrlEncode(fajlneve);
             var uri = new Uri(new Uri("https://api-content.dropbox.com/1/"),
                 String.Format("files_put/{0}/{1}",
@@ -194,12 +194,12 @@ namespace GrabTheMoment.API
             var reader = new StreamReader(response.GetResponseStream());
             var json = reader.ReadToEnd();
 
-            log.WriteEvent("Dropbox/Upload: json: " + json.ToString());
+            log.WriteEvent("Dropbox_oauth1/Upload: json: " + json.ToString());
         }
 
         public static string Share(string fajlneve)
         {
-            log.WriteEvent("Dropbox/Share: Elindultam");
+            log.WriteEvent("Dropbox_oauth1/Share: Elindultam");
             fajlneve = UpperCaseUrlEncode(fajlneve);
             var uri = new Uri(new Uri("https://api.dropbox.com/1/"),
                 String.Format("shares/{0}/{1}?short_url=true",
@@ -216,7 +216,7 @@ namespace GrabTheMoment.API
 
             JObject o = JObject.Parse(json.ToString());
 
-            log.WriteEvent("Dropbox/Share: fajlneve: " + fajlneve + " rovidurl: " + o["url"].ToString());
+            log.WriteEvent("Dropbox_oauth1/Share: fajlneve: " + fajlneve + " rovidurl: " + o["url"].ToString());
 
             return o["url"].ToString();
         }

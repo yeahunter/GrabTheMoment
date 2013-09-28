@@ -24,3 +24,4 @@ D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMome
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.csproj.GenerateResource.Cache
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.exe
 D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.pdb
+D:\Users\Peti\Dokumentumok\Visual Studio 2012\Projects\GrabTheMoment\GrabTheMoment\obj\Debug\GrabTheMoment.csprojResolveAssemblyReference.cache

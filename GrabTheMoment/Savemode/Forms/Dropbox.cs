@@ -23,13 +23,13 @@ namespace GrabTheMoment.Savemode.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            API.Dropbox.requestToken(ref reqtoken, ref reqsecret);
-            API.Dropbox.Authorize(reqtoken);
+            API.Dropbox_oauth1.requestToken(ref reqtoken, ref reqsecret);
+            API.Dropbox_oauth1.Authorize(reqtoken);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            API.Dropbox.AccessToken(reqtoken, reqsecret, ref eventecske);
+            API.Dropbox_oauth1.AccessToken(reqtoken, reqsecret, ref eventecske);
             label2.Text = eventecske;
             if (eventecske == "OK")
             {
