@@ -29,7 +29,10 @@ namespace GrabTheMoment.Savemode
             {
                 bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
                 if (Settings.Default.CopyLink == 1)
+                {
+                    log.WriteEvent("Form1/MLocal_SavePS: ertek: " + Settings.Default.MLocal_path + "\\" + neve + ".png");
                     InterceptKeys.Klipbood(Settings.Default.MLocal_path + "\\" + neve + ".png");
+                }
             }
             catch (Exception e)
             {

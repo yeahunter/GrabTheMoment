@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
+using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
 {
@@ -41,6 +42,8 @@ namespace GrabTheMoment
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
+            if (Settings.Default.InstantClipboard)
+                Clipboard.SetText(clipboord);
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
             logol.WriteEvent("Klipbood-1arg: " + clipboard);
         }
@@ -98,7 +101,10 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        new System.Threading.Thread(() => screenmode.FullPS()).Start();
+                        System.Threading.Thread fullps = new System.Threading.Thread(() => screenmode.FullPS());
+                        fullps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        fullps.Start();
+                        //new System.Threading.Thread(() => screenmode.FullPS()).Start();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -111,8 +117,11 @@ namespace GrabTheMoment
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        Form2 secondForm = new Form2();
-                        secondForm.Show();
+                        System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
+                        areaps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        areaps.Start();
+                        //Form2 secondForm = new Form2();
+                        //secondForm.Show();
                     }
                 }
 

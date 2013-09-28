@@ -226,5 +226,17 @@ namespace GrabTheMoment.Properties {
                 this["MDropbox_upload"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InstantClipboard {
+            get {
+                return ((bool)(this["InstantClipboard"]));
+            }
+            set {
+                this["InstantClipboard"] = value;
+            }
+        }
     }
 }
