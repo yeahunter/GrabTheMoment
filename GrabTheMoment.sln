@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabTheMoment", "GrabTheMoment\GrabTheMoment.csproj", "{832057F3-0B1B-456E-AC8D-682D266BFADC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gameshot", "Gameshot\Gameshot.csproj", "{1250E2BA-0C74-4BAF-962A-D57D77CD1D08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{832057F3-0B1B-456E-AC8D-682D266BFADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{832057F3-0B1B-456E-AC8D-682D266BFADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{832057F3-0B1B-456E-AC8D-682D266BFADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1250E2BA-0C74-4BAF-962A-D57D77CD1D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1250E2BA-0C74-4BAF-962A-D57D77CD1D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1250E2BA-0C74-4BAF-962A-D57D77CD1D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1250E2BA-0C74-4BAF-962A-D57D77CD1D08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

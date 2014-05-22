@@ -117,11 +117,11 @@ namespace GrabTheMoment
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
-                        areaps.SetApartmentState(System.Threading.ApartmentState.STA);
-                        areaps.Start();
-                        //Form2 secondForm = new Form2();
-                        //secondForm.Show();
+                        //System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
+                        //areaps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        //areaps.Start();
+                        Form2 secondForm = new Form2();
+                        secondForm.Show();
                     }
                 }
 
