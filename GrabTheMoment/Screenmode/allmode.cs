@@ -22,7 +22,6 @@ namespace GrabTheMoment.Screenmode
 {
     class allmode
     {
-        Log log = new Log();
         Savemode.allmode savemode = new Savemode.allmode();
         public string WhatClipboard()
         {
@@ -123,11 +122,11 @@ namespace GrabTheMoment.Screenmode
                 if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                     savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
                 notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-                log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
+                Log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
             }
             catch (Exception e)
             {
-                log.WriteExceptionEvent(e, "Form1/FullPS: ");
+                Log.WriteEvent("Form1/FullPS: ", e);
             }
         }
 
@@ -163,13 +162,13 @@ namespace GrabTheMoment.Screenmode
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-            log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
-            log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
+            Log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
+            Log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
         }
 
         public void AreaPs(Rectangle rectangle)
         {
-            log.WriteEvent("Form1/AreaPs: Meghivodtam!");
+            Log.WriteEvent("Form1/AreaPs: Meghivodtam!");
             string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
             int xcoord = rectangle.X + 1, ycoord = rectangle.Y + 1, windowwidth = rectangle.Width -1, windowheight = rectangle.Height - 1;
             Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
@@ -185,7 +184,7 @@ namespace GrabTheMoment.Screenmode
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
             notifyIcon(5000, "AreaPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-            log.WriteEvent("Form1/AreaPs: " + idodatum + " elkészült!");
+            Log.WriteEvent("Form1/AreaPs: " + idodatum + " elkészült!");
         }
     }
 }

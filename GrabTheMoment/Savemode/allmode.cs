@@ -21,7 +21,6 @@ namespace GrabTheMoment.Savemode
 {
     class allmode
     {
-        Log log = new Log();
 
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
@@ -30,13 +29,13 @@ namespace GrabTheMoment.Savemode
                 bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
                 if (Settings.Default.CopyLink == 1)
                 {
-                    log.WriteEvent("Form1/MLocal_SavePS: ertek: " + Settings.Default.MLocal_path + "\\" + neve + ".png");
+                    Log.WriteEvent("Form1/MLocal_SavePS: ertek: " + Settings.Default.MLocal_path + "\\" + neve + ".png");
                     InterceptKeys.Klipbood(Settings.Default.MLocal_path + "\\" + neve + ".png");
                 }
             }
             catch (Exception e)
             {
-                log.WriteExceptionEvent(e, "Form1/MLocal_SavePS: ");
+                Log.WriteEvent("Form1/MLocal_SavePS: ", e);
             }
         }
 
@@ -60,7 +59,7 @@ namespace GrabTheMoment.Savemode
             }
             catch (Exception e)
             {
-                log.WriteExceptionEvent(e, "Form1/MDropbox_SavePS: ");
+                Log.WriteEvent("Form1/MDropbox_SavePS: ", e);
             }
             //if (!File.Exists(Settings.Default.MDropbox_path))
             //    System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
@@ -87,7 +86,7 @@ namespace GrabTheMoment.Savemode
                 reqStream.Dispose();
 
                 FtpWebResponse resp = (FtpWebResponse)req.GetResponse();
-                log.WriteEvent("Upload File Complete, status " + resp.StatusDescription);
+                Log.WriteEvent("Upload File Complete, status " + resp.StatusDescription);
 
                 resp.Close();
                 resp.Dispose();
@@ -97,7 +96,7 @@ namespace GrabTheMoment.Savemode
             }
             catch (Exception e)
             {
-                log.WriteExceptionEvent(e, "Form1/MFtp_SavePS: ");
+                Log.WriteEvent("Form1/MFtp_SavePS: ",e);
             }
         }
 
@@ -143,7 +142,7 @@ namespace GrabTheMoment.Savemode
                 }
                 catch
                 {
-                    log.WriteEvent("Form1/MImgur_SavePS: Rossz response!");
+                    Log.WriteEvent("Form1/MImgur_SavePS: Rossz response!");
                 }
 
                 if (Settings.Default.CopyLink == 4)
@@ -151,7 +150,7 @@ namespace GrabTheMoment.Savemode
             }
             catch (Exception e)
             {
-                log.WriteExceptionEvent(e, "Form1/MImgur_SavePS: ");
+                Log.WriteEvent("Form1/MImgur_SavePS: ", e);
             }
         }
     }

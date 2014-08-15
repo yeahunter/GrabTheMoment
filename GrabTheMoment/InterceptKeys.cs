@@ -18,7 +18,6 @@ namespace GrabTheMoment
 
         private static Form1 windowsform = null;
         private static Screenmode.allmode screenmode = null;
-        private static Log logol = new Log();
         private static string clipboard = null;
 
         public static void Hook(Form1 formegy)
@@ -33,10 +32,10 @@ namespace GrabTheMoment
             if (clipboard != null && windowsform.lastLinkToolStripMenuItem.Enabled)
             {
                 Clipboard.SetText(clipboard);
-                logol.WriteEvent("Klipbood-0arg: " + clipboard);
+                Log.WriteEvent("Klipbood-0arg: " + clipboard);
             }
             else
-                logol.WriteEvent("Klipbood-0arg ures clipboard valtozo");
+                Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
         }
 
         public static void Klipbood(string clipboord)
@@ -45,7 +44,7 @@ namespace GrabTheMoment
             if (Settings.Default.InstantClipboard)
                 Clipboard.SetText(clipboord);
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
-            logol.WriteEvent("Klipbood-1arg: " + clipboard);
+            Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
         public static Form1 windowsformoscucc

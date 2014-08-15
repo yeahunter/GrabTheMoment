@@ -22,10 +22,10 @@ namespace GrabTheMoment
 {
     public partial class Form1 : Form
     {
-        Log log = new Log();
         public Form1()
         {
             InitializeComponent();
+            Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
             localToolStripMenuItem.Enabled      = checkBox5.Enabled = checkBox1.Checked = Settings.Default.MLocal;
             fTPToolStripMenuItem.Enabled        = checkBox6.Enabled = checkBox2.Checked = Settings.Default.MFtp;
             dropboxToolStripMenuItem.Enabled    = checkBox7.Enabled = checkBox3.Checked = Settings.Default.MDropbox;

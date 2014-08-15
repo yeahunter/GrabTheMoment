@@ -8,37 +8,44 @@ using System.Windows.Forms;
 
 namespace GrabTheMoment
 {
-    class Log
+    public static class Log
     {
-        public void WriteEvent(string Information)
+        public class EmptyPathException : SystemException
         {
-
-            try
-            {
-#if DEBUG
-                StreamWriter writer = new StreamWriter(string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM")), true, Encoding.Unicode);
-                string CurrentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                writer.WriteLine("[" + CurrentDateTime + "] INFO: " + Information);
-                writer.WriteLine("");
-                writer.Close();
-#endif
-            }
-            catch { }
+            public EmptyPathException(string message) : base(message) { }
         }
-        public void WriteExceptionEvent(Exception e, string AdditionalInformation)
+
+        private static string _path = String.Empty;
+
+        public static string LogPath
         {
-            try
-            {
+            set { _path = value; }
+        }
+
+        public static void WriteEvent(string Information, Exception e = null)
+        {
 #if DEBUG
-                StreamWriter writer = new StreamWriter(string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM")), true, Encoding.Unicode);
-                string CurrentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                writer.WriteLine("[" + CurrentDateTime + "] ERROR: " + AdditionalInformation);
-                writer.WriteLine(e.ToString());
-                writer.WriteLine("");
-                writer.Close();
+            if (_path == String.Empty)
+                throw new EmptyPathException(String.Format("{0}: Üres a path.", String.Empty /* Itt majd valami jo cucc lesz */));
+
+            string mappautvonal = Path.GetDirectoryName(_path);
+            string CurrentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            if ((mappautvonal.Length > 0) && (!Directory.Exists(mappautvonal)))
+                Directory.CreateDirectory(mappautvonal);
+
+            StreamWriter writer = new StreamWriter(_path, true, Encoding.Unicode);
+            string sor = String.Empty;
+
+            if (Information != String.Empty && e == null)
+                sor = String.Format("[{0}] [{1}] INFO: {2}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, Information.Replace(System.Environment.NewLine, " @ "));
+            else if (Information != String.Empty && e != null)
+                sor = String.Format("[{0}] [{1}] INFO: {2} | ERROR:{3}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, Information.Replace(System.Environment.NewLine, " @ "), e.ToString().Replace(System.Environment.NewLine, " @ "));
+            else if (Information == String.Empty && e != null)
+                sor = String.Format("[{0}] [{1}] ERROR: {2}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, e.ToString().Replace(System.Environment.NewLine, " @ "));
+
+            writer.WriteLine(sor);
+            writer.Close();
 #endif
-            }
-            catch { }
         }
     }
 }
