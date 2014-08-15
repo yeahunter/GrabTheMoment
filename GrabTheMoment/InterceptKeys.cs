@@ -13,8 +13,10 @@ namespace GrabTheMoment
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101; // Nemkezel több gombot egyszerre!
         private const int WM_SYSKEYDOWN = 0x0104; // Az Alt-hoz kellett!
+#if !__MonoCS__
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+#endif
 
         private static Form1 windowsform = null;
         private static Screenmode.allmode screenmode = null;
@@ -25,7 +27,9 @@ namespace GrabTheMoment
         {
             windowsform = formegy;
             screenmode = new Screenmode.allmode();
+#if !__MonoCS__
             _hookID = SetHook(_proc);
+#endif
         }
 
         public static void Klipbood()
