@@ -8,7 +8,6 @@ namespace GrabTheMoment
 {
     public partial class Form2 : Form
     {
-        private Screenmode.allmode smode;
         private System.Drawing.Graphics formGraphics;
         private bool isDown = false;
         private int initialX;
@@ -18,9 +17,8 @@ namespace GrabTheMoment
         public Form2()
         {
             InitializeComponent();
-            smode = InterceptKeys.smode;
-            smode.mekkoraazxesazy();
-            WinApi.SetWinFullScreen(this.Handle, smode.x, smode.y);
+            Screenmode.allmode.mekkoraazxesazy();
+            WinApi.SetWinFullScreen(this.Handle, Screenmode.allmode.x, Screenmode.allmode.y);
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -76,7 +74,7 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new System.Threading.Thread(() => smode.AreaPs(rect)).Start();
+            new System.Threading.Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
             this.Close();
         }
     }

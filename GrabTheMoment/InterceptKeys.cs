@@ -17,13 +17,11 @@ namespace GrabTheMoment
         private static IntPtr _hookID = IntPtr.Zero;
 
         private static Form1 windowsform = null;
-        private static Screenmode.allmode screenmode = null;
         private static string clipboard = null;
 
         public static void Hook(Form1 formegy)
         {
             windowsform = formegy;
-            screenmode = new Screenmode.allmode();
             _hookID = SetHook(_proc);
         }
 
@@ -52,12 +50,6 @@ namespace GrabTheMoment
         public static Form1 windowsformoscucc
         {
             get { return windowsform; }
-        }
-
-        public static Screenmode.allmode smode
-        {
-            get { return screenmode; }
-            set { screenmode = value; }
         }
 
 #if !__MonoCS__
@@ -93,7 +85,7 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        System.Threading.Thread fullps = new System.Threading.Thread(() => screenmode.FullPS());
+                        System.Threading.Thread fullps = new System.Threading.Thread(() => Screenmode.allmode.FullPS());
                         fullps.SetApartmentState(System.Threading.ApartmentState.STA);
                         fullps.Start();
                         //new System.Threading.Thread(() => screenmode.FullPS()).Start();
@@ -104,7 +96,7 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        new System.Threading.Thread(() => screenmode.WindowPs(rect)).Start();
+                        new System.Threading.Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
