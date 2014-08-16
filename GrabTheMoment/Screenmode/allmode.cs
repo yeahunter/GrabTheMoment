@@ -1,31 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows;
-using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
-using System.IO;
-using System.Net;
-using System.Web;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace GrabTheMoment.Screenmode
 {
     class allmode
     {
-        Savemode.allmode savemode = new Savemode.allmode();
+        private Savemode.allmode savemode = new Savemode.allmode();
+        public int x, y;
+
         public string WhatClipboard()
         {
-            string visszater = "";
+            string visszater = string.Empty;
+
             switch (Settings.Default.CopyLink)
             {
                 case 0:
@@ -47,14 +35,13 @@ namespace GrabTheMoment.Screenmode
                     visszater = "???Copy";
                     break;
             }
+
             return visszater;
         }
 
-        public int x, y;
-
         public void mekkoraazxesazy()
         {
-            foreach (Screen asztal in System.Windows.Forms.Screen.AllScreens)
+            foreach (var asztal in Screen.AllScreens)
             {
                 int iksz = asztal.Bounds.X;
                 if (asztal.Bounds.X < x)
@@ -68,12 +55,12 @@ namespace GrabTheMoment.Screenmode
         public void DrawWatermark(Graphics gfx)
         {
             int mekkorabetuk = (int)(Math.Pow(gfx.VisibleClipBounds.Width * gfx.VisibleClipBounds.Height, (1.0 / 3.3)));
-            Font font = new Font("Arial", mekkorabetuk, FontStyle.Bold, GraphicsUnit.Pixel);
-            Color color = Color.FromArgb(25, 127, 127, 127);
-            SolidBrush brush = new SolidBrush(color);
+            var font = new Font("Arial", mekkorabetuk, FontStyle.Bold, GraphicsUnit.Pixel);
+            var color = Color.FromArgb(25, 127, 127, 127);
+            var brush = new SolidBrush(color);
 
-            String theString = "gtm.peti.info";
-            SizeF sz = gfx.VisibleClipBounds.Size;
+            string theString = "gtm.peti.info";
+            var sz = gfx.VisibleClipBounds.Size;
             gfx.TranslateTransform(sz.Width / 2, sz.Height / 2);
             float fok = -45;
             fok *= sz.Height / sz.Width;
@@ -88,7 +75,7 @@ namespace GrabTheMoment.Screenmode
 
         public void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
-            Form1 fone = InterceptKeys.windowsformoscucc;
+            var fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
         }
 
@@ -102,25 +89,29 @@ namespace GrabTheMoment.Screenmode
 
                 mekkoraazxesazy();
 
-                Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
-                Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
+                var bmpScreenShot = new Bitmap(screenwidth, screenheight);
+                var gfx = Graphics.FromImage((Image)bmpScreenShot);
                 gfx.CopyFromScreen(x, y, 0, 0, new Size(screenwidth, screenheight));
 
                 DrawWatermark(gfx);
 
                 if (Settings.Default.MLocal)
                     savemode.MLocal_SavePS(bmpScreenShot, idodatum);
+
                 if (Settings.Default.MFtp)
                 {
                     //System.Threading.Thread.Sleep(5000);
                     savemode.MFtp_SavePS(bmpScreenShot, idodatum);
                 }
+
                 //if (Settings.Default.MDropbox)
                 //    MDropbox_SavePS(bmpScreenShot, idodatum);
                 if (Settings.Default.MImgur)
                     savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+
                 if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                     savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
+
                 notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
                 Log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
             }
@@ -137,6 +128,7 @@ namespace GrabTheMoment.Screenmode
             int ycoord = rectangle.Y;
             int windowwidth = rectangle.Width - xcoord;
             int windowheight = rectangle.Height - ycoord;
+
             if (xcoord == -8 && ycoord == -8)
             {
                 xcoord += 8;
@@ -144,23 +136,28 @@ namespace GrabTheMoment.Screenmode
                 windowwidth -= 16;
                 windowheight -= 16;
             }
-            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
+
+            var bmpScreenShot = new Bitmap(windowwidth, windowheight);
+            var gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
 
             DrawWatermark(gfx);
 
             if (Settings.Default.MLocal)
                 savemode.MLocal_SavePS(bmpScreenShot, idodatum);
+
             if (Settings.Default.MFtp)
             {
                 //System.Threading.Thread.Sleep(5000);
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
             }
+
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
+
             notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             Log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
             Log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
@@ -171,18 +168,23 @@ namespace GrabTheMoment.Screenmode
             Log.WriteEvent("Form1/AreaPs: Meghivodtam!");
             string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
             int xcoord = rectangle.X + 1, ycoord = rectangle.Y + 1, windowwidth = rectangle.Width -1, windowheight = rectangle.Height - 1;
-            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
+            var bmpScreenShot = new Bitmap(windowwidth, windowheight);
+            var gfx = Graphics.FromImage((Image)bmpScreenShot);
             gfx.CopyFromScreen(x + xcoord, y + ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
             DrawWatermark(gfx);
+
             if (Settings.Default.MLocal)
                 savemode.MLocal_SavePS(bmpScreenShot, idodatum);
+
             if (Settings.Default.MFtp)
                 savemode.MFtp_SavePS(bmpScreenShot, idodatum);
+
             if (Settings.Default.MImgur)
                 savemode.MImgur_SavePS(bmpScreenShot, idodatum);
+
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 savemode.MDropbox_SavePS(bmpScreenShot, idodatum);
+
             notifyIcon(5000, "AreaPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
             Log.WriteEvent("Form1/AreaPs: " + idodatum + " elkészült!");
         }

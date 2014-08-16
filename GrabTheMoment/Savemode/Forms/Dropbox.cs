@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
@@ -13,8 +6,10 @@ namespace GrabTheMoment.Savemode.Forms
 {
     public partial class Dropbox : Form
     {
+        private string reqtoken = null;
+        private string reqsecret = null;
+        private string eventecske = null;
 
-        string reqtoken = null, reqsecret = null, eventecske = null;
         public Dropbox()
         {
             InitializeComponent();

@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.Threading;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace GrabTheMoment
 {
     static class Program
     {
-        static Form1 windowsform;
-        static string AppGUID = System.Reflection.Assembly.GetExecutingAssembly().GetType().GUID.ToString();
+        static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
+        static Form1 windowsform;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
