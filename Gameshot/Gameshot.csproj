@@ -38,6 +38,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DllImports.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
