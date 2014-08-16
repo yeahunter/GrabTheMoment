@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 namespace GrabTheMoment
 {
     public partial class Form2 : Form
     {
-        Screenmode.allmode smode;
-        System.Drawing.Graphics formGraphics;
-        bool isDown = false;
-        int initialX;
-        int initialY;
-        Rectangle rect;
+        private Screenmode.allmode smode;
+        private Graphics formGraphics;
+        private bool isDown = false;
+        private int initialX;
+        private int initialY;
+        private Rectangle rect;
 
         public Form2()
         {
@@ -27,8 +22,8 @@ namespace GrabTheMoment
             smode.mekkoraazxesazy();
             WinApi.SetWinFullScreen(this.Handle, smode.x, smode.y);
             this.Activate();
-            this.SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, true);
-            this.BackColor = System.Drawing.Color.Transparent;
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.BackColor = Color.Transparent;
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
         }
@@ -55,8 +50,8 @@ namespace GrabTheMoment
                 //this.Invalidate();
                 //this.Refresh();
                 float penwidth = 1;
-                Pen drwaPen = new Pen(ForeColor, penwidth);
-                SolidBrush brush = new SolidBrush(Color.Red);
+                var drwaPen = new Pen(ForeColor, penwidth);
+                var brush = new SolidBrush(Color.Red);
                 //Pen backPen = new Pen(Color.Red, penwidth);
                 int width = e.X - initialX;
                 int height = e.Y - initialY;
@@ -66,7 +61,7 @@ namespace GrabTheMoment
                                Math.Abs(height));
 
                 
-                Rectangle inner = rect;
+                var inner = rect;
                 inner.X += (int)penwidth;
                 inner.Y += (int)penwidth;
                 inner.Width -= (int)penwidth;

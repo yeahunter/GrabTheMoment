@@ -41,30 +41,23 @@ namespace GrabTheMoment
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
+
             if (Settings.Default.InstantClipboard)
                 Clipboard.SetText(clipboord);
+
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
             Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
         public static Form1 windowsformoscucc
         {
-            get
-            {
-                return windowsform;
-            }
+            get { return windowsform; }
         }
 
         public static Screenmode.allmode smode
         {
-            get
-            {
-                return screenmode;
-            }
-            set
-            {
-                screenmode = value;
-            }
+            get { return screenmode; }
+            set { screenmode = value; }
         }
 
 #if !__MonoCS__

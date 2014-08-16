@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Collections.Generic;
-using System.Text;
 using System.Web;
+using System.Text;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace GrabTheMoment.API
 {
-    public class OAuthBase
+    class OAuthBase
     {
-
         /// <summary>
         /// Provides a predefined set of algorithms that are supported officially by the protocol
         /// </summary>
@@ -54,14 +53,7 @@ namespace GrabTheMoment.API
 
             public int Compare(QueryParameter x, QueryParameter y)
             {
-                if (x.Name == y.Name)
-                {
-                    return string.Compare(x.Value, y.Value);
-                }
-                else
-                {
-                    return string.Compare(x.Name, y.Name);
-                }
+                return x.Name == y.Name ? string.Compare(x.Value, y.Value) : string.Compare(x.Name, y.Name);
             }
 
             #endregion
@@ -100,14 +92,10 @@ namespace GrabTheMoment.API
         private string ComputeHash(HashAlgorithm hashAlgorithm, string data)
         {
             if (hashAlgorithm == null)
-            {
                 throw new ArgumentNullException("hashAlgorithm");
-            }
 
             if (string.IsNullOrEmpty(data))
-            {
                 throw new ArgumentNullException("data");
-            }
 
             byte[] dataBuffer = System.Text.Encoding.ASCII.GetBytes(data);
             byte[] hashBytes = hashAlgorithm.ComputeHash(dataBuffer);
@@ -123,11 +111,9 @@ namespace GrabTheMoment.API
         private List<QueryParameter> GetQueryParameters(string parameters)
         {
             if (parameters.StartsWith("?"))
-            {
                 parameters = parameters.Remove(0, 1);
-            }
 
-            List<QueryParameter> result = new List<QueryParameter>();
+            var result = new List<QueryParameter>();
 
             if (!string.IsNullOrEmpty(parameters))
             {
@@ -160,7 +146,7 @@ namespace GrabTheMoment.API
         /// <returns>Returns a Url encoded string</returns>
         protected string UrlEncode(string value)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
             foreach (char symbol in value)
             {
@@ -184,11 +170,11 @@ namespace GrabTheMoment.API
         /// <returns>a string representing the normalized parameters</returns>
         protected string NormalizeRequestParameters(IList<QueryParameter> parameters)
         {
-            StringBuilder sb = new StringBuilder();
-            QueryParameter p = null;
+            var sb = new StringBuilder();
+
             for (int i = 0; i < parameters.Count; i++)
             {
-                p = parameters[i];
+                var p = parameters[i];
                 sb.AppendFormat("{0}={1}", p.Name, p.Value);
 
                 if (i < parameters.Count - 1)
@@ -240,7 +226,7 @@ namespace GrabTheMoment.API
             normalizedUrl = null;
             normalizedRequestParameters = null;
 
-            List<QueryParameter> parameters = GetQueryParameters(url.Query);
+            var parameters = GetQueryParameters(url.Query);
             parameters.Add(new QueryParameter(OAuthVersionKey, OAuthVersion));
             parameters.Add(new QueryParameter(OAuthNonceKey, nonce));
             parameters.Add(new QueryParameter(OAuthTimestampKey, timeStamp));
@@ -255,14 +241,14 @@ namespace GrabTheMoment.API
             parameters.Sort(new QueryParameterComparer());
 
             normalizedUrl = string.Format("{0}://{1}", url.Scheme, url.Host);
+
             if (!((url.Scheme == "http" && url.Port == 80) || (url.Scheme == "https" && url.Port == 443)))
-            {
                 normalizedUrl += ":" + url.Port;
-            }
+
             normalizedUrl += url.AbsolutePath;
             normalizedRequestParameters = NormalizeRequestParameters(parameters);
 
-            StringBuilder signatureBase = new StringBuilder();
+            var signatureBase = new StringBuilder();
             signatureBase.AppendFormat("{0}&", httpMethod.ToUpper());
             signatureBase.AppendFormat("{0}&", UrlEncode(normalizedUrl));
             signatureBase.AppendFormat("{0}", UrlEncode(normalizedRequestParameters));
@@ -337,7 +323,7 @@ namespace GrabTheMoment.API
         public virtual string GenerateTimeStamp()
         {
             // Default implementation of UNIX time of the current UTC time
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
 
@@ -350,6 +336,5 @@ namespace GrabTheMoment.API
             // Just a simple implementation of a random number between 123400 and 9999999
             return random.Next(123400, 9999999).ToString();
         }
-
     }
 }

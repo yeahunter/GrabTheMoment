@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using GrabTheMoment.Properties;
+using System.Text;
+using System.Diagnostics;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using GrabTheMoment.Properties;
 
 namespace GrabTheMoment.API
 {
@@ -23,7 +21,7 @@ namespace GrabTheMoment.API
             var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
 
             // Generate a signature
-            OAuthBase oAuth = new OAuthBase();
+            var oAuth = new OAuthBase();
             string nonce = oAuth.GenerateNonce();
             string timeStamp = oAuth.GenerateTimeStamp();
             string parameters;
@@ -34,7 +32,7 @@ namespace GrabTheMoment.API
 
             signature = HttpUtility.UrlEncode(signature);
 
-            StringBuilder requestUri = new StringBuilder(uri.ToString());
+            var requestUri = new StringBuilder(uri.ToString());
             requestUri.AppendFormat("?oauth_consumer_key={0}&", consumerKey);
             requestUri.AppendFormat("oauth_nonce={0}&", nonce);
             requestUri.AppendFormat("oauth_timestamp={0}&", timeStamp);
@@ -70,9 +68,7 @@ namespace GrabTheMoment.API
             try
             {
                 var uri = "https://api.dropbox.com/1/oauth/access_token";
-
-                OAuthBase oAuth = new OAuthBase();
-
+                var oAuth = new OAuthBase();
                 var nonce = oAuth.GenerateNonce();
                 var timeStamp = oAuth.GenerateTimeStamp();
                 string parameters;
@@ -124,6 +120,7 @@ namespace GrabTheMoment.API
                 }
                 else
                     Log.WriteEvent("Dropbox_oauth1/AccessToken: ", ex);
+
                 eventecske = "Hiba!";
             }
         }
@@ -131,6 +128,7 @@ namespace GrabTheMoment.API
         private static string UpperCaseUrlEncode(string s)
         {
             char[] temp = HttpUtility.UrlEncode(s).ToCharArray();
+
             for (int i = 0; i < temp.Length - 2; i++)
             {
                 if (temp[i] == '%')
@@ -149,9 +147,8 @@ namespace GrabTheMoment.API
 
             var data = new StringBuilder(new string(temp));
             foreach (string character in values.Keys)
-            {
                 data.Replace(character, values[character]);
-            }
+
             return data.ToString();
         }
 
@@ -164,7 +161,7 @@ namespace GrabTheMoment.API
                 String.Format("files_put/{0}/{1}",
                 "sandbox", fajlneve));
 
-            OAuthBase oAuth = new OAuthBase();
+            var oAuth = new OAuthBase();
             var nonce = oAuth.GenerateNonce();
             var timestamp = oAuth.GenerateTimeStamp();
             string parameters;
@@ -212,8 +209,7 @@ namespace GrabTheMoment.API
             var response = request.GetResponse();
             var reader = new StreamReader(response.GetResponseStream());
             var json = reader.ReadToEnd();
-
-            JObject o = JObject.Parse(json.ToString());
+            var o = JObject.Parse(json.ToString());
 
             Log.WriteEvent("Dropbox_oauth1/Share: fajlneve: " + fajlneve + " rovidurl: " + o["url"].ToString());
 
@@ -224,7 +220,7 @@ namespace GrabTheMoment.API
         {
             var uri = new Uri("https://api.dropbox.com/1/account/info");
 
-            OAuthBase oAuth = new OAuthBase();
+            var oAuth = new OAuthBase();
             var nonce = oAuth.GenerateNonce();
             var timestamp = oAuth.GenerateTimeStamp();
             string parameters;
@@ -236,7 +232,7 @@ namespace GrabTheMoment.API
                 nonce, OAuthBase.SignatureTypes.HMACSHA1,
                 out normalizedUrl, out parameters);
 
-            var requestUri = String.Format("{0}?{1}&oauth_signature={2}",
+            var requestUri = string.Format("{0}?{1}&oauth_signature={2}",
                 normalizedUrl, parameters, HttpUtility.UrlEncode(signature));
 
             var request = (HttpWebRequest)WebRequest.Create(requestUri);
@@ -246,7 +242,6 @@ namespace GrabTheMoment.API
             var response = request.GetResponse();
             var reader = new StreamReader(response.GetResponseStream());
             var json = reader.ReadToEnd();
-
 
             Console.WriteLine(HttpUtility.HtmlDecode(json.ToString()));
             Console.ReadLine();

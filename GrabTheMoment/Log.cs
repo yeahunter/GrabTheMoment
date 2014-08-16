@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Windows.Forms;
+using System.Text;
 
 namespace GrabTheMoment
 {
-    public static class Log
+    static class Log
     {
         public class EmptyPathException : SystemException
         {
@@ -33,7 +29,7 @@ namespace GrabTheMoment
             if ((mappautvonal.Length > 0) && (!Directory.Exists(mappautvonal)))
                 Directory.CreateDirectory(mappautvonal);
 
-            StreamWriter writer = new StreamWriter(_path, true, Encoding.Unicode);
+            var writer = new StreamWriter(_path, true, Encoding.Unicode);
             string sor = String.Empty;
 
             if (Information != String.Empty && e == null)
