@@ -1,36 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
 using System.IO;
 using System.Net;
 using System.Web;
-using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace GrabTheMoment.Savemode
 {
     class allmode
     {
-
         public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
-                bmpScreenShot.Save(Settings.Default.MLocal_path + "\\" + neve + ".png", ImageFormat.Png);
+                string path = Path.Combine(Settings.Default.MLocal_path, neve + ".png");
+                bmpScreenShot.Save(path, ImageFormat.Png);
                 if (Settings.Default.CopyLink == 1)
                 {
-                    Log.WriteEvent("Form1/MLocal_SavePS: ertek: " + Settings.Default.MLocal_path + "\\" + neve + ".png");
-                    InterceptKeys.Klipbood(Settings.Default.MLocal_path + "\\" + neve + ".png");
+                    Log.WriteEvent("Form1/MLocal_SavePS: ertek: " + path);
+                    InterceptKeys.Klipbood(path);
                 }
             }
             catch (Exception e)
@@ -45,6 +36,7 @@ namespace GrabTheMoment.Savemode
             {
                 neve = neve + ".png";
                 byte[] filedata = new byte[0];
+
                 using (MemoryStream stream = new MemoryStream())
                 {
                     bmpScreenShot.Save(stream, ImageFormat.Png);
@@ -52,6 +44,7 @@ namespace GrabTheMoment.Savemode
 
                     filedata = stream.ToArray();
                 }
+
                 API.Dropbox_oauth1.Upload(filedata, neve);
 
                 if (Settings.Default.CopyLink == 3)
@@ -71,8 +64,9 @@ namespace GrabTheMoment.Savemode
             try
             {
                 neve = neve + ".png";
-                string ezittapath = Settings.Default.MFtp_path + "/" + neve;
-                FtpWebRequest req = (FtpWebRequest)WebRequest.Create("ftp://" + Settings.Default.MFtp_address + "/" + Settings.Default.MFtp_remotedir + "/" + neve);
+                Uri HttpLink = new Uri(String.Format("{0}/{1}", Settings.Default.MFtp_path, neve));
+                Uri FtpLink = new Uri(String.Format("ftp://{0}/{1}/{2}", Settings.Default.MFtp_address, Settings.Default.MFtp_remotedir, neve));
+                FtpWebRequest req = (FtpWebRequest)WebRequest.Create(FtpLink);
                 req.UseBinary = true;
                 //req.UsePassive = true;
                 req.KeepAlive = false;
@@ -80,19 +74,21 @@ namespace GrabTheMoment.Savemode
                 req.Credentials = new NetworkCredential(Settings.Default.MFtp_user, Settings.Default.MFtp_password);
                 byte[] filedata = new byte[0];
                 req.ContentLength = filedata.Length;
-                Stream reqStream = req.GetRequestStream();
-                reqStream.Write(filedata, 0, filedata.Length);
-                reqStream.Close();
-                reqStream.Dispose();
 
-                FtpWebResponse resp = (FtpWebResponse)req.GetResponse();
-                Log.WriteEvent("Upload File Complete, status " + resp.StatusDescription);
+                using (Stream reqStream = req.GetRequestStream())
+                {
+                    reqStream.Write(filedata, 0, filedata.Length);
+                    reqStream.Close();
+                }
 
-                resp.Close();
-                resp.Dispose();
+                using (FtpWebResponse resp = (FtpWebResponse)req.GetResponse())
+                {
+                    Log.WriteEvent("Upload File Complete, status " + resp.StatusDescription);
+                    resp.Close();
+                }
 
                 if (Settings.Default.CopyLink == 2)
-                    InterceptKeys.Klipbood(ezittapath);
+                    InterceptKeys.Klipbood(HttpLink.OriginalString);
             }
             catch (Exception e)
             {
@@ -106,7 +102,7 @@ namespace GrabTheMoment.Savemode
             {
                 neve = neve + ".png";
 
-                string holakep = "";
+                string holakep = string.Empty;
 
                 byte[] filedata = new byte[0];
                 using (MemoryStream stream = new MemoryStream())

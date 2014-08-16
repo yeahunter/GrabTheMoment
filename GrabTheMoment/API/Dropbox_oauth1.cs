@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using GrabTheMoment.Properties;
 using Newtonsoft.Json;
@@ -124,6 +122,7 @@ namespace GrabTheMoment.API
                 }
                 else
                     Log.WriteEvent("Dropbox_oauth1/AccessToken: ", ex);
+
                 eventecske = "Hiba!";
             }
         }
@@ -131,6 +130,7 @@ namespace GrabTheMoment.API
         private static string UpperCaseUrlEncode(string s)
         {
             char[] temp = HttpUtility.UrlEncode(s).ToCharArray();
+
             for (int i = 0; i < temp.Length - 2; i++)
             {
                 if (temp[i] == '%')
@@ -148,10 +148,12 @@ namespace GrabTheMoment.API
             };
 
             var data = new StringBuilder(new string(temp));
+
             foreach (string character in values.Keys)
             {
                 data.Replace(character, values[character]);
             }
+
             return data.ToString();
         }
 
@@ -184,6 +186,7 @@ namespace GrabTheMoment.API
             request.KeepAlive = true;
 
             request.ContentLength = filedata.Length;
+
             using (var requestStream = request.GetRequestStream())
             {
                 requestStream.Write(filedata, 0, filedata.Length);
