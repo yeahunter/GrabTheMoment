@@ -40,12 +40,16 @@ namespace GrabTheMoment
 
             if (futhatoke)
             {
+#if __MonoCS__
                 Gtk.Application.Init();
+#endif
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 windowsform = new Form1();
                 InterceptKeys.Hook(windowsform);
+#if __MonoCS__
                 new Thread(() => Gtk.Application.Run()).Start();
+#endif
                 Application.Run(windowsform);
             }
         }
