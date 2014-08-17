@@ -155,6 +155,10 @@ namespace GrabTheMoment
         private static void Specialsdf(object o, SpecialKey key)
         {
             Log.WriteEvent("Hotkey Pressed!");
+            // Csak asztalt lehet vele egyenlőre fényképezni
+            System.Threading.Thread fullps = new System.Threading.Thread(() => screenmode.FullPS());
+            fullps.SetApartmentState(System.Threading.ApartmentState.STA);
+            fullps.Start();
         }
 #endif
     }
