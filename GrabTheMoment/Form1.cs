@@ -10,7 +10,9 @@ namespace GrabTheMoment
 {
     public partial class Form1 : Form
     {
+#if __MonoCS__
         delegate void SetVisibleCallback(bool Visible);
+#endif
 
         public Form1()
         {
@@ -41,6 +43,7 @@ namespace GrabTheMoment
             }
         }
 
+#if __MonoCS__
         // Külön szálon való futtathatóság miatt kell.
         public void SetVisible(bool Visible)
         {
@@ -58,7 +61,6 @@ namespace GrabTheMoment
             }
         }
 
-#if __MonoCS__
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Gtk.Application.Quit();
