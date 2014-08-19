@@ -2,6 +2,9 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
 
 namespace GrabTheMoment
 {

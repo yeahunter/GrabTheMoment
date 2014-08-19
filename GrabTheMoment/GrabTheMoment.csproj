@@ -158,10 +158,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Linux\TrayIcon.cs" />
-    <None Condition="'$(OS)' != 'Windows_NT'"  Include="Resources\atk-sharp.dll.config">
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\atk-sharp.dll.config">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Linux\SpecialKey.cs" />
+    <Compile Include="Linux\SpecialKeyPressedHandler.cs" />
+    <Compile Include="Linux\SpecialKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

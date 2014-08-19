@@ -3,7 +3,7 @@ using System;
 using Gtk;
 using Gdk;
 
-namespace GrabTheMoment
+namespace GrabTheMoment.Linux
 {
     public class TrayIcon
     {
