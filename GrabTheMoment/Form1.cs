@@ -52,17 +52,17 @@ namespace GrabTheMoment
             }
         }
 
-
+#if !__MonoCS__
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            /*if (this.WindowState == FormWindowState.Minimized)
+            if (this.WindowState == FormWindowState.Minimized)
             {
                 //this.Show();
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
                 //this.Activate();
-            }*/
+            }
             //else
             //{
             //    this.ShowInTaskbar = false;
@@ -72,24 +72,29 @@ namespace GrabTheMoment
 
             //}
         }
+#endif
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+#if !__MonoCS__
         private void notifyIcon1_MouseUp(object sender, MouseEventArgs e)
         {
-            //if (e.Button == MouseButtons.Right)
-            //    contextMenuStrip1.Show(Control.MousePosition);
+            if (e.Button == MouseButtons.Right)
+                contextMenuStrip1.Show(Control.MousePosition);
         }
+#endif
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                //this.ShowInTaskbar = false;
-                //notifyIcon1.Visible = true;
+#if !__MonoCS__
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
+#endif
                 //this.Hide();
                 //this.WindowState = FormWindowState.Normal;
             }
@@ -200,15 +205,16 @@ namespace GrabTheMoment
                 Settings.Default.CopyLink = 0;
             Settings.Default.Save();
         }
-
+#if !__MonoCS__
         private void lastLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //InterceptKeys.Klipbood();
+            InterceptKeys.Klipbood();
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
-            //InterceptKeys.Klipbood();
+            InterceptKeys.Klipbood();
         }
+#endif
     }
 }

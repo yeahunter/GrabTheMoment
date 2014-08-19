@@ -43,6 +43,7 @@ namespace GrabTheMoment
 
         public static void Klipbood()
         {
+#if !__MonoCS__
             if (clipboard != null && windowsform.lastLinkToolStripMenuItem.Enabled)
             {
                 Clipboard.SetText(clipboard);
@@ -50,6 +51,7 @@ namespace GrabTheMoment
             }
             else
                 Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
+#endif
         }
 
         public static void Klipbood(string clipboord)
@@ -58,8 +60,9 @@ namespace GrabTheMoment
 
             if (Settings.Default.InstantClipboard)
                 Clipboard.SetText(clipboord);
-
+#if !__MonoCS__
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
+#endif
             Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 

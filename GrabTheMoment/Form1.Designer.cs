@@ -30,9 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+#if !__MonoCS__
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+#endif
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+#if !__MonoCS__
             this.lastLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+#endif
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,29 +60,35 @@
             // 
             // notifyIcon1
             // 
-            //this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            //this.notifyIcon1.Icon = new System.Drawing.Icon("oldyeahico.ico");
-            //this.notifyIcon1.Text = "Grab The Moment - Developed by Invisible © 2013";
-            //this.notifyIcon1.Visible = true;
-            //this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
-            //this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
-            //this.notifyIcon1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseUp);
+#if !__MonoCS__
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = new System.Drawing.Icon("oldyeahico.ico");
+            this.notifyIcon1.Text = "Grab The Moment - Developed by Invisible © 2013";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            this.notifyIcon1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseUp);
+#endif
             // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+#if !__MonoCS__
             this.lastLinkToolStripMenuItem,
+#endif
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
             // 
             // lastLinkToolStripMenuItem
             // 
+#if !__MonoCS__
             this.lastLinkToolStripMenuItem.Enabled = false;
             this.lastLinkToolStripMenuItem.Name = "lastLinkToolStripMenuItem";
             this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lastLinkToolStripMenuItem.Text = "Last link";
             this.lastLinkToolStripMenuItem.Click += new System.EventHandler(this.lastLinkToolStripMenuItem_Click);
+#endif
             // 
             // exitToolStripMenuItem
             // 
@@ -286,7 +296,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox1;
+#if !__MonoCS__
         public System.Windows.Forms.NotifyIcon notifyIcon1;
+#endif
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.ToolStripMenuItem fTPToolStripMenuItem;
@@ -298,7 +310,9 @@
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox8;
+#if !__MonoCS__
         public System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
+#endif
     }
 }
 

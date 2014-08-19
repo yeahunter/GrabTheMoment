@@ -49,9 +49,10 @@ namespace GrabTheMoment
                 Application.SetCompatibleTextRenderingDefault(false);
                 windowsform = new Form1();
                 InterceptKeys.Hook(windowsform);
-
+#if !__MonoCS__
+                Application.Run(windowsform);
+#else
                 new Thread(() => Application.Run(windowsform)).Start();
-#if __MonoCS__
                 Gtk.Application.Init();
 
                 // Attach to the Delete Event when the window has been closed.
