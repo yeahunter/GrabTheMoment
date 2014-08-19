@@ -68,6 +68,7 @@
     <Reference Include="gtk-sharp">
       <HintPath>Resources\gtk-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Dropbox_oauth1.cs" />
@@ -154,12 +155,16 @@
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Linux\TrayIcon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="oldyeahico.ico" />
+    <Content Include="oldyeahico.ico">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -187,4 +192,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Linux\" />
+  </ItemGroup>
 </Project>

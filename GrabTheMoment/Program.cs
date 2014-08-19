@@ -40,17 +40,24 @@ namespace GrabTheMoment
 
             if (futhatoke)
             {
-#if __MonoCS__
-                Gtk.Application.Init();
-#endif
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 windowsform = new Form1();
                 InterceptKeys.Hook(windowsform);
+
+                new Thread(() => Application.Run(windowsform)).Start();
 #if __MonoCS__
-                new Thread(() => Gtk.Application.Run()).Start();
+                Gtk.Application.Init();
+
+                // Attach to the Delete Event when the window has been closed.
+                //window.DeleteEvent += delegate { Gtk.Application.Quit (); }; // bugos a WINFORM leállítása mert gtk-t nem lővi le.
+                /*var trayicon = */new TrayIcon();
+                InterceptKeys.InitLinux();
+
+                // Show the main window and start the application.
+                //window.ShowAll ();
+                Gtk.Application.Run();
 #endif
-                Application.Run(windowsform);
             }
         }
     }

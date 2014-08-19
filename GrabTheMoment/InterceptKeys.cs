@@ -31,10 +31,15 @@ namespace GrabTheMoment
             screenmode = new Screenmode.allmode();
 #if !__MonoCS__
             _hookID = SetHook(_proc);
-#else
-            special.RegisterHandler(Specialsdf, SpecialKey.asd);
 #endif
         }
+
+#if __MonoCS__
+        public static void InitLinux()
+        {
+            special.RegisterHandler(Specialsdf, SpecialKey.asd);
+        }
+#endif
 
         public static void Klipbood()
         {
@@ -166,7 +171,7 @@ namespace GrabTheMoment
 #if __MonoCS__
     public delegate void SpecialKeyPressedHandler(object o, SpecialKey key);
 
-    public enum SpecialKey 
+    public enum SpecialKey
     {
         asd = Gdk.Key.Page_Up
 

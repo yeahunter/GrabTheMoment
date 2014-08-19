@@ -6,6 +6,8 @@ namespace GrabTheMoment
 {
     public partial class Form1 : Form
     {
+        delegate void SetVisibleCallback(bool Visible);
+
         public Form1()
         {
             InitializeComponent();
@@ -33,16 +35,33 @@ namespace GrabTheMoment
 
         }
 
+        public void SetVisible(bool Visible)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                SetVisibleCallback d = new SetVisibleCallback(SetVisible);
+                this.Invoke(d, new object[] { Visible });
+            }
+            else
+            {
+                this.Visible = Visible;
+            }
+        }
+
+
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized)
+            /*if (this.WindowState == FormWindowState.Minimized)
             {
                 //this.Show();
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
                 //this.Activate();
-            }
+            }*/
             //else
             //{
             //    this.ShowInTaskbar = false;
@@ -60,16 +79,16 @@ namespace GrabTheMoment
 
         private void notifyIcon1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-                contextMenuStrip1.Show(Control.MousePosition);
+            //if (e.Button == MouseButtons.Right)
+            //    contextMenuStrip1.Show(Control.MousePosition);
         }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                this.ShowInTaskbar = false;
-                notifyIcon1.Visible = true;
+                //this.ShowInTaskbar = false;
+                //notifyIcon1.Visible = true;
                 //this.Hide();
                 //this.WindowState = FormWindowState.Normal;
             }
@@ -183,12 +202,12 @@ namespace GrabTheMoment
 
         private void lastLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InterceptKeys.Klipbood();
+            //InterceptKeys.Klipbood();
         }
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
-            InterceptKeys.Klipbood();
+            //InterceptKeys.Klipbood();
         }
     }
 }
