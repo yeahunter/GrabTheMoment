@@ -20,8 +20,9 @@ namespace GrabTheMoment
             // Show/Hide the window (even from the Panel/Taskbar) when the TrayIcon has been clicked.
             trayIcon.Activate += delegate
             {
-                InterceptKeys.windowsformoscucc.SetVisibleWindow(!InterceptKeys.windowsformoscucc.Visible);
+                InterceptKeys.windowsformoscucc.SetVisible(!InterceptKeys.windowsformoscucc.Visible);
             };
+
             // Show a pop up menu when the icon has been right clicked.
             trayIcon.PopupMenu += OnTrayIconPopup;
 

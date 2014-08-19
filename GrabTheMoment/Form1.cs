@@ -42,14 +42,14 @@ namespace GrabTheMoment
         }
 
         // Külön szálon való futtathatóság miatt kell.
-        public void SetVisibleWindow(bool Visible)
+        public void SetVisible(bool Visible)
         {
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             if (this.InvokeRequired)
             {
-                SetVisibleCallback d = new SetVisibleCallback(SetVisibleWindow);
+                SetVisibleCallback d = new SetVisibleCallback(SetVisible);
                 this.Invoke(d, new object[] { Visible });
             }
             else
