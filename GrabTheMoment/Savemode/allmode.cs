@@ -10,9 +10,9 @@ using System.Xml;
 
 namespace GrabTheMoment.Savemode
 {
-    class allmode
+    static class allmode
     {
-        public void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace GrabTheMoment.Savemode
             }
         }
 
-        public void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace GrabTheMoment.Savemode
             //bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
         }
 
-        public void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace GrabTheMoment.Savemode
             }
         }
 
-        public void MImgur_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void MImgur_SavePS(Bitmap bmpScreenShot, string neve)
         {
             try
             {
