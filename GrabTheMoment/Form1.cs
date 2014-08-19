@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+#if __MonoCS__
+using System.ComponentModel;
+#endif
 using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
@@ -12,6 +15,9 @@ namespace GrabTheMoment
         public Form1()
         {
             InitializeComponent();
+#if __MonoCS__
+            this.FormClosed += Form1_FormClosed;
+#endif
             Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
             localToolStripMenuItem.Enabled      = checkBox5.Enabled = checkBox1.Checked = Settings.Default.MLocal;
             fTPToolStripMenuItem.Enabled        = checkBox6.Enabled = checkBox2.Checked = Settings.Default.MFtp;
@@ -36,14 +42,14 @@ namespace GrabTheMoment
         }
 
         // Külön szálon való futtathatóság miatt kell.
-        public void SetVisible(bool Visible)
+        public void SetVisibleWindow(bool Visible)
         {
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             if (this.InvokeRequired)
             {
-                SetVisibleCallback d = new SetVisibleCallback(SetVisible);
+                SetVisibleCallback d = new SetVisibleCallback(SetVisibleWindow);
                 this.Invoke(d, new object[] { Visible });
             }
             else
@@ -51,6 +57,14 @@ namespace GrabTheMoment
                 this.Visible = Visible;
             }
         }
+
+#if __MonoCS__
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Gtk.Application.Quit();
+            Application.Exit();
+        }
+#endif
 
 #if !__MonoCS__
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -91,8 +105,8 @@ namespace GrabTheMoment
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-#if !__MonoCS__
                 this.ShowInTaskbar = false;
+#if !__MonoCS__
                 notifyIcon1.Visible = true;
 #endif
                 //this.Hide();
