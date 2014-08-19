@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
+using GrabTheMoment.Windows;
 
 namespace GrabTheMoment
 {
     public partial class Form2 : Form
     {
-        private System.Drawing.Graphics formGraphics;
+        private Graphics formGraphics;
         private bool isDown = false;
         private int initialX;
         private int initialY;
@@ -74,38 +74,8 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new System.Threading.Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
+            new Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
             this.Close();
-        }
-    }
-    public class WinApi
-    {
-        [DllImport("user32.dll", EntryPoint = "GetSystemMetrics")]
-        public static extern int GetSystemMetrics(int which);
-
-        [DllImport("user32.dll")]
-        public static extern void
-            SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
-                         int X, int Y, int width, int height, uint flags);
-
-        private const int SM_CXSCREEN = 0;
-        private const int SM_CYSCREEN = 1;
-        private static IntPtr HWND_TOP = IntPtr.Zero;
-        private const int SWP_SHOWWINDOW = 64; // 0x0040
-
-        public static int ScreenX
-        {
-            get { return GetSystemMetrics(SM_CXSCREEN); }
-        }
-
-        public static int ScreenY
-        {
-            get { return GetSystemMetrics(SM_CYSCREEN); }
-        }
-
-        public static void SetWinFullScreen(IntPtr hwnd, int x, int y)
-        {
-            SetWindowPos(hwnd, HWND_TOP, x, y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, SWP_SHOWWINDOW);
         }
     }
 }

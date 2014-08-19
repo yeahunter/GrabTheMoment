@@ -165,6 +165,7 @@
     <Compile Include="Linux\SpecialKey.cs" />
     <Compile Include="Linux\SpecialKeyPressedHandler.cs" />
     <Compile Include="Linux\SpecialKeys.cs" />
+    <Compile Include="Windows\WinApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -203,5 +204,6 @@
   -->
   <ItemGroup>
     <Folder Include="Linux\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
 </Project>
