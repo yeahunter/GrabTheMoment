@@ -145,20 +145,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\gdk-sharp.dll.config">
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\gdk-sharp.dll.config">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\glib-sharp.dll.config">
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\glib-sharp.dll.config">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\gtk-sharp.dll.config">
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\gtk-sharp.dll.config">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Linux\TrayIcon.cs" />
-    <None Include="Resources\atk-sharp.dll.config">
+    <None Condition="'$(OS)' != 'Windows_NT'"  Include="Resources\atk-sharp.dll.config">
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
