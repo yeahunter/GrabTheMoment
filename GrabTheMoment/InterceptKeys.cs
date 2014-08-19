@@ -105,10 +105,10 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        System.Threading.Thread fullps = new System.Threading.Thread(() => Screenmode.allmode.FullPS());
-                        fullps.SetApartmentState(System.Threading.ApartmentState.STA);
+                       Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
+                        fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
-                        //new System.Threading.Thread(() => screenmode.FullPS()).Start();
+                        //new Thread(() => screenmode.FullPS()).Start();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -116,13 +116,13 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        new System.Threading.Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
+                        new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        //System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
-                        //areaps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        //Thread areaps = new Thread(() => new Form2());
+                        //areaps.SetApartmentState(ApartmentState.STA);
                         //areaps.Start();
                         Form2 secondForm = new Form2();
                         secondForm.Show();
@@ -159,8 +159,8 @@ namespace GrabTheMoment
         {
             Log.WriteEvent("Hotkey Pressed!");
             // Csak asztalt lehet vele egyenlőre fényképezni
-            Thread fullps = new Thread(() => screenmode.FullPS());
-            fullps.SetApartmentState(System.Threading.ApartmentState.STA);
+            Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
+            fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();
         }
 #endif
