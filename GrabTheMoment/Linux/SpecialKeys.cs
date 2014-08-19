@@ -183,26 +183,6 @@ namespace GrabTheMoment.Linux
             set { raise_delay = value; }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct XKeyEvent
-        {
-            public XEventName type;
-            public IntPtr serial;
-            public bool send_event;
-            public IntPtr display;
-            public IntPtr window;
-            public IntPtr root;
-            public IntPtr subwindow;
-            public IntPtr time;
-            public int x;
-            public int y;
-            public int x_root;
-            public int x_y;
-            public uint state;
-            public uint keycode;
-            public bool same_screen;
-        }
-
         [DllImport("libX11")]
         private static extern int XKeysymToKeycode(IntPtr display, SpecialKey keysym);
 
@@ -227,30 +207,7 @@ namespace GrabTheMoment.Linux
         private static extern int gdk_error_trap_pop();
 
         [DllImport("gdk-x11-2.0")]
-        private static extern void gdk_flush();
-
-        [Flags]
-        private enum XModMask {
-            None    = 0,
-            Shift   = 1 << 0,
-            Lock    = 1 << 1,
-            Control = 1 << 2,
-            Mod1    = 1 << 3,
-            Mod2    = 1 << 4,
-            Mod3    = 1 << 5,
-            Mod4    = 1 << 6,
-            Mod5    = 1 << 7
-        }
-
-        private enum XGrabMode {
-            Sync  = 0,
-            Async = 1
-        }
-
-        private enum XEventName {
-            KeyPress   = 2,
-            KeyRelease = 3,
-        }
+        private static extern void gdk_flush();     
     }
 }
 #endif
