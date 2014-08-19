@@ -1,5 +1,7 @@
 ﻿#if __MonoCS__
 using System;
+using System.IO;
+using System.Drawing.Imaging;
 using Gtk;
 using Gdk;
 
@@ -14,7 +16,9 @@ namespace GrabTheMoment.Linux
         public TrayIcon ()
         {
             // Creation of the Icon
-            trayIcon = new StatusIcon(new Pixbuf ("oldyeahico.ico"));
+            MemoryStream memoryStream = new MemoryStream();
+            InterceptKeys.windowsformoscucc.YeahunterIcon.ToBitmap().Save(memoryStream, ImageFormat.Png);
+            trayIcon = new StatusIcon(new Pixbuf(memoryStream.ToArray()));
             trayIcon.Visible = true;
 
             // Show/Hide the window (even from the Panel/Taskbar) when the TrayIcon has been clicked.

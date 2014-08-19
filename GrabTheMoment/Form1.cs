@@ -13,6 +13,7 @@ namespace GrabTheMoment
 #if __MonoCS__
         delegate void SetVisibleCallback(bool Visible);
 #endif
+        public Icon YeahunterIcon { get; private set; }
 
         public Form1()
         {

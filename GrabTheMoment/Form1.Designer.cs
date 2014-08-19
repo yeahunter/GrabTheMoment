@@ -60,9 +60,10 @@
             // 
             // notifyIcon1
             // 
+            this.YeahunterIcon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
 #if !__MonoCS__
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Icon = new System.Drawing.Icon("oldyeahico.ico");
+            this.notifyIcon1.Icon = this.YeahunterIcon;
             this.notifyIcon1.Text = "Grab The Moment - Developed by Invisible © 2013";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
