@@ -9,7 +9,9 @@ namespace GrabTheMoment
     public class TrayIcon
     {
         // The tray Icon
-        private StatusIcon trayIcon;
+        // Fix: (GrabTheMoment:12338): GLib-CRITICAL **: Source ID 13 was not found when attempting to remove it
+        // Megakadályozza hogy eltünjön az ikon. (Hibrid megoldásból ered ez a hiba.)
+        private static StatusIcon trayIcon;
 
         public TrayIcon ()
         {
@@ -24,6 +26,11 @@ namespace GrabTheMoment
 
             // A Tooltip for the Icon
             trayIcon.Tooltip = "Hello World Icon";
+        }
+
+        public void SetVisible(bool Visible)
+        {
+            trayIcon.Visible = Visible;
         }
 
         // Create the popup menu, on right click.
