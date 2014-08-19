@@ -7,6 +7,11 @@ namespace GrabTheMoment
 {
     static class Program
     {
+        // Fix: (GrabTheMoment:12338): GLib-CRITICAL **: Source ID 13 was not found when attempting to remove it
+        // Megakadályozza hogy eltünjön az ikon. (Hibrid megoldásból ered ez a hiba.)
+#if __MonoCS__
+        static TrayIcon trayicon;
+#endif
         static Form1 windowsform;
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
@@ -51,7 +56,7 @@ namespace GrabTheMoment
 
                 // Attach to the Delete Event when the window has been closed.
                 //window.DeleteEvent += delegate { Gtk.Application.Quit (); }; // bugos a WINFORM leállítása mert gtk-t nem lővi le.
-                /*var trayicon = */new TrayIcon();
+                trayicon = new TrayIcon();
                 InterceptKeys.InitLinux();
 
                 // Show the main window and start the application.

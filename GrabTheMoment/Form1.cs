@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
@@ -32,9 +33,9 @@ namespace GrabTheMoment
                     checkBox8.Checked = true;
                     break;
             }
-
         }
 
+        // Külön szálon való futtathatóság miatt kell.
         public void SetVisible(bool Visible)
         {
             // InvokeRequired required compares the thread ID of the

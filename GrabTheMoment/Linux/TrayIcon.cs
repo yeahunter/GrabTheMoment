@@ -1,17 +1,15 @@
-﻿using System;
+﻿#if __MonoCS__
+using System;
 using Gtk;
 using Gdk;
-
-using System.Threading;
 
 namespace GrabTheMoment
 {
     public class TrayIcon
     {
         // The tray Icon
-        // Fix: (GrabTheMoment:12338): GLib-CRITICAL **: Source ID 13 was not found when attempting to remove it
-        // Megakadályozza hogy eltünjön az ikon. (Hibrid megoldásból ered ez a hiba.)
         private static StatusIcon trayIcon;
+        public static StatusIcon GetTrayIcon() { return trayIcon; }
 
         public TrayIcon ()
         {
@@ -54,3 +52,4 @@ namespace GrabTheMoment
         }
     }
 }
+#endif

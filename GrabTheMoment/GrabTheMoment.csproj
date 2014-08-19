@@ -59,16 +59,18 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Resources\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="gdk-sharp">
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp">
       <HintPath>Resources\gdk-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="glib-sharp">
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp">
       <HintPath>Resources\glib-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="gtk-sharp">
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp">
       <HintPath>Resources\gtk-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp" Condition="'$(OS)' != 'Windows_NT'">
+      <HintPath>Resources\atk-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Dropbox_oauth1.cs" />
@@ -156,6 +158,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Linux\TrayIcon.cs" />
+    <None Include="Resources\atk-sharp.dll.config">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
