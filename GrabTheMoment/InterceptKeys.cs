@@ -55,7 +55,7 @@ namespace GrabTheMoment
 #else
             if (clipboard != null) // TODO
             {
-                Clipboard.SetText(clipboard);
+                Gtk.Application.Invoke((delegate { setClipboard(clipboard); }));
                 Log.WriteEvent("Klipbood-0arg: " + clipboard);
             }
             else
@@ -66,14 +66,33 @@ namespace GrabTheMoment
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
-
-            if (Settings.Default.InstantClipboard) // Azért nem fut le mert a settings nem megy rendesen. (Linux)
-                Clipboard.SetText(clipboord);
 #if !__MonoCS__
+            if (Settings.Default.InstantClipboard)
+                Clipboard.SetText(clipboard);
+
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
+#else
+            // TODO: Miért false mindig?
+            //if (Settings.Default.InstantClipboard)
+                Gtk.Application.Invoke((delegate { setClipboard(clipboard); }));
 #endif
             Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
+
+#if __MonoCS__
+        private static void setClipboard(string text)
+        {
+            try
+            {
+                Gtk.Clipboard clip = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
+                clip.Text = text;
+            }
+            catch
+            {
+
+            }
+        }
+#endif
 
         public static Form1 windowsformoscucc
         {
