@@ -68,7 +68,7 @@ namespace GrabTheMoment
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Gtk.Application.Quit();
-            Application.Exit();
+            //Application.Exit();
         }
 #endif
 
