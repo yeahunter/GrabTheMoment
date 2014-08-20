@@ -4,7 +4,6 @@ using System.Threading;
 using System.Reflection;
 #if __MonoCS__
 using GrabTheMoment.Linux;
-using GrabTheMoment.Properties;
 #endif
 
 namespace GrabTheMoment

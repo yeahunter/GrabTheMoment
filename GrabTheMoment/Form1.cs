@@ -21,6 +21,9 @@ namespace GrabTheMoment
 #if __MonoCS__
             this.FormClosed += Form1_FormClosed;
 #endif
+            // Középre helyezi az ablakot induláskor.
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
             localToolStripMenuItem.Enabled      = checkBox5.Enabled = checkBox1.Checked = Settings.Default.MLocal;
             fTPToolStripMenuItem.Enabled        = checkBox6.Enabled = checkBox2.Checked = Settings.Default.MFtp;
