@@ -66,8 +66,7 @@ namespace GrabTheMoment
 #if !__MonoCS__
                 Application.Run(windowsform);
 #else
-                Console.WriteLine(Path.GetFileNameWithoutExtension(AppName));
-                Runtime.SetProcessName(AppName);
+                Runtime.SetProcessName(Path.GetFileNameWithoutExtension(AppName));
                 new Thread(() => Application.Run(windowsform)).Start();
                 Gtk.Application.Init();
 
