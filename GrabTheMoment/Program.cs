@@ -22,7 +22,7 @@ namespace GrabTheMoment
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
 #if __MonoCS__
-        const string AppName = "GrabTheMoment.exe";
+        static string AppName = Assembly.GetExecutingAssembly().ManifestModule.Name;
 #endif
 
         /// <summary>
