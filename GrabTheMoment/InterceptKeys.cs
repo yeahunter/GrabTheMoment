@@ -52,6 +52,14 @@ namespace GrabTheMoment
             }
             else
                 Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
+#else
+            if (clipboard != null) // TODO
+            {
+                Clipboard.SetText(clipboard);
+                Log.WriteEvent("Klipbood-0arg: " + clipboard);
+            }
+            else
+                Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
 #endif
         }
 
@@ -59,7 +67,7 @@ namespace GrabTheMoment
         {
             clipboard = clipboord;
 
-            if (Settings.Default.InstantClipboard)
+            if (Settings.Default.InstantClipboard) // Azért nem fut le mert a settings nem megy rendesen. (Linux)
                 Clipboard.SetText(clipboord);
 #if !__MonoCS__
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
