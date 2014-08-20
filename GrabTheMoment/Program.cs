@@ -1,4 +1,7 @@
 ﻿using System;
+#if __MonoCS__
+using System.IO;
+#endif
 using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
@@ -25,6 +28,11 @@ namespace GrabTheMoment
         [STAThread]
         static void Main()
         {
+#if __MonoCS__
+            if (File.Exists("GrabTheMoment.exe.config"))
+                File.Delete("GrabTheMoment.exe.config");
+#endif
+
             try
             {
                 Mutex mutex = new Mutex(false, "Local\\" + AppGUID);
