@@ -21,6 +21,9 @@ namespace GrabTheMoment
         static Form1 windowsform;
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
+#if __MonoCS__
+        const string AppName = "GrabTheMoment.exe";
+#endif
 
         /// <summary>
         /// The main entry point for the application.
@@ -29,8 +32,8 @@ namespace GrabTheMoment
         static void Main()
         {
 #if __MonoCS__
-            if (File.Exists("GrabTheMoment.exe.config"))
-                File.Delete("GrabTheMoment.exe.config");
+            if (File.Exists(AppName + ".config"))
+                File.Delete(AppName + ".config");
 #endif
 
             try
@@ -63,6 +66,7 @@ namespace GrabTheMoment
 #if !__MonoCS__
                 Application.Run(windowsform);
 #else
+                Runtime.SetProcessName(AppName);
                 new Thread(() => Application.Run(windowsform)).Start();
                 Gtk.Application.Init();
 

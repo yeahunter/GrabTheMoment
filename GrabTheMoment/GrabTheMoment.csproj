@@ -170,6 +170,7 @@
     <Compile Include="Linux\XEventName.cs" />
     <Compile Include="Linux\XGrabMode.cs" />
     <Compile Include="Linux\XModMask.cs" />
+    <Compile Include="Linux\Runtime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
