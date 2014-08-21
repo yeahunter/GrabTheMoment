@@ -43,7 +43,27 @@ namespace GrabTheMoment.Linux
         private void OnTrayIconPopup (object o, EventArgs args)
         {
             Menu popupMenu = new Menu();
-            ImageMenuItem menuItemQuit = new ImageMenuItem ("Quit");
+            ImageMenuItem menuItemDesktopPrint = new ImageMenuItem("Print Desktop");
+            //Gtk.Image appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemDesktopPrint.Image = appimg;
+            popupMenu.Add(menuItemDesktopPrint);
+
+            menuItemDesktopPrint.Activated += delegate
+            {
+                InterceptKeys.PrintDesktop();
+            };
+
+            ImageMenuItem menuItemActiveWindow = new ImageMenuItem("Print Active Window");
+            //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemActiveWindow.Image = appimg;
+            popupMenu.Add(menuItemActiveWindow);
+
+            menuItemActiveWindow.Activated += delegate
+            {
+                InterceptKeys.PrintActiveWindow();
+            };
+
+            ImageMenuItem menuItemQuit = new ImageMenuItem("Quit");
             Gtk.Image appimg = new Gtk.Image(Stock.Quit, IconSize.Menu);
             menuItemQuit.Image = appimg;
             popupMenu.Add(menuItemQuit);

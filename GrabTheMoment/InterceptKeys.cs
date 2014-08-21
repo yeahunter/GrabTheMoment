@@ -183,18 +183,16 @@ namespace GrabTheMoment
         [DllImport("user32.dll")]
         static extern int GetWindowRect(IntPtr hWnd, out Rectangle rect);
 #else
-        private static void SpecialPrint(object o, SpecialKey key)
+        public static void PrintDesktop()
         {
-            Log.WriteEvent("Hotkey Pressed!");
             // Csak asztalt lehet vele egyenlőre fényképezni
             Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
             fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();
         }
 
-        private static void SpecialAltPrint(object o, SpecialKey key)
+        public static void PrintActiveWindow()
         {
-            Log.WriteEvent("Hotkey Pressed!");
             int x;
             int y;
             int width;
@@ -209,6 +207,18 @@ namespace GrabTheMoment
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
             rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
             new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
+        }
+
+        private static void SpecialPrint(object o, SpecialKey key)
+        {
+            Log.WriteEvent("Hotkey Pressed! [Print]");
+            PrintDesktop();
+        }
+
+        private static void SpecialAltPrint(object o, SpecialKey key)
+        {
+            Log.WriteEvent("Hotkey Pressed! [Alt+Print]");
+            PrintActiveWindow();
         }
 #endif
     }
