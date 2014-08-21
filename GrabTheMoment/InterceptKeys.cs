@@ -85,7 +85,8 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        System.Threading.Thread fullps = new System.Threading.Thread(() => Screenmode.allmode.FullPS());
+                        System.Threading.Thread fullps = new System.Threading.Thread(() => new Screenmode.FullScreen());
+                        // System.Threading.Thread fullps = new System.Threading.Thread(() => Screenmode.allmode.FullPS());
                         fullps.SetApartmentState(System.Threading.ApartmentState.STA);
                         fullps.Start();
                         //new System.Threading.Thread(() => screenmode.FullPS()).Start();

@@ -100,6 +100,8 @@
       <DependentUpon>local.cs</DependentUpon>
     </Compile>
     <Compile Include="Screenmode\allmode.cs" />
+    <Compile Include="Screenmode\FullScreen.cs" />
+    <Compile Include="Screenmode\PrintScreenType.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

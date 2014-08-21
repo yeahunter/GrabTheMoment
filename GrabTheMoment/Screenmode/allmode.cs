@@ -9,7 +9,7 @@ namespace GrabTheMoment.Screenmode
     {
         public static int x, y;
 
-        private static string WhatClipboard()
+        public static string WhatClipboard()
         {
             string visszater = string.Empty;
 
