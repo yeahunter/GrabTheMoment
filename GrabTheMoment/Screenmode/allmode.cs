@@ -9,33 +9,18 @@ namespace GrabTheMoment.Screenmode
     {
         public static int x, y;
 
+        protected enum CopyType
+        {
+            Disabled,
+            Local,
+            FTP,
+            Dropbox,
+            Imgur
+        }
+
         public static string WhatClipboard()
         {
-            string visszater = string.Empty;
-
-            switch (Settings.Default.CopyLink)
-            {
-                case 0:
-                    visszater = "NincsCopy";
-                    break;
-                case 1:
-                    visszater = "LocalCopy";
-                    break;
-                case 2:
-                    visszater = "FTPCopy";
-                    break;
-                case 3:
-                    visszater = "DropboxCopy";
-                    break;
-                case 4:
-                    visszater = "ImgurCopy";
-                    break;
-                default:
-                    visszater = "???Copy";
-                    break;
-            }
-
-            return visszater;
+            return ((CopyType)Settings.Default.CopyLink).ToString();
         }
 
         public static void mekkoraazxesazy()
@@ -76,49 +61,6 @@ namespace GrabTheMoment.Screenmode
         {
             Form1 fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
-        }
-
-        public static void FullPS()
-        {
-            try
-            {
-                string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-                int screenheight = SystemInformation.VirtualScreen.Height;
-                int screenwidth = SystemInformation.VirtualScreen.Width;
-
-                mekkoraazxesazy();
-
-                Bitmap bmpScreenShot = new Bitmap(screenwidth, screenheight);
-                Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-                gfx.CopyFromScreen(x, y, 0, 0, new Size(screenwidth, screenheight));
-
-                DrawWatermark(gfx);
-
-                if (Settings.Default.MLocal)
-                    Savemode.allmode.MLocal_SavePS(bmpScreenShot, idodatum);
-
-                if (Settings.Default.MFtp)
-                {
-                    //System.Threading.Thread.Sleep(5000);
-                    Savemode.allmode.MFtp_SavePS(bmpScreenShot, idodatum);
-                }
-
-                //if (Settings.Default.MDropbox)
-                //    MDropbox_SavePS(bmpScreenShot, idodatum);
-
-                if (Settings.Default.MImgur)
-                    Savemode.allmode.MImgur_SavePS(bmpScreenShot, idodatum);
-
-                if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
-                    Savemode.allmode.MDropbox_SavePS(bmpScreenShot, idodatum);
-
-                notifyIcon(7000, "FullPS" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-                Log.WriteEvent("Form1/FullPS: " + idodatum + " elkészült!");
-            }
-            catch (Exception e)
-            {
-                Log.WriteEvent("Form1/FullPS: ", e);
-            }
         }
 
         public static void WindowPs(Rectangle rectangle)
