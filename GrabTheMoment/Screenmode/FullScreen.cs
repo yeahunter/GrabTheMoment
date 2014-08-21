@@ -8,13 +8,16 @@ namespace GrabTheMoment.Screenmode
         public FullScreen()
         {
             SetFileName();
-            SetImgSize(SystemInformation.VirtualScreen.Height, SystemInformation.VirtualScreen.Width);
+            Height = SystemInformation.VirtualScreen.Height;
+            Width = SystemInformation.VirtualScreen.Width;
+
+            mekkoraazxesazy();
             CreatePic();
 
             SavePic();
 
-            notifyIcon(7000, "FullPS" + " + " + allmode.WhatClipboard(), FileName, ToolTipIcon.Info);
-            Log.WriteEvent("Form1/FullPS: " + FileName + " elkészült!");
+            notifyIcon(7000, "FullScreen" + " + " + allmode.WhatClipboard(), FileName, ToolTipIcon.Info);
+            Log.WriteEvent("FullScreen/Constructor: " + FileName + " elkészült!");
         }
     }
 }

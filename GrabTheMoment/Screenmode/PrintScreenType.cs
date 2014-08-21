@@ -10,12 +10,14 @@ namespace GrabTheMoment.Screenmode
         private string _FileName;
 
         private int _Height, _Width, _X, _Y;
+
         private Graphics _Gfx;
         private Bitmap _bmpScreenShot;
 
         public string FileName
         {
             get { return _FileName; }
+            set { _FileName = value; }
         }
 
         protected void SetFileName()
@@ -23,18 +25,31 @@ namespace GrabTheMoment.Screenmode
             _FileName = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
         }
 
-        protected void SetFileName(string name)
+        public int X
         {
-            _FileName = name;
+            get { return _X; }
+            set { _X = value; }
         }
 
-        protected void SetImgSize(int Height, int Width)
+        public int Y
         {
-            _Height = Height;
-            _Width = Width;
+            get { return _Y; }
+            set { _Y = value; }
         }
 
-        private void mekkoraazxesazy()
+        public int Height
+        {
+            get { return _Height; }
+            set { _Height = value; }
+        }
+
+        public int Width
+        {
+            get { return _Width; }
+            set { _Width = value; }
+        }
+
+        protected void mekkoraazxesazy()
         {
             foreach (Screen Kijelzo in Screen.AllScreens)
             {
@@ -44,14 +59,11 @@ namespace GrabTheMoment.Screenmode
                 int ipszilon = Kijelzo.Bounds.Y;
                 if (ipszilon < _Y)
                     _Y = ipszilon;
-
-                Log.WriteEvent(String.Format("iksz:{0} | ipszilon:{1}", iksz, ipszilon));
             }
         }
 
         protected void CreatePic()
         {
-            mekkoraazxesazy();
             _bmpScreenShot = new Bitmap(_Width, _Height);
             _Gfx = Graphics.FromImage((Image)_bmpScreenShot);
             _Gfx.CopyFromScreen(_X, _Y, 0, 0, new Size(_Width, _Height));

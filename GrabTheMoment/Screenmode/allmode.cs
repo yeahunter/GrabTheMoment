@@ -9,7 +9,7 @@ namespace GrabTheMoment.Screenmode
     {
         public static int x, y;
 
-        protected enum CopyType
+        public enum CopyType
         {
             Disabled,
             Local,
@@ -61,48 +61,6 @@ namespace GrabTheMoment.Screenmode
         {
             Form1 fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
-        }
-
-        public static void WindowPs(Rectangle rectangle)
-        {
-            string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
-            int xcoord = rectangle.X;
-            int ycoord = rectangle.Y;
-            int windowwidth = rectangle.Width - xcoord;
-            int windowheight = rectangle.Height - ycoord;
-
-            if (xcoord == -8 && ycoord == -8)
-            {
-                xcoord += 8;
-                ycoord += 8;
-                windowwidth -= 16;
-                windowheight -= 16;
-            }
-
-            Bitmap bmpScreenShot = new Bitmap(windowwidth, windowheight);
-            Graphics gfx = Graphics.FromImage((Image)bmpScreenShot);
-            gfx.CopyFromScreen(xcoord, ycoord, 0, 0, new Size(windowwidth, windowheight), CopyPixelOperation.SourceCopy);
-
-            DrawWatermark(gfx);
-
-            if (Settings.Default.MLocal)
-                Savemode.allmode.MLocal_SavePS(bmpScreenShot, idodatum);
-
-            if (Settings.Default.MFtp)
-            {
-                //System.Threading.Thread.Sleep(5000);
-                Savemode.allmode.MFtp_SavePS(bmpScreenShot, idodatum);
-            }
-
-            if (Settings.Default.MImgur)
-                Savemode.allmode.MImgur_SavePS(bmpScreenShot, idodatum);
-
-            if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
-                Savemode.allmode.MDropbox_SavePS(bmpScreenShot, idodatum);
-
-            notifyIcon(7000, "WindowPs" + " + " + WhatClipboard(), idodatum, ToolTipIcon.Info);
-            Log.WriteEvent("Form1/WindowPs: Settings.Default.CopyLink: " + Settings.Default.CopyLink);
-            Log.WriteEvent("Form1/WindowPs: " + idodatum + " elkészült!");
         }
 
         public static void AreaPs(Rectangle rectangle)

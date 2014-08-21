@@ -97,7 +97,7 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        new System.Threading.Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
+                        new System.Threading.Thread(() => new Screenmode.ActiveWindow(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
