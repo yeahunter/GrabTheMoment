@@ -6,7 +6,8 @@ namespace GrabTheMoment.Linux
     public enum SpecialKey
     {
         // TODO: Print gombra átrakni.
-        Print = Gdk.Key.Page_Up
+        Print = Gdk.Key.Page_Up,
+        AltPrint = Gdk.Key.Page_Down
     };
 }
 #endif

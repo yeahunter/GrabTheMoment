@@ -131,8 +131,13 @@ namespace GrabTheMoment.Screenmode
             string idodatum = DateTime.Now.ToString("yyyy.MM.dd.-HH.mm.ss");
             int xcoord = rectangle.X;
             int ycoord = rectangle.Y;
+#if !__MonoCS__
             int windowwidth = rectangle.Width - xcoord;
             int windowheight = rectangle.Height - ycoord;
+#else
+            int windowwidth = rectangle.Width;
+            int windowheight = rectangle.Height;
+#endif
 
             if (xcoord == -8 && ycoord == -8)
             {

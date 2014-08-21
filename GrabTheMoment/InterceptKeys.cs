@@ -39,6 +39,7 @@ namespace GrabTheMoment
         public static void InitLinux()
         {
             special.RegisterHandler(SpecialPrint, SpecialKey.Print);
+            special.RegisterHandler(SpecialAltPrint, SpecialKey.AltPrint);
         }
 #endif
 
@@ -189,6 +190,25 @@ namespace GrabTheMoment
             Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
             fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();
+        }
+
+        private static void SpecialAltPrint(object o, SpecialKey key)
+        {
+            Log.WriteEvent("Hotkey Pressed!");
+            int x;
+            int y;
+            int width;
+            int height;
+            int depth;
+            Rectangle rect;
+
+            Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
+            Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
+
+            // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
+            // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
+            rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
+            new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
         }
 #endif
     }
