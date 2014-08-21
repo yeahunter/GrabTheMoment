@@ -63,6 +63,9 @@ namespace GrabTheMoment.Linux
                 InterceptKeys.PrintActiveWindow();
             };
 
+            SeparatorMenuItem separator = new SeparatorMenuItem();
+            popupMenu.Add(separator);
+
             ImageMenuItem menuItemQuit = new ImageMenuItem("Quit");
             Gtk.Image appimg = new Gtk.Image(Stock.Quit, IconSize.Menu);
             menuItemQuit.Image = appimg;
