@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 using Gtk;
 using Gdk;
 
@@ -10,6 +11,7 @@ namespace GrabTheMoment.Linux
     public class TrayIcon
     {
         // The tray Icon
+        private List<MenuItem> SItemList = new List<MenuItem>();
         private static StatusIcon trayIcon;
         public static StatusIcon GetTrayIcon() { return trayIcon; }
 
@@ -61,6 +63,59 @@ namespace GrabTheMoment.Linux
             menuItemActiveWindow.Activated += delegate
             {
                 InterceptKeys.PrintActiveWindow();
+            };
+
+            ImageMenuItem menuItemSelectWindow = new ImageMenuItem("Select Windows");
+            //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemActiveWindow.Image = appimg;
+            popupMenu.Add(menuItemSelectWindow);
+
+            Menu Ssubmenu = new Menu();
+            menuItemSelectWindow.Submenu = Ssubmenu;
+
+            menuItemSelectWindow.Submenu.Focused += delegate
+            {
+                foreach(var sc in Gdk.Screen.Default.ToplevelWindows)
+                {
+                    Console.WriteLine(sc);
+                    //Console.WriteLine(sc.);
+                    var item = new MenuItem("asd");
+                    SItemList.Add(item);
+                    Ssubmenu.Append(item);
+                    //Ssubmenu.Remove
+                    /*int x;
+                    int y;
+                    int width;
+                    int height;
+                    int depth;
+                    Rectangle rect;
+
+                    sc.GetGeometry(out x, out y, out width, out height, out depth);
+                    sc.GetRootOrigin(out x, out y);
+
+                    // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
+                    // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
+                    rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
+                    new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();*/
+                }
+
+                Ssubmenu.ShowAll();
+            };
+
+            menuItemSelectWindow.Submenu.Hidden += delegate
+            {
+                foreach(var sc in Gdk.Screen.Default.ToplevelWindows)
+                {
+                    foreach(var list in SItemList)
+                        list.Destroy();
+
+                    SItemList.Clear();
+                }
+            };
+
+            menuItemSelectWindow.Activated += delegate
+            {
+
             };
 
             SeparatorMenuItem separator = new SeparatorMenuItem();
