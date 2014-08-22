@@ -59,18 +59,11 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Resources\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp">
-      <HintPath>Resources\gdk-sharp.dll</HintPath>
-    </Reference>
-    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp">
-      <HintPath>Resources\glib-sharp.dll</HintPath>
-    </Reference>
-    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp">
-      <HintPath>Resources\gtk-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="atk-sharp" Condition="'$(OS)' != 'Windows_NT'">
-      <HintPath>Resources\atk-sharp.dll</HintPath>
-    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="notify-sharp, Version=0.4.0.0, Culture=neutral, PublicKeyToken=2df29c54e245917a" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Dropbox_oauth1.cs" />
@@ -145,23 +138,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\gdk-sharp.dll.config">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\glib-sharp.dll.config">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\gtk-sharp.dll.config">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Linux\TrayIcon.cs" />
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="Resources\atk-sharp.dll.config">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Linux\SpecialKey.cs" />
     <Compile Include="Linux\SpecialKeyPressedHandler.cs" />
     <Compile Include="Linux\SpecialKeys.cs" />
