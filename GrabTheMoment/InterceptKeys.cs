@@ -200,21 +200,21 @@ namespace GrabTheMoment
             int depth;
             Rectangle rect;
 
-            Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-            Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
+            Gdk.Global.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
+            Gdk.Global.ActiveWindow.GetRootOrigin(out x, out y);
 
             /*if(x < 0)
             {
-                Gdk.Screen.Default.ActiveWindow.Move(0, y);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
+                Gdk.Global.ActiveWindow.Move(0, y);
+                Gdk.Global.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
+                Gdk.Global.ActiveWindow.GetRootOrigin(out x, out y);
             }
 
             if(y < 0)
             {
-                Gdk.Screen.Default.ActiveWindow.Move(x, 0);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
+                Gdk.Global.ActiveWindow.Move(x, 0);
+                Gdk.Global.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
+                Gdk.Global.ActiveWindow.GetRootOrigin(out x, out y);
             }*/
 
             // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően

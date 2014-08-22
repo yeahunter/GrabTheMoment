@@ -104,7 +104,7 @@ namespace GrabTheMoment.Linux
 
             menuItemSelectWindow.Submenu.Hidden += delegate
             {
-                foreach(var sc in Gdk.Screen.Default.ToplevelWindows)
+                foreach(var sc in Gdk.Global.WindowManagerClientWindows)
                 {
                     foreach(var list in SItemList)
                         list.Destroy();
@@ -113,10 +113,10 @@ namespace GrabTheMoment.Linux
                 }
             };
 
-            menuItemSelectWindow.Activated += delegate
+            /*menuItemSelectWindow.Activated += delegate
             {
 
-            };
+            };*/
 
             SeparatorMenuItem separator = new SeparatorMenuItem();
             popupMenu.Add(separator);
