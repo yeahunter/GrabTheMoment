@@ -77,7 +77,6 @@ namespace GrabTheMoment.Screenmode
 
         private static void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
-            // TODO: FIX??
 #if !__MonoCS__
             Form1 fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
