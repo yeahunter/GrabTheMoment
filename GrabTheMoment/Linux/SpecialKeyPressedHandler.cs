@@ -3,6 +3,6 @@ using System;
 
 namespace GrabTheMoment.Linux
 {
-    public delegate void SpecialKeyPressedHandler(object o, SpecialKey key);
+    public delegate void SpecialKeyPressedHandler(object o, SpecialKey key, Gdk.ModifierType ModeMask);
 }
 #endif

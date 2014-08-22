@@ -39,7 +39,6 @@ namespace GrabTheMoment
         public static void InitLinux()
         {
             special.RegisterHandler(SpecialPrint, SpecialKey.Print);
-            special.RegisterHandler(SpecialAltPrint, SpecialKey.AltPrint);
         }
 #endif
 
@@ -225,16 +224,18 @@ namespace GrabTheMoment
             new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
         }
 
-        private static void SpecialPrint(object o, SpecialKey key)
+        private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)
         {
-            Log.WriteEvent("Hotkey Pressed! [Print]");
-            PrintDesktop();
-        }
-
-        private static void SpecialAltPrint(object o, SpecialKey key)
-        {
-            Log.WriteEvent("Hotkey Pressed! [Alt+Print]");
-            PrintActiveWindow();
+            if(key == SpecialKey.Print && ModeMask == Gdk.ModifierType.Mod2Mask)
+            {
+                Log.WriteEvent("Hotkey Pressed! [Print]");
+                PrintDesktop();
+            }
+            else if(key == SpecialKey.Print && ModeMask == (Gdk.ModifierType.Mod1Mask | Gdk.ModifierType.Mod2Mask))
+            {
+                Log.WriteEvent("Hotkey Pressed! [Alt+Print]");
+                PrintActiveWindow();
+            }
         }
 #endif
     }

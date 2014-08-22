@@ -6,7 +6,7 @@ namespace GrabTheMoment.Linux
     public enum SpecialKey
     {
         Print = Gdk.Key.Print,
-        AltPrint = Gdk.Key.Print
+        None
     };
 }
 #endif
