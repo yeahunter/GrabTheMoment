@@ -103,7 +103,10 @@
     <Compile Include="Savemode\Forms\local.Designer.cs">
       <DependentUpon>local.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screenmode\ActiveWindow.cs" />
     <Compile Include="Screenmode\allmode.cs" />
+    <Compile Include="Screenmode\FullScreen.cs" />
+    <Compile Include="Screenmode\PrintScreenType.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,6 +150,7 @@
     <Compile Include="Linux\XEventName.cs" />
     <Compile Include="Linux\XGrabMode.cs" />
     <Compile Include="Linux\Runtime.cs" />
+    <Compile Include="Linux\HookKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

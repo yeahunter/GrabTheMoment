@@ -133,7 +133,8 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                       Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
+                        Thread fullps = new Thread(() => new Screenmode.FullScreen());
+                        // Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
                         fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
                         //new Thread(() => screenmode.FullPS()).Start();
@@ -144,7 +145,7 @@ namespace GrabTheMoment
                         IntPtr hWnd = GetForegroundWindow();
                         Rectangle rect;
                         GetWindowRect(hWnd, out rect);
-                        new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
+                        new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -186,7 +187,7 @@ namespace GrabTheMoment
         public static void PrintDesktop()
         {
             // Csak asztalt lehet vele egyenlőre fényképezni
-            Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
+            Thread fullps = new Thread(() => new Screenmode.FullScreen());
             fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();
         }
@@ -221,7 +222,7 @@ namespace GrabTheMoment
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
             rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
             //rect = new Rectangle(x, y, width, height);
-            new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();
+            new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
         }
 
         private static void SpecialPrint(object o, SpecialKey key)

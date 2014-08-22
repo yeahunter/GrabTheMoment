@@ -1,0 +1,18 @@
+﻿#if __MonoCS__
+using System;
+
+namespace GrabTheMoment.Linux
+{
+    public class HookKey
+    {
+        public int Key { get; private set; }
+        public Gdk.ModifierType ModeMask { get; private set; }
+
+        public HookKey(int key, Gdk.ModifierType modemask)
+        {
+            Key = key;
+            ModeMask = modemask;
+        }
+    }
+}
+#endif

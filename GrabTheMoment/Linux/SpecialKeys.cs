@@ -10,7 +10,7 @@ namespace GrabTheMoment.Linux
     {
         private Hashtable key_map = new Hashtable();
         private Hashtable key_registrations = new Hashtable();
-        private Dictionary<int, Gdk.ModifierType> keycode_list;
+        private List<HookKey> keycode_list;
         private TimeSpan raise_delay = new TimeSpan(0);
         private DateTime last_raise = DateTime.MinValue;
 
@@ -50,9 +50,9 @@ namespace GrabTheMoment.Linux
             }
         }
 
-        private Dictionary<int, Gdk.ModifierType> BuildKeyCodeList()
+        private List<HookKey> BuildKeyCodeList()
         {
-            var kc_list = new Dictionary<int, Gdk.ModifierType>();
+            var kc_list = new List<HookKey>();
 
             foreach(SpecialKey key in Enum.GetValues(typeof(SpecialKey)))
             {
@@ -67,9 +67,9 @@ namespace GrabTheMoment.Linux
                         key_map[key] = keycode;
 
                         if(key == SpecialKey.AltPrint)
-                            kc_list.Add(keycode, Gdk.ModifierType.Mod1Mask);
+                            kc_list.Add(new HookKey(keycode, Gdk.ModifierType.Mod1Mask));
                         else
-                            kc_list.Add(keycode, Gdk.ModifierType.None);
+                            kc_list.Add(new HookKey(keycode, Gdk.ModifierType.None));
                     }
                 }
             }
@@ -84,7 +84,7 @@ namespace GrabTheMoment.Linux
                 Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
 
                 foreach(var klist in keycode_list)
-                    GrabKey(screen.RootWindow, klist.Key, klist.Value);
+                    GrabKey(screen.RootWindow, klist.Key, klist.ModeMask);
 
                 screen.RootWindow.AddFilter(FilterKey);
             }
@@ -96,7 +96,7 @@ namespace GrabTheMoment.Linux
             {
                 Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
                 foreach(var klist in keycode_list)
-                    UngrabKey(screen.RootWindow, klist.Key, klist.Value);
+                    UngrabKey(screen.RootWindow, klist.Key, klist.ModeMask);
 
                 screen.RootWindow.RemoveFilter(FilterKey);
             }

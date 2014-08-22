@@ -17,6 +17,10 @@ namespace GrabTheMoment.Linux
 
         public TrayIcon ()
         {
+        }
+
+        public void Init()
+        {
             // Creation of the Icon
             MemoryStream memoryStream = new MemoryStream();
             InterceptKeys.windowsformoscucc.YeahunterIcon.ToBitmap().Save(memoryStream, ImageFormat.Png);
