@@ -139,7 +139,6 @@ namespace GrabTheMoment.Linux
 
             popupMenu.ShowAll();
             popupMenu.Popup();
-            //Gdk.NotifyType.
         }
     }
 }
