@@ -109,14 +109,14 @@ namespace GrabTheMoment.Linux
 
             gdk_error_trap_push();
 
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
 
 
             gdk_flush();
@@ -132,27 +132,14 @@ namespace GrabTheMoment.Linux
 
             gdk_error_trap_push();
 
-            if(modemask != Gdk.ModifierType.None)
-            {
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
-                XUngrabKey(xdisplay, keycode, modemask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid);
-            }
-            else
-            {
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod5Mask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.Mod5Mask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod5Mask | Gdk.ModifierType.LockMask, xid);
-                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.Mod5Mask | Gdk.ModifierType.LockMask, xid);
-            }
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
+            XUngrabKey(xdisplay, keycode, modemask, xid);
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid);
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
+            XUngrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid);
+            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid);
 
             gdk_flush();
 
@@ -163,11 +150,11 @@ namespace GrabTheMoment.Linux
         private Gdk.FilterReturn FilterKey(IntPtr xeventPtr, Gdk.Event gdkEvent)
         {
             Log.WriteEvent("filter "+ gdkEvent.Type);
+
             if(DateTime.Now - last_raise < raise_delay)
                 return Gdk.FilterReturn.Continue;
 
             last_raise = DateTime.Now;
-
             XKeyEvent xevent = (XKeyEvent)Marshal.PtrToStructure(xeventPtr, typeof(XKeyEvent));
 
             if(xevent.type != XEventName.KeyPress)
@@ -186,6 +173,7 @@ namespace GrabTheMoment.Linux
             if (key_registrations[keycode] != null)
             {
                 x = key_registrations[keycode];
+
                 if (x is SpecialKeyPressedHandler)
                     ((SpecialKeyPressedHandler)x)(this, key, (Gdk.ModifierType)xevent.state);    
 

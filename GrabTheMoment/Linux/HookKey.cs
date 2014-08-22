@@ -1,6 +1,5 @@
 ﻿#if __MonoCS__
 using System;
-using System.Collections;
 
 namespace GrabTheMoment.Linux
 {
