@@ -7,7 +7,7 @@ namespace GrabTheMoment.Linux
     {
         // TODO: Print gombra átrakni.
         Print = Gdk.Key.Page_Up,
-        AltPrint = Gdk.Key.Page_Down
+        AltPrint = Gdk.Key.Print
     };
 }
 #endif

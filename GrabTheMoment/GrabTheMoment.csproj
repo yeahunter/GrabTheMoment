@@ -169,7 +169,6 @@
     <Compile Include="Linux\XKeyEvent.cs" />
     <Compile Include="Linux\XEventName.cs" />
     <Compile Include="Linux\XGrabMode.cs" />
-    <Compile Include="Linux\XModMask.cs" />
     <Compile Include="Linux\Runtime.cs" />
   </ItemGroup>
   <ItemGroup>
