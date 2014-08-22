@@ -185,7 +185,6 @@ namespace GrabTheMoment
 #else
         public static void PrintDesktop()
         {
-            // Csak asztalt lehet vele egyenlőre fényképezni
             Thread fullps = new Thread(() => new Screenmode.FullScreen());
             fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();

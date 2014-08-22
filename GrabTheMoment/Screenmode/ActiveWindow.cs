@@ -12,8 +12,6 @@ namespace GrabTheMoment.Screenmode
             X = rectangle.X;
             Y = rectangle.Y;
 
-            Width = rectangle.Width - X;
-            Height = rectangle.Height - Y;
 #if !__MonoCS__
             Width = rectangle.Width - X;
             Height = rectangle.Height - Y;
