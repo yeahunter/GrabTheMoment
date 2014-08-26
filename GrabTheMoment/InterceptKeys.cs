@@ -21,7 +21,7 @@ namespace GrabTheMoment
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 #else
-        private static SpecialKeys special = new SpecialKeys();
+        private static SpecialKeys special;
 #endif
 
         private static Form1 windowsform = null;
@@ -38,7 +38,13 @@ namespace GrabTheMoment
 #if __MonoCS__
         public static void InitLinux()
         {
-            special.RegisterHandler(SpecialPrint, SpecialKey.Print);
+            special = new SpecialKeys();
+            special.RegisterHandler(SpecialPrint, Gdk.ModifierType.Mod1Mask, SpecialKey.Print);
+        }
+
+        public static void UninitLinux()
+        {
+            special.Dispose();
         }
 #endif
 

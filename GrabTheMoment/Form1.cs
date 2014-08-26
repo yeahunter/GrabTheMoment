@@ -67,6 +67,7 @@ namespace GrabTheMoment
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            InterceptKeys.UninitLinux();
             Gtk.Application.Quit();
             //Application.Exit();
         }

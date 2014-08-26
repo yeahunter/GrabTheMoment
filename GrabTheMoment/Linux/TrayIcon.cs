@@ -133,6 +133,7 @@ namespace GrabTheMoment.Linux
             // Quit the application when quit has been clicked.
             menuItemQuit.Activated += delegate
             {
+                InterceptKeys.UninitLinux();
                 System.Windows.Forms.Application.Exit();
                 Application.Quit();
             };
