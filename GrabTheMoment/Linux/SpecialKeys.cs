@@ -51,7 +51,7 @@ namespace GrabTheMoment.Linux
             {
                 int key = (int)specialKey;
 
-                if(KeyMap.ContainsKey(key))
+                if((key = Contains(specialKey)) != NoneKey)
                     KeyMap[key].SKPHMethod -= handler;
             }
         }
