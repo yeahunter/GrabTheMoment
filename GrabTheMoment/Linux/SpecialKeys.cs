@@ -11,7 +11,7 @@ namespace GrabTheMoment.Linux
         private Dictionary<int, HookKey> KeyMap = new Dictionary<int, HookKey>();
         private DateTime last_raise = DateTime.MinValue;
         private TimeSpan raise_delay = new TimeSpan(0);
-        private const int NoKey = -88;
+        private const int NoneKey = -88;
 
         public SpecialKeys()
         {
@@ -31,9 +31,9 @@ namespace GrabTheMoment.Linux
         {
             foreach(SpecialKey specialKey in specialKeys)
             {
-                int key = NoKey;
+                int key = NoneKey;
 
-                if((key = Contains(specialKey)) != NoKey)
+                if((key = Contains(specialKey)) != NoneKey)
                 {
                     if(KeyMap[key].ModeMask == Gdk.ModifierType.None && ModeMask != Gdk.ModifierType.None)
                         KeyMap[key].ModeMask = ModeMask;
@@ -70,7 +70,7 @@ namespace GrabTheMoment.Linux
                     return map.Value.Key;
             }
 
-            return NoKey;
+            return NoneKey;
         }
 
         private void BuildKeyMap()
