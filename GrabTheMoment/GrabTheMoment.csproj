@@ -99,11 +99,11 @@
     <Compile Include="Savemode\Forms\local.Designer.cs">
       <DependentUpon>local.cs</DependentUpon>
     </Compile>
-    <Compile Include="Screenmode\ActiveWindow.cs" />
-    <Compile Include="Screenmode\allmode.cs" />
-    <Compile Include="Screenmode\FullScreen.cs" />
-    <Compile Include="Screenmode\PrintScreenType.cs" />
-    <Compile Include="Screenmode\RectangleArea.cs" />
+    <Compile Include="ScreenMode\ActiveWindow.cs" />
+    <Compile Include="ScreenMode\allmode.cs" />
+    <Compile Include="ScreenMode\FullScreen.cs" />
+    <Compile Include="ScreenMode\PrintScreenType.cs" />
+    <Compile Include="ScreenMode\RectangleArea.cs" />
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

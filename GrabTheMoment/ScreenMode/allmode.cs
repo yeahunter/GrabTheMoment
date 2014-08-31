@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     static class allmode
     {
