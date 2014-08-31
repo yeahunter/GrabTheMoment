@@ -217,7 +217,7 @@ namespace GrabTheMoment.Linux
         private static extern int gdk_error_trap_pop();
 
         [DllImport("gdk-x11-2.0")]
-        private static extern void gdk_flush();     
+        private static extern void gdk_flush();
     }
 }
 #endif

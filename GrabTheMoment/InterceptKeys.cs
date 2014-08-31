@@ -198,6 +198,11 @@ namespace GrabTheMoment
 
         public static void PrintActiveWindow()
         {
+            PrintWindow(Gdk.Screen.Default.ActiveWindow);
+        }
+
+        public static void PrintWindow(Gdk.Window window)
+        {
             int x;
             int y;
             int width;
@@ -205,27 +210,12 @@ namespace GrabTheMoment
             int depth;
             Rectangle rect;
 
-            Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-            Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
-
-            /*if(x < 0)
-            {
-                Gdk.Screen.Default.ActiveWindow.Move(0, y);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
-            }
-
-            if(y < 0)
-            {
-                Gdk.Screen.Default.ActiveWindow.Move(x, 0);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
-            }*/
+            window.GetGeometry(out x, out y, out width, out height, out depth);
+            window.GetRootOrigin(out x, out y);
 
             // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
             rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
-            //rect = new Rectangle(x, y, width, height);
             new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
         }
 
