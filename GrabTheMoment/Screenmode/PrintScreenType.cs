@@ -49,7 +49,7 @@ namespace GrabTheMoment.Screenmode
             set { _Width = value; }
         }
 
-        protected void mekkoraazxesazy()
+        protected void SetXandY()
         {
             foreach (Screen Kijelzo in Screen.AllScreens)
             {

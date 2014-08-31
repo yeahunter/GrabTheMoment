@@ -12,8 +12,6 @@ namespace GrabTheMoment
         private int initialY;
         private Rectangle rect;
 
-        private Screenmode.RectangleArea RA;
-
         public DesignateArea()
         {
             InitializeComponent();
@@ -73,7 +71,7 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new System.Threading.Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
+            new System.Threading.Thread(() => new Screenmode.RectangleArea(rect)).Start();
             this.Close();
         }
     }

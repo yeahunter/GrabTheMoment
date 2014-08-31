@@ -11,7 +11,7 @@ namespace GrabTheMoment.Screenmode
             Height = SystemInformation.VirtualScreen.Height;
             Width = SystemInformation.VirtualScreen.Width;
 
-            mekkoraazxesazy();
+            SetXandY();
             CreatePic();
 
             SavePic();
