@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace GrabTheMoment
 {
-    public partial class Form2 : Form
+    public partial class DesignateArea : Form
     {
-        private Screenmode.allmode smode;
         private System.Drawing.Graphics formGraphics;
         private bool isDown = false;
         private int initialX;
         private int initialY;
         private Rectangle rect;
 
-        public Form2()
+        public DesignateArea()
         {
             InitializeComponent();
-            smode = InterceptKeys.smode;
-            smode.mekkoraazxesazy();
-            WinApi.SetWinFullScreen(this.Handle, smode.x, smode.y);
+            ScreenMode.allmode.mekkoraazxesazy();
+            API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -30,8 +26,7 @@ namespace GrabTheMoment
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Escape)
-                this.Close();
+            this.Close(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
         }
 
         private void Form2_MouseDown(object sender, MouseEventArgs e)
@@ -43,7 +38,7 @@ namespace GrabTheMoment
 
         private void Form2_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDown == true)
+            if (isDown)
             {
                 this.Invalidate();
                 this.Update();
@@ -76,38 +71,8 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new System.Threading.Thread(() => smode.AreaPs(rect)).Start();
+            new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
             this.Close();
-        }
-    }
-    public class WinApi
-    {
-        [DllImport("user32.dll", EntryPoint = "GetSystemMetrics")]
-        public static extern int GetSystemMetrics(int which);
-
-        [DllImport("user32.dll")]
-        public static extern void
-            SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
-                         int X, int Y, int width, int height, uint flags);
-
-        private const int SM_CXSCREEN = 0;
-        private const int SM_CYSCREEN = 1;
-        private static IntPtr HWND_TOP = IntPtr.Zero;
-        private const int SWP_SHOWWINDOW = 64; // 0x0040
-
-        public static int ScreenX
-        {
-            get { return GetSystemMetrics(SM_CXSCREEN); }
-        }
-
-        public static int ScreenY
-        {
-            get { return GetSystemMetrics(SM_CYSCREEN); }
-        }
-
-        public static void SetWinFullScreen(IntPtr hwnd, int x, int y)
-        {
-            SetWindowPos(hwnd, HWND_TOP, x, y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, SWP_SHOWWINDOW);
         }
     }
 }
