@@ -7,7 +7,7 @@ namespace GrabTheMoment
 {
     static class Program
     {
-        static Form1 windowsform;
+        static Main windowsform;
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
 
@@ -42,7 +42,7 @@ namespace GrabTheMoment
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                windowsform = new Form1();
+                windowsform = new Main();
                 InterceptKeys.Hook(windowsform);
                 Application.Run(windowsform);
             }

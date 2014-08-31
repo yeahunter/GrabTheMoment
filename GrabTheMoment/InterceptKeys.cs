@@ -16,10 +16,10 @@ namespace GrabTheMoment
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
-        private static Form1 windowsform = null;
+        private static Main windowsform = null;
         private static string clipboard = null;
 
-        public static void Hook(Form1 formegy)
+        public static void Hook(Main formegy)
         {
             windowsform = formegy;
             _hookID = SetHook(_proc);
@@ -47,7 +47,7 @@ namespace GrabTheMoment
             Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
 
-        public static Form1 windowsformoscucc
+        public static Main windowsformoscucc
         {
             get { return windowsform; }
         }
@@ -86,7 +86,6 @@ namespace GrabTheMoment
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
                         System.Threading.Thread fullps = new System.Threading.Thread(() => new Screenmode.FullScreen());
-                        // System.Threading.Thread fullps = new System.Threading.Thread(() => Screenmode.allmode.FullPS());
                         fullps.SetApartmentState(System.Threading.ApartmentState.STA);
                         fullps.Start();
                         //new System.Threading.Thread(() => screenmode.FullPS()).Start();
@@ -105,7 +104,7 @@ namespace GrabTheMoment
                         //System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
                         //areaps.SetApartmentState(System.Threading.ApartmentState.STA);
                         //areaps.Start();
-                        Form2 secondForm = new Form2();
+                        DesignateArea secondForm = new DesignateArea();
                         secondForm.Show();
                     }
                 }
