@@ -2,11 +2,10 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using GrabTheMoment.Windows;
 
 namespace GrabTheMoment
 {
-    public partial class Form2 : Form
+    public partial class DesignateArea : Form
     {
         private Graphics formGraphics;
         private bool isDown = false;
@@ -14,11 +13,11 @@ namespace GrabTheMoment
         private int initialY;
         private Rectangle rect;
 
-        public Form2()
+        public DesignateArea()
         {
             InitializeComponent();
             Screenmode.allmode.mekkoraazxesazy();
-            WinApi.SetWinFullScreen(this.Handle, Screenmode.allmode.x, Screenmode.allmode.y);
+            API.NativeWin32.SetWinFullScreen(this.Handle, Screenmode.allmode.x, Screenmode.allmode.y);
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -28,8 +27,7 @@ namespace GrabTheMoment
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Escape)
-                this.Close();
+            this.Close(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
         }
 
         private void Form2_MouseDown(object sender, MouseEventArgs e)
@@ -41,7 +39,7 @@ namespace GrabTheMoment
 
         private void Form2_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDown == true)
+            if (isDown)
             {
                 this.Invalidate();
                 this.Update();
@@ -74,7 +72,7 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
+            new Thread(() => new Screenmode.RectangleArea(rect)).Start();
             this.Close();
         }
     }

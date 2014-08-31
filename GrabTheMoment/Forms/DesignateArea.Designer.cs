@@ -1,6 +1,6 @@
 ﻿namespace GrabTheMoment
 {
-    partial class Form2
+    partial class DesignateArea
     {
         /// <summary>
         /// Required designer variable.

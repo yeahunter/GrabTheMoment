@@ -52,7 +52,7 @@ namespace GrabTheMoment.Screenmode
             set { _Width = value; }
         }
 
-        protected void mekkoraazxesazy()
+        protected void SetXandY()
         {
             foreach (Screen Kijelzo in Screen.AllScreens)
             {
@@ -98,7 +98,7 @@ namespace GrabTheMoment.Screenmode
         protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
 #if !__MonoCS__
-            Form1 fone = InterceptKeys.windowsformoscucc;
+            Main fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
 #else
             Notification n = new Notification(tiptitle, tiptext);

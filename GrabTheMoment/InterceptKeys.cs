@@ -24,10 +24,10 @@ namespace GrabTheMoment
         private static SpecialKeys special;
 #endif
 
-        private static Form1 windowsform = null;
+        private static Main windowsform = null;
         private static string clipboard = null;
 
-        public static void Hook(Form1 formegy)
+        public static void Hook(Main formegy)
         {
             windowsform = formegy;
 #if !__MonoCS__
@@ -100,7 +100,7 @@ namespace GrabTheMoment
         }
 #endif
 
-        public static Form1 windowsformoscucc
+        public static Main windowsformoscucc
         {
             get { return windowsform; }
         }
@@ -139,7 +139,6 @@ namespace GrabTheMoment
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
                         Thread fullps = new Thread(() => new Screenmode.FullScreen());
-                        // Thread fullps = new Thread(() => Screenmode.allmode.FullPS());
                         fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
                         //new Thread(() => screenmode.FullPS()).Start();
@@ -158,7 +157,7 @@ namespace GrabTheMoment
                         //Thread areaps = new Thread(() => new Form2());
                         //areaps.SetApartmentState(ApartmentState.STA);
                         //areaps.Start();
-                        Form2 secondForm = new Form2();
+                        DesignateArea secondForm = new DesignateArea();
                         secondForm.Show();
                     }
                 }

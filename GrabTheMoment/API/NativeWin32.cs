@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace GrabTheMoment.Windows
+namespace GrabTheMoment.API
 {
-    public class WinApi
+    public class NativeWin32
     {
         [DllImport("user32.dll", EntryPoint = "GetSystemMetrics")]
         public static extern int GetSystemMetrics(int which);
 
         [DllImport("user32.dll")]
         public static extern void
-        SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
-            int X, int Y, int width, int height, uint flags);
+            SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
+                         int X, int Y, int width, int height, uint flags);
 
         private const int SM_CXSCREEN = 0;
         private const int SM_CYSCREEN = 1;
