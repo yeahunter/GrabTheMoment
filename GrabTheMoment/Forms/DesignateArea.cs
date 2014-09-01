@@ -84,7 +84,7 @@ namespace GrabTheMoment
 #endif
             isDown = false;
 #if __MonoCS__
-            Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlóre én gépemen így jól működik.
+            Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlőre én gépemen így jól működik.
 #endif
             new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
             this.Close();
