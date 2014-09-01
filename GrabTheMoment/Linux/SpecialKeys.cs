@@ -35,9 +35,8 @@ namespace GrabTheMoment.Linux
 
                 if((key = Contains(specialKey)) != NoneKey)
                 {
-                    if(KeyMap[key].ModeMask == Gdk.ModifierType.None && ModeMask != Gdk.ModifierType.None)
-                        KeyMap[key].ModeMask = ModeMask;
-
+                    var mm = new Gdk.ModifierType[] { ModeMask };
+                    mm.CopyTo(KeyMap[key].ModeMask, 0);
                     KeyMap[key].SKPHMethod += handler;
                     KeyMap[key].SKPHMethod = handler;
                     ReinitializeKeys();
@@ -114,21 +113,24 @@ namespace GrabTheMoment.Linux
             }
         }
 
-        private void GrabKey(Gdk.Window root, int keycode, Gdk.ModifierType modemask = Gdk.ModifierType.None)
+        private void GrabKey(Gdk.Window root, int keycode, Gdk.ModifierType[] modemask)
         {
             IntPtr xid = gdk_x11_drawable_get_xid(root.Handle);
             IntPtr xdisplay = gdk_x11_get_default_xdisplay();
 
             gdk_error_trap_push();
 
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            foreach(var mmask in modemask)
+            {
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, mmask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, mmask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            }
 
             gdk_flush();
 
@@ -136,21 +138,24 @@ namespace GrabTheMoment.Linux
                 Log.WriteEvent(string.Format("SpecialKeys: Could not grab key {0} (maybe another application has grabbed this key)", keycode));
         }
 
-        private void UngrabKey(Gdk.Window root, int keycode, Gdk.ModifierType modemask = Gdk.ModifierType.None)
+        private void UngrabKey(Gdk.Window root, int keycode, Gdk.ModifierType[] modemask)
         {
             IntPtr xid = gdk_x11_drawable_get_xid(root.Handle);
             IntPtr xdisplay = gdk_x11_get_default_xdisplay();
 
             gdk_error_trap_push();
 
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
-            XUngrabKey(xdisplay, keycode, modemask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid);
+            foreach(var mmask in modemask)
+            {
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
+                XUngrabKey(xdisplay, keycode, mmask, xid);
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask, xid);
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
+                XUngrabKey(xdisplay, keycode, mmask | Gdk.ModifierType.LockMask, xid);
+                XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask | Gdk.ModifierType.LockMask, xid);
+            }
 
             gdk_flush();
 

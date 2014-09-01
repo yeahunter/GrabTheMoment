@@ -40,6 +40,7 @@ namespace GrabTheMoment
         {
             special = new SpecialKeys();
             special.RegisterHandler(SpecialPrint, Gdk.ModifierType.Mod1Mask, SpecialKey.Print);
+            special.RegisterHandler(SpecialPrint, Gdk.ModifierType.ControlMask, SpecialKey.Print);
         }
 
         public static void UninitLinux()
@@ -207,29 +208,15 @@ namespace GrabTheMoment
             Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
             Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
 
-            /*if(x < 0)
-            {
-                Gdk.Screen.Default.ActiveWindow.Move(0, y);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
-            }
-
-            if(y < 0)
-            {
-                Gdk.Screen.Default.ActiveWindow.Move(x, 0);
-                Gdk.Screen.Default.ActiveWindow.GetGeometry(out x, out y, out width, out height, out depth);
-                Gdk.Screen.Default.ActiveWindow.GetRootOrigin(out x, out y);
-            }*/
-
             // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
             rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
-            //rect = new Rectangle(x, y, width, height);
             new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
         }
 
         private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)
         {
+            Console.WriteLine(ModeMask);
             if(key == SpecialKey.Print && ModeMask == Gdk.ModifierType.Mod2Mask)
             {
                 Log.WriteEvent("Hotkey Pressed! [Print]");
@@ -239,6 +226,12 @@ namespace GrabTheMoment
             {
                 Log.WriteEvent("Hotkey Pressed! [Alt+Print]");
                 PrintActiveWindow();
+            }
+            else if(key == SpecialKey.Print && ModeMask == (Gdk.ModifierType.ControlMask | Gdk.ModifierType.Mod2Mask))
+            {
+                Log.WriteEvent("Hotkey Pressed! [Control+Print]");
+                //DesignateArea secondForm = new DesignateArea();
+                //secondForm.Show();
             }
         }
 #endif
