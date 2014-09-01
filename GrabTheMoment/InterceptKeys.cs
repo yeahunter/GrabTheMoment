@@ -1,9 +1,10 @@
-﻿using System;
+using System;
+using System.Drawing;
 using System.Threading;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Drawing;
+using System.Runtime.InteropServices;
+﻿using GrabTheMoment.API;
 #if __MonoCS__
 using GrabTheMoment.Linux;
 #endif
@@ -18,7 +19,7 @@ namespace GrabTheMoment
         private const int WM_KEYUP = 0x0101; // Nemkezel több gombot egyszerre!
         private const int WM_SYSKEYDOWN = 0x0104; // Az Alt-hoz kellett!
 #if !__MonoCS__
-        private static LowLevelKeyboardProc _proc = HookCallback;
+        private static NativeWin32.LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 #else
         private static SpecialKeys special;
@@ -107,18 +108,15 @@ namespace GrabTheMoment
         }
 
 #if !__MonoCS__
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
+        private static IntPtr SetHook(NativeWin32.LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-                    GetModuleHandle(curModule.ModuleName), 0);
+                return NativeWin32.SetWindowsHookEx(WH_KEYBOARD_LL, proc,
+                    NativeWin32.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
-
-        private delegate IntPtr LowLevelKeyboardProc(
-            int nCode, IntPtr wParam, IntPtr lParam);
 
         private static IntPtr HookCallback(
             int nCode, IntPtr wParam, IntPtr lParam)
@@ -139,18 +137,18 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        Thread fullps = new Thread(() => new Screenmode.FullScreen());
+                       Thread fullps = new Thread(() => new ScreenMode.FullScreen());
                         fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
-                        //new Thread(() => screenmode.FullPS()).Start();
+                        //new Thread(() => ScreenMode.FullPS()).Start();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        IntPtr hWnd = GetForegroundWindow();
+                        IntPtr hWnd = NativeWin32.GetForegroundWindow();
                         Rectangle rect;
-                        GetWindowRect(hWnd, out rect);
-                        new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
+                        NativeWin32.GetWindowRect(hWnd, out rect);
+                        new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
                     }
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -164,34 +162,12 @@ namespace GrabTheMoment
                 }
 
             }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
-
+            return NativeWin32.CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook,
-            LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-            IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowRect(IntPtr hWnd, out Rectangle rect);
 #else
         public static void PrintDesktop()
         {
-            Thread fullps = new Thread(() => new Screenmode.FullScreen());
+            Thread fullps = new Thread(() => new ScreenMode.FullScreen());
             fullps.SetApartmentState(ApartmentState.STA);
             fullps.Start();
         }
@@ -211,7 +187,7 @@ namespace GrabTheMoment
             // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
             rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
-            new Thread(() => new Screenmode.ActiveWindow(rect)).Start();
+            new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
         }
 
         private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)

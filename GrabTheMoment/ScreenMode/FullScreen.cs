@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public class FullScreen : PrintScreenType
     {

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public class RectangleArea : PrintScreenType
     {
@@ -13,8 +13,8 @@ namespace GrabTheMoment.Screenmode
             Width = rectangle.Width - 1;
 
             SetXandY();
-            X += rectangle.X;
-            Y += rectangle.Y;
+            X += rectangle.X + 1;
+            Y += rectangle.Y + 1;
 
             CreatePic();
             SavePic();

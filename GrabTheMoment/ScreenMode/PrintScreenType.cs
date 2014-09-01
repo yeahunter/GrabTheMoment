@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Notifications;
 #endif
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public abstract class PrintScreenType
     {

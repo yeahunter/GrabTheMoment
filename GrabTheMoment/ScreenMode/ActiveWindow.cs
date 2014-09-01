@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public class ActiveWindow : PrintScreenType
     {

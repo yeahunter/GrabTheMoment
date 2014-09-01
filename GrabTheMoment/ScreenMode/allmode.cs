@@ -6,7 +6,7 @@ using GrabTheMoment.Properties;
 using Notifications;
 #endif
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     static class allmode
     {

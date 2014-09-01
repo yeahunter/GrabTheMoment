@@ -16,8 +16,8 @@ namespace GrabTheMoment
         public DesignateArea()
         {
             InitializeComponent();
-            Screenmode.allmode.mekkoraazxesazy();
-            API.NativeWin32.SetWinFullScreen(this.Handle, Screenmode.allmode.x, Screenmode.allmode.y);
+            ScreenMode.allmode.mekkoraazxesazy();
+            API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -72,7 +72,7 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new Thread(() => new Screenmode.RectangleArea(rect)).Start();
+            new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
             this.Close();
         }
     }
