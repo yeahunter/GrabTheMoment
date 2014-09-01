@@ -69,6 +69,16 @@ namespace GrabTheMoment.Linux
                 InterceptKeys.PrintActiveWindow();
             };
 
+            ImageMenuItem menuItemDesignateArea = new ImageMenuItem("Print Designate Area");
+            //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemDesignateArea.Image = appimg;
+            popupMenu.Add(menuItemDesignateArea);
+
+            menuItemDesignateArea.Activated += delegate
+            {
+                InterceptKeys.PrintDesignateArea();
+            };
+
             ImageMenuItem menuItemSelectWindow = new ImageMenuItem("Select Windows");
             //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
             //menuItemActiveWindow.Image = appimg;

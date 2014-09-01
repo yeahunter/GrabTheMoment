@@ -137,7 +137,7 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                       Thread fullps = new Thread(() => new ScreenMode.FullScreen());
+                        Thread fullps = new Thread(() => new ScreenMode.FullScreen());
                         fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
                         //new Thread(() => ScreenMode.FullPS()).Start();
@@ -190,6 +190,12 @@ namespace GrabTheMoment
             new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
         }
 
+        public static void PrintDesignateArea()
+        {
+            DesignateArea secondForm = new DesignateArea();
+            Application.Run(secondForm); // Így normálisan lefut.
+        }
+
         private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)
         {
             if(key == SpecialKey.Print && ModeMask == Gdk.ModifierType.Mod2Mask)
@@ -205,8 +211,7 @@ namespace GrabTheMoment
             else if(key == SpecialKey.Print && ModeMask == (Gdk.ModifierType.ControlMask | Gdk.ModifierType.Mod2Mask))
             {
                 Log.WriteEvent("Hotkey Pressed! [Control+Print]");
-                //DesignateArea secondForm = new DesignateArea();
-                //secondForm.Show();
+                PrintDesignateArea();
             }
         }
 #endif

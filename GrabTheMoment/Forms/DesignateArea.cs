@@ -3,6 +3,10 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
+
+
+using System.Runtime.InteropServices;  // TÖRÖLNI MAJD
+
 namespace GrabTheMoment
 {
     public partial class DesignateArea : Form
@@ -16,8 +20,16 @@ namespace GrabTheMoment
         public DesignateArea()
         {
             InitializeComponent();
+#if !__MonoCS__
             ScreenMode.allmode.mekkoraazxesazy();
             API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
+#else
+            //IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(a.Handle);
+            //IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
+            //ScreenMode.allmode.mekkoraazxesazy();
+            //NativeLinux.XMoveResizeWindow(xdisplay, xid, ScreenMode.allmode.x, ScreenMode.allmode.y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
+            this.WindowState = FormWindowState.Maximized; // Az ablak így nem fedi le a tálcát de ha egér oda van húzva úgyan úgy lefényképezi.
+#endif
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -71,7 +83,13 @@ namespace GrabTheMoment
 
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
+#if __MonoCS__
+            this.Visible = false;
+#endif
             isDown = false;
+#if __MonoCS__
+            Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlóre én gépemen így jól működik.
+#endif
             new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
             this.Close();
         }

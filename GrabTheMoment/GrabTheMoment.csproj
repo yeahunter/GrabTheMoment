@@ -152,6 +152,7 @@
     <Compile Include="Linux\XGrabMode.cs" />
     <Compile Include="Linux\Runtime.cs" />
     <Compile Include="Linux\HookKey.cs" />
+    <Compile Include="Linux\NativeLinux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
