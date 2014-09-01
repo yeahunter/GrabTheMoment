@@ -3,10 +3,6 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
-
-
-using System.Runtime.InteropServices;  // TÖRÖLNI MAJD
-
 namespace GrabTheMoment
 {
     public partial class DesignateArea : Form
