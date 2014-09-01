@@ -216,7 +216,6 @@ namespace GrabTheMoment
 
         private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)
         {
-            Console.WriteLine(ModeMask);
             if(key == SpecialKey.Print && ModeMask == Gdk.ModifierType.Mod2Mask)
             {
                 Log.WriteEvent("Hotkey Pressed! [Print]");
