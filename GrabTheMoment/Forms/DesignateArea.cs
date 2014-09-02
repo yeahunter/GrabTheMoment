@@ -26,7 +26,7 @@ namespace GrabTheMoment
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Close(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
+            ExitForm(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
         }
 
         private void Form2_MouseDown(object sender, MouseEventArgs e)
@@ -71,7 +71,16 @@ namespace GrabTheMoment
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
-            new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            // Ha valaki ertelmes magassagu/szelessegu teglalapot szeretne, csak akkor keszitunk neki kepet
+            if (rect.Height != 0 && rect.Width != 0)
+                new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            ExitForm();
+        }
+
+        private void ExitForm()
+        {
             this.Close();
         }
     }
