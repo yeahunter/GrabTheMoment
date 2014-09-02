@@ -43,7 +43,7 @@ namespace GrabTheMoment
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Close(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
+            ExitForm(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
         }
 
         private void Form2_MouseDown(object sender, MouseEventArgs e)
@@ -95,6 +95,16 @@ namespace GrabTheMoment
             Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlőre én gépemen így jól működik.
 #endif
             new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            // Ha valaki ertelmes magassagu/szelessegu teglalapot szeretne, csak akkor keszitunk neki kepet
+            if (rect.Height != 0 && rect.Width != 0)
+                new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            ExitForm();
+        }
+
+        private void ExitForm()
+        {
             this.Close();
         }
     }

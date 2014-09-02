@@ -115,13 +115,7 @@ namespace GrabTheMoment.ScreenMode
                 Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MFtp)
-            {
-                //System.Threading.Thread.Sleep(5000);
                 Savemode.allmode.MFtp_SavePS(_bmpScreenShot, _FileName);
-            }
-
-            //if (Settings.Default.MDropbox)
-            //    MDropbox_SavePS(bmpScreenShot, idodatum);
 
             if (Settings.Default.MImgur)
                 Savemode.allmode.MImgur_SavePS(_bmpScreenShot, _FileName);
