@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
 
 namespace GrabTheMoment
 {
@@ -20,11 +23,16 @@ namespace GrabTheMoment
             ScreenMode.allmode.mekkoraazxesazy();
             API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
 #else
-            //IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(a.Handle);
+            //IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(this.Handle - 1);
             //IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
             //ScreenMode.allmode.mekkoraazxesazy();
             //NativeLinux.XMoveResizeWindow(xdisplay, xid, ScreenMode.allmode.x, ScreenMode.allmode.y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
-            this.WindowState = FormWindowState.Maximized; // Az ablak így nem fedi le a tálcát de ha egér oda van húzva úgyan úgy lefényképezi.
+            //this.WindowState = FormWindowState.Maximized; // Az ablak így nem fedi le a tálcát de ha egér oda van húzva úgyan úgy lefényképezi.
+            this.TopMost = true;
+            this.Location = new Point(0, 0);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Width = SystemInformation.VirtualScreen.Width;
+            this.Height = SystemInformation.VirtualScreen.Height;
 #endif
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
