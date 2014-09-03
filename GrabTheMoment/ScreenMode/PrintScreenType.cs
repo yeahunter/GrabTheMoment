@@ -2,6 +2,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+#if __MonoCS__
+using Notifications;
+#endif
 
 namespace GrabTheMoment.ScreenMode
 {
@@ -94,8 +97,15 @@ namespace GrabTheMoment.ScreenMode
 
         protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
+#if !__MonoCS__
             Main fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
+#else
+            Notification n = new Notification(tiptitle, tiptext);
+            n.AddHint("x-canonical-append", "");
+            n.Timeout = 15;
+            n.Show();
+#endif
         }
 
         protected void SavePic()

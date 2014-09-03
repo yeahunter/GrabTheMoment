@@ -1,11 +1,14 @@
-﻿using GrabTheMoment.API;
-using GrabTheMoment.Properties;
 using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Threading;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+﻿using GrabTheMoment.API;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
+using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
 {
@@ -15,8 +18,12 @@ namespace GrabTheMoment
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101; // Nemkezel több gombot egyszerre!
         private const int WM_SYSKEYDOWN = 0x0104; // Az Alt-hoz kellett!
+#if !__MonoCS__
         private static NativeWin32.LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+#else
+        private static SpecialKeys special;
+#endif
 
         private static Main windowsform = null;
         private static string clipboard = null;
@@ -24,11 +31,28 @@ namespace GrabTheMoment
         public static void Hook(Main formegy)
         {
             windowsform = formegy;
+#if !__MonoCS__
             _hookID = SetHook(_proc);
+#endif
         }
+
+#if __MonoCS__
+        public static void InitLinux()
+        {
+            special = new SpecialKeys();
+            special.RegisterHandler(SpecialPrint, Gdk.ModifierType.Mod1Mask, SpecialKey.Print);
+            special.RegisterHandler(SpecialPrint, Gdk.ModifierType.ControlMask, SpecialKey.Print);
+        }
+
+        public static void UninitLinux()
+        {
+            special.Dispose();
+        }
+#endif
 
         public static void Klipbood()
         {
+#if !__MonoCS__
             if (clipboard != null && windowsform.lastLinkToolStripMenuItem.Enabled)
             {
                 Clipboard.SetText(clipboard);
@@ -36,18 +60,47 @@ namespace GrabTheMoment
             }
             else
                 Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
+#else
+            if (clipboard != null) // TODO
+            {
+                Gtk.Application.Invoke((delegate { setClipboard(clipboard); }));
+                Log.WriteEvent("Klipbood-0arg: " + clipboard);
+            }
+            else
+                Log.WriteEvent("Klipbood-0arg ures clipboard valtozo");
+#endif
         }
 
         public static void Klipbood(string clipboord)
         {
             clipboard = clipboord;
-
+#if !__MonoCS__
             if (Settings.Default.InstantClipboard)
-                Clipboard.SetText(clipboord);
+                Clipboard.SetText(clipboard);
 
             windowsform.lastLinkToolStripMenuItem.Enabled = true;
+#else
+            // TODO: Miért false mindig?
+            //if (Settings.Default.InstantClipboard)
+                Gtk.Application.Invoke((delegate { setClipboard(clipboard); }));
+#endif
             Log.WriteEvent("Klipbood-1arg: " + clipboard);
         }
+
+#if __MonoCS__
+        private static void setClipboard(string text)
+        {
+            try
+            {
+                Gtk.Clipboard clip = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
+                clip.Text = text;
+            }
+            catch
+            {
+
+            }
+        }
+#endif
 
         public static Main windowsformoscucc
         {
@@ -84,10 +137,10 @@ namespace GrabTheMoment
                     //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
-                        System.Threading.Thread fullps = new System.Threading.Thread(() => new ScreenMode.FullScreen());
-                        fullps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        Thread fullps = new Thread(() => new ScreenMode.FullScreen());
+                        fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
-                        //new System.Threading.Thread(() => ScreenMode.FullPS()).Start();
+                        //new Thread(() => ScreenMode.FullPS()).Start();
                         //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
@@ -100,8 +153,8 @@ namespace GrabTheMoment
                     // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        //System.Threading.Thread areaps = new System.Threading.Thread(() => new Form2());
-                        //areaps.SetApartmentState(System.Threading.ApartmentState.STA);
+                        //Thread areaps = new Thread(() => new Form2());
+                        //areaps.SetApartmentState(ApartmentState.STA);
                         //areaps.Start();
                         DesignateArea secondForm = new DesignateArea();
                         secondForm.Show();
@@ -112,6 +165,54 @@ namespace GrabTheMoment
             return NativeWin32.CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 #else
+        public static void PrintDesktop()
+        {
+            Thread fullps = new Thread(() => new ScreenMode.FullScreen());
+            fullps.SetApartmentState(ApartmentState.STA);
+            fullps.Start();
+        }
+
+        public static void PrintActiveWindow()
+        {
+            PrintWindow(Gdk.Screen.Default.ActiveWindow);
+        }
+
+        public static void PrintWindow(Gdk.Window window)
+        {
+            // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
+            // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
+            int x = window.FrameExtents.X;
+            int y = window.FrameExtents.Y;
+            int width = window.FrameExtents.Width;
+            int height = window.FrameExtents.Height;
+            Rectangle rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
+            new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
+        }
+
+        public static void PrintDesignateArea()
+        {
+            DesignateArea secondForm = new DesignateArea();
+            Application.Run(secondForm); // Így normálisan lefut.
+        }
+
+        private static void SpecialPrint(object o, SpecialKey key, Gdk.ModifierType ModeMask)
+        {
+            if(key == SpecialKey.Print && ModeMask == Gdk.ModifierType.Mod2Mask)
+            {
+                Log.WriteEvent("Hotkey Pressed! [Print]");
+                PrintDesktop();
+            }
+            else if(key == SpecialKey.Print && ModeMask == (Gdk.ModifierType.Mod1Mask | Gdk.ModifierType.Mod2Mask))
+            {
+                Log.WriteEvent("Hotkey Pressed! [Alt+Print]");
+                PrintActiveWindow();
+            }
+            else if(key == SpecialKey.Print && ModeMask == (Gdk.ModifierType.ControlMask | Gdk.ModifierType.Mod2Mask))
+            {
+                Log.WriteEvent("Hotkey Pressed! [Control+Print]");
+                PrintDesignateArea();
+            }
+        }
 #endif
     }
 }
