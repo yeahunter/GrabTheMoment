@@ -91,11 +91,13 @@ namespace GrabTheMoment.Linux
 
                     item.ButtonPressEvent += delegate
                     {
-                        Console.WriteLine(12);
-                        //Ssubmenu.Hide();
-                        //popupMenu.Hide();
-                        sc.Show(); // Nem aktíválja azonnal.
-                        InterceptKeys.PrintWindow(sc);
+                        sc.Show();
+                        new Thread(() =>
+                        {
+                                Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
+                            InterceptKeys.PrintWindow(sc);
+                        }).Start();
+
                     };
                 }
 

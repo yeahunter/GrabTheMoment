@@ -62,6 +62,9 @@ namespace GrabTheMoment
             else
             {
                 this.Visible = Visible;
+                // Bug fix.
+                if(Visible)
+                    this.Activate();
             }
         }
 
