@@ -18,7 +18,7 @@ namespace GrabTheMoment
 #if __MonoCS__
         static TrayIcon trayicon;
 #endif
-        static Form1 windowsform;
+        static Main windowsform;
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
         static bool futhatoke = false;
 #if __MonoCS__
@@ -61,7 +61,7 @@ namespace GrabTheMoment
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                windowsform = new Form1();
+                windowsform = new Main();
                 InterceptKeys.Hook(windowsform);
 #if !__MonoCS__
                 Application.Run(windowsform);

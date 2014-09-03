@@ -72,6 +72,16 @@ namespace GrabTheMoment.Linux
                 InterceptKeys.PrintActiveWindow();
             };
 
+            ImageMenuItem menuItemDesignateArea = new ImageMenuItem("Print Designate Area");
+            //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemDesignateArea.Image = appimg;
+            popupMenu.Add(menuItemDesignateArea);
+
+            menuItemDesignateArea.Activated += delegate
+            {
+                InterceptKeys.PrintDesignateArea();
+            };
+
             ImageMenuItem menuItemSelectWindow = new ImageMenuItem("Select Windows");
             //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
             //menuItemActiveWindow.Image = appimg;
@@ -84,7 +94,7 @@ namespace GrabTheMoment.Linux
             {
                 foreach(var sc in Gdk.Screen.Default.WindowStack)
                 {
-                    var item = new MenuItem(GetWindowText(sc));
+                    var item = new MenuItem(NativeLinux.GetWindowText(sc));
 
                     SItemList.Add(item);
                     Ssubmenu.Append(item);
@@ -116,11 +126,6 @@ namespace GrabTheMoment.Linux
                 }
             };
 
-            /*menuItemSelectWindow.Activated += delegate
-            {
-
-            };*/
-
             SeparatorMenuItem separator = new SeparatorMenuItem();
             popupMenu.Add(separator);
 
@@ -140,44 +145,6 @@ namespace GrabTheMoment.Linux
             popupMenu.ShowAll();
             popupMenu.Popup();
         }
-
-
-        /// <summary>
-        /// Gets the text of the window.
-        /// </summary>
-        /// <param name="windowPointer">The pointer to the window.</param>
-        /// <returns>The text of the window.</returns>
-        public string GetWindowText(Gdk.Window windowPointer)
-        {
-            string windowText = string.Empty;
-            IntPtr xid = gdk_x11_drawable_get_xid(windowPointer.Handle);
-            IntPtr display = gdk_x11_get_default_xdisplay();
-            IntPtr namePointer = IntPtr.Zero;
-            int success = XFetchName(display, xid, ref namePointer);
-            string name = Marshal.PtrToStringAuto(namePointer);
-
-            if (success != 0)
-                windowText = name;
-
-            XFree(namePointer);
-            return windowText;
-        }
-
-        // Ezeket a függvényeket át kellene helyezni egy közös osztályba hogy globálisan lehessen használni őket.
-        [DllImport("gdk-x11-2.0")]
-        private static extern IntPtr gdk_x11_drawable_get_xid(IntPtr window);
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern IntPtr gdk_x11_get_default_xdisplay();
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern void gdk_error_trap_push();
-
-        [DllImport("libX11", EntryPoint = "XFetchName")]
-        private static extern int XFetchName(IntPtr display, IntPtr window, ref IntPtr window_name);
-
-        [DllImport("libX11", EntryPoint = "XFree")]
-        private static extern int XFree(IntPtr data);
     }
 }
 #endif
