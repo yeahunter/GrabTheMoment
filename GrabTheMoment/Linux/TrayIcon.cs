@@ -101,7 +101,13 @@ namespace GrabTheMoment.Linux
 
                     item.ButtonPressEvent += delegate
                     {
-                        sc.Show();
+                        // Így rendesen felugranak az ablakok.
+                        sc.Focus(0);
+                        // Bezárja az almenüt.
+                        Ssubmenu.Cancel();
+                        // Bezárja a főmenüt.
+                        popupMenu.Cancel();
+
                         new Thread(() =>
                         {
                             Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
