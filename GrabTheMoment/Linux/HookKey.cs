@@ -5,13 +5,15 @@ namespace GrabTheMoment.Linux
 {
     public class HookKey
     {
-        public Gdk.ModifierType ModeMask { get; private set; }
+        public Gdk.ModifierType[] ModeMask = new Gdk.ModifierType[] { Gdk.ModifierType.None };
+        public SpecialKey SKey { get; private set; }
+        public SpecialKeyPressedHandler SKPHMethod;
         public int Key { get; private set; }
 
-        public HookKey(int key, Gdk.ModifierType modemask)
+        public HookKey(int key, SpecialKey skey)
         {
             Key = key;
-            ModeMask = modemask;
+            SKey = skey;
         }
     }
 }

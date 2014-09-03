@@ -8,32 +8,38 @@ namespace GrabTheMoment.Linux
 {
     public class SpecialKeys
     {
-        private Hashtable key_map = new Hashtable();
-        private Hashtable key_registrations = new Hashtable();
-        private List<HookKey> keycode_list;
-        private TimeSpan raise_delay = new TimeSpan(0);
+        private Dictionary<int, HookKey> KeyMap = new Dictionary<int, HookKey>();
         private DateTime last_raise = DateTime.MinValue;
+        private TimeSpan raise_delay = new TimeSpan(0);
+        private const int NoneKey = -88;
 
         public SpecialKeys()
         {
-            Log.WriteEvent("init");
-            keycode_list = BuildKeyCodeList();
+            Log.WriteEvent("SpecialKeys: Init");
+            BuildKeyMap();
             InitializeKeys();
         }
 
         public void Dispose()
         {
+            Log.WriteEvent("SpecialKeys: Dispose");
             UnitializeKeys();
+            KeyMap.Clear();
         }
 
-        public void RegisterHandler(SpecialKeyPressedHandler handler, params SpecialKey[] specialKeys)
+        public void RegisterHandler(SpecialKeyPressedHandler handler, Gdk.ModifierType ModeMask, params SpecialKey[] specialKeys)
         {
             foreach(SpecialKey specialKey in specialKeys)
             {
-                if(key_map.Contains(specialKey))
+                int key = NoneKey;
+
+                if((key = Contains(specialKey)) != NoneKey)
                 {
-                    int key = (int)key_map[specialKey];
-                    key_registrations[key] = Delegate.Combine(key_registrations[key] as Delegate, handler);
+                    var mm = new Gdk.ModifierType[] { ModeMask };
+                    mm.CopyTo(KeyMap[key].ModeMask, 0);
+                    KeyMap[key].SKPHMethod += handler;
+                    KeyMap[key].SKPHMethod = handler;
+                    ReinitializeKeys();
                 }
             }
         }
@@ -42,39 +48,43 @@ namespace GrabTheMoment.Linux
         {
             foreach(SpecialKey specialKey in specialKeys)
             {
-                if(key_map.Contains(specialKey))
-                {
-                    int key = (int)key_map[specialKey];
-                    key_registrations[key] = Delegate.Remove(key_registrations[key] as Delegate, handler); 
-                }
+                int key = (int)specialKey;
+
+                if((key = Contains(specialKey)) != NoneKey)
+                    KeyMap[key].SKPHMethod -= handler;
             }
         }
 
-        private List<HookKey> BuildKeyCodeList()
+        private void ReinitializeKeys()
         {
-            var kc_list = new List<HookKey>();
+            UnitializeKeys();
+            InitializeKeys();
+        }
 
+        private int Contains(SpecialKey key)
+        {
+            foreach(var map in KeyMap)
+            {
+                if(map.Value.SKey == key)
+                    return map.Value.Key;
+            }
+
+            return NoneKey;
+        }
+
+        private void BuildKeyMap()
+        {
             foreach(SpecialKey key in Enum.GetValues(typeof(SpecialKey)))
             {
-                IntPtr xdisplay = gdk_x11_get_default_xdisplay();
+                IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
 
                 if(!xdisplay.Equals(IntPtr.Zero))
                 {
-                    int keycode = XKeysymToKeycode(xdisplay, key);
+                    int keycode = NativeLinux.XKeysymToKeycode(xdisplay, key);
                     if(keycode != 0)
-                    {
-                        key_map[keycode] = key;
-                        key_map[key] = keycode;
-
-                        if(key == SpecialKey.Print)
-                            kc_list.Add(new HookKey(keycode, Gdk.ModifierType.Mod1Mask));
-                        else
-                            kc_list.Add(new HookKey(keycode, Gdk.ModifierType.None));
-                    }
+                        KeyMap.Add(keycode, new HookKey(keycode, key));
                 }
             }
-
-            return kc_list;
         }
 
         private void InitializeKeys()
@@ -83,8 +93,8 @@ namespace GrabTheMoment.Linux
             {
                 Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
 
-                foreach(var klist in keycode_list)
-                    GrabKey(screen.RootWindow, klist.Key, klist.ModeMask);
+                foreach(var map in KeyMap)
+                    GrabKey(screen.RootWindow, map.Key, map.Value.ModeMask);
 
                 screen.RootWindow.AddFilter(FilterKey);
             }
@@ -95,61 +105,67 @@ namespace GrabTheMoment.Linux
             for(int i = 0; i < Gdk.Display.Default.NScreens; i++)
             {
                 Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
-                foreach(var klist in keycode_list)
-                    UngrabKey(screen.RootWindow, klist.Key, klist.ModeMask);
+
+                foreach(var map in KeyMap)
+                    UngrabKey(screen.RootWindow, map.Key, map.Value.ModeMask);
 
                 screen.RootWindow.RemoveFilter(FilterKey);
             }
         }
 
-        private void GrabKey(Gdk.Window root, int keycode, Gdk.ModifierType modemask = Gdk.ModifierType.None)
+        private void GrabKey(Gdk.Window root, int keycode, Gdk.ModifierType[] modemask)
         {
-            IntPtr xid = gdk_x11_drawable_get_xid(root.Handle);
-            IntPtr xdisplay = gdk_x11_get_default_xdisplay();
+            IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(root.Handle);
+            IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
 
-            gdk_error_trap_push();
+            NativeLinux.gdk_error_trap_push();
 
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
-            XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            foreach(var mmask in modemask)
+            {
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, mmask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, mmask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+                NativeLinux.XGrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask | Gdk.ModifierType.LockMask, xid, true, XGrabMode.Async, XGrabMode.Async);
+            }
 
+            NativeLinux.gdk_flush();
 
-            gdk_flush();
-
-            if(gdk_error_trap_pop() != 0)
-                Log.WriteEvent(string.Format(": Could not grab key {0} (maybe another application has grabbed this key)", keycode));
+            if(NativeLinux.gdk_error_trap_pop() != 0)
+                Log.WriteEvent(string.Format("SpecialKeys: Could not grab key {0} (maybe another application has grabbed this key)", keycode));
         }
 
-        private void UngrabKey(Gdk.Window root, int keycode, Gdk.ModifierType modemask = Gdk.ModifierType.None)
+        private void UngrabKey(Gdk.Window root, int keycode, Gdk.ModifierType[] modemask)
         {
-            IntPtr xid = gdk_x11_drawable_get_xid(root.Handle);
-            IntPtr xdisplay = gdk_x11_get_default_xdisplay();
+            IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(root.Handle);
+            IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
 
-            gdk_error_trap_push();
+            NativeLinux.gdk_error_trap_push();
 
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
-            XUngrabKey(xdisplay, keycode, modemask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, modemask | Gdk.ModifierType.LockMask, xid);
-            XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | modemask | Gdk.ModifierType.LockMask, xid);
+            foreach(var mmask in modemask)
+            {
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.None, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, mmask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.LockMask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | Gdk.ModifierType.LockMask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, mmask | Gdk.ModifierType.LockMask, xid);
+                NativeLinux.XUngrabKey(xdisplay, keycode, Gdk.ModifierType.Mod2Mask | mmask | Gdk.ModifierType.LockMask, xid);
+            }
 
-            gdk_flush();
+            NativeLinux.gdk_flush();
 
-            if(gdk_error_trap_pop() != 0)
-                Log.WriteEvent(string.Format(": Could not ungrab key {0} (maybe another application has grabbed this key)", keycode));
+            if(NativeLinux.gdk_error_trap_pop() != 0)
+                Log.WriteEvent(string.Format("SpecialKeys: Could not ungrab key {0} (maybe another application has grabbed this key)", keycode));
         }
 
         private Gdk.FilterReturn FilterKey(IntPtr xeventPtr, Gdk.Event gdkEvent)
         {
-            Log.WriteEvent("filter "+ gdkEvent.Type);
+            Log.WriteEvent("SpecialKeys: [1]filter " + gdkEvent.Type);
 
             if(DateTime.Now - last_raise < raise_delay)
                 return Gdk.FilterReturn.Continue;
@@ -161,22 +177,16 @@ namespace GrabTheMoment.Linux
                 return Gdk.FilterReturn.Continue;
 
             int keycode = (int)xevent.keycode;
-            object x = key_map[keycode];
+            object x = KeyMap[keycode];
 
-            Log.WriteEvent("filter "+ keycode);
+            Log.WriteEvent("SpecialKeys: [2]filter " + keycode);
 
             if(x == null)
                 return Gdk.FilterReturn.Continue;
 
-            SpecialKey key = (SpecialKey)key_map[keycode];
-
-            if (key_registrations[keycode] != null)
+            if(KeyMap[keycode].SKPHMethod.Method != null)
             {
-                x = key_registrations[keycode];
-
-                if (x is SpecialKeyPressedHandler)
-                    ((SpecialKeyPressedHandler)x)(this, key, (Gdk.ModifierType)xevent.state);    
-
+                KeyMap[keycode].SKPHMethod.Invoke(this, KeyMap[keycode].SKey, (Gdk.ModifierType)xevent.state);
                 return Gdk.FilterReturn.Remove;
             }
 
@@ -188,32 +198,6 @@ namespace GrabTheMoment.Linux
             get { return raise_delay; }
             set { raise_delay = value; }
         }
-
-        [DllImport("libX11")]
-        private static extern int XKeysymToKeycode(IntPtr display, SpecialKey keysym);
-
-        [DllImport("libX11")]
-        private static extern void XGrabKey(IntPtr display, int keycode, Gdk.ModifierType modifiers, 
-            IntPtr window, bool owner_events, XGrabMode pointer_mode, XGrabMode keyboard_mode);
-
-        [DllImport("libX11")]
-        private static extern void XUngrabKey(IntPtr display, int keycode, Gdk.ModifierType modifiers, 
-            IntPtr window);
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern IntPtr gdk_x11_drawable_get_xid(IntPtr window);
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern IntPtr gdk_x11_get_default_xdisplay();
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern void gdk_error_trap_push();
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern int gdk_error_trap_pop();
-
-        [DllImport("gdk-x11-2.0")]
-        private static extern void gdk_flush();     
     }
 }
 #endif

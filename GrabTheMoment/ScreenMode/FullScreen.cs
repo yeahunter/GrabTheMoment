@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public class FullScreen : PrintScreenType
     {
@@ -11,7 +11,7 @@ namespace GrabTheMoment.Screenmode
             Height = SystemInformation.VirtualScreen.Height;
             Width = SystemInformation.VirtualScreen.Width;
 
-            mekkoraazxesazy();
+            SetXandY();
             CreatePic();
 
             SavePic();

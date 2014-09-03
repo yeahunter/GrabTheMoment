@@ -2,11 +2,13 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using GrabTheMoment.Windows;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
 
 namespace GrabTheMoment
 {
-    public partial class Form2 : Form
+    public partial class DesignateArea : Form
     {
         private Graphics formGraphics;
         private bool isDown = false;
@@ -14,11 +16,24 @@ namespace GrabTheMoment
         private int initialY;
         private Rectangle rect;
 
-        public Form2()
+        public DesignateArea()
         {
             InitializeComponent();
-            Screenmode.allmode.mekkoraazxesazy();
-            WinApi.SetWinFullScreen(this.Handle, Screenmode.allmode.x, Screenmode.allmode.y);
+#if !__MonoCS__
+            ScreenMode.allmode.mekkoraazxesazy();
+            API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
+#else
+            //IntPtr xid = NativeLinux.gdk_x11_drawable_get_xid(this.Handle - 1);
+            //IntPtr xdisplay = NativeLinux.gdk_x11_get_default_xdisplay();
+            //ScreenMode.allmode.mekkoraazxesazy();
+            //NativeLinux.XMoveResizeWindow(xdisplay, xid, ScreenMode.allmode.x, ScreenMode.allmode.y, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
+            //this.WindowState = FormWindowState.Maximized; // Az ablak így nem fedi le a tálcát de ha egér oda van húzva úgyan úgy lefényképezi.
+            this.TopMost = true;
+            this.Location = new Point(0, 0);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Width = SystemInformation.VirtualScreen.Width;
+            this.Height = SystemInformation.VirtualScreen.Height;
+#endif
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -28,8 +43,7 @@ namespace GrabTheMoment
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyCode == Keys.Escape)
-                this.Close();
+            ExitForm(); // Barmelyik gomb lenyomasakor el fog tunni ez a form.
         }
 
         private void Form2_MouseDown(object sender, MouseEventArgs e)
@@ -41,7 +55,7 @@ namespace GrabTheMoment
 
         private void Form2_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDown == true)
+            if (isDown)
             {
                 this.Invalidate();
                 this.Update();
@@ -73,8 +87,24 @@ namespace GrabTheMoment
 
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
+#if __MonoCS__
+            this.Visible = false;
+#endif
             isDown = false;
-            new Thread(() => Screenmode.allmode.AreaPs(rect)).Start();
+#if __MonoCS__
+            Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlőre én gépemen így jól működik.
+#endif
+            new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            // Ha valaki ertelmes magassagu/szelessegu teglalapot szeretne, csak akkor keszitunk neki kepet
+            if (rect.Height != 0 && rect.Width != 0)
+                new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+
+            ExitForm();
+        }
+
+        private void ExitForm()
+        {
             this.Close();
         }
     }

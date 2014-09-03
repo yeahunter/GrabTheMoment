@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Notifications;
 #endif
 
-namespace GrabTheMoment.Screenmode
+namespace GrabTheMoment.ScreenMode
 {
     public abstract class PrintScreenType
     {
@@ -52,7 +52,7 @@ namespace GrabTheMoment.Screenmode
             set { _Width = value; }
         }
 
-        protected void mekkoraazxesazy()
+        protected void SetXandY()
         {
             foreach (Screen Kijelzo in Screen.AllScreens)
             {
@@ -98,7 +98,7 @@ namespace GrabTheMoment.Screenmode
         protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
         {
 #if !__MonoCS__
-            Form1 fone = InterceptKeys.windowsformoscucc;
+            Main fone = InterceptKeys.windowsformoscucc;
             fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
 #else
             Notification n = new Notification(tiptitle, tiptext);
@@ -115,13 +115,7 @@ namespace GrabTheMoment.Screenmode
                 Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MFtp)
-            {
-                //System.Threading.Thread.Sleep(5000);
                 Savemode.allmode.MFtp_SavePS(_bmpScreenShot, _FileName);
-            }
-
-            //if (Settings.Default.MDropbox)
-            //    MDropbox_SavePS(bmpScreenShot, idodatum);
 
             if (Settings.Default.MImgur)
                 Savemode.allmode.MImgur_SavePS(_bmpScreenShot, _FileName);

@@ -8,14 +8,14 @@ using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
 #if __MonoCS__
         delegate void SetVisibleCallback(bool Visible);
 #endif
         public Icon YeahunterIcon { get; private set; }
 
-        public Form1()
+        public Main()
         {
             InitializeComponent();
 #if __MonoCS__
@@ -62,11 +62,15 @@ namespace GrabTheMoment
             else
             {
                 this.Visible = Visible;
+                // Bug fix.
+                if(Visible)
+                    this.Activate();
             }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            InterceptKeys.UninitLinux();
             Gtk.Application.Quit();
             //Application.Exit();
         }

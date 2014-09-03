@@ -1,10 +1,13 @@
 ﻿#if __MonoCS__
 using System;
 using System.IO;
+using System.Threading;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
+
+using System.Runtime.InteropServices;
 
 namespace GrabTheMoment.Linux
 {
@@ -37,7 +40,7 @@ namespace GrabTheMoment.Linux
             trayIcon.PopupMenu += OnTrayIconPopup;
 
             // A Tooltip for the Icon
-            trayIcon.Tooltip = "Hello World Icon";
+            trayIcon.Tooltip = "Grab The Moment";
         }
 
         public void SetVisible(bool Visible)
@@ -56,7 +59,13 @@ namespace GrabTheMoment.Linux
 
             menuItemDesktopPrint.Activated += delegate
             {
-                InterceptKeys.PrintDesktop();
+                popupMenu.Cancel();
+
+                new Thread(() =>
+                {
+                    Thread.Sleep(400); // Kis késleltetés.
+                    InterceptKeys.PrintDesktop();
+                }).Start();
             };
 
             ImageMenuItem menuItemActiveWindow = new ImageMenuItem("Print Active Window");
@@ -66,7 +75,24 @@ namespace GrabTheMoment.Linux
 
             menuItemActiveWindow.Activated += delegate
             {
-                InterceptKeys.PrintActiveWindow();
+                popupMenu.Cancel();
+
+                new Thread(() =>
+                {
+                    Thread.Sleep(400); // Kis késleltetés.
+                    InterceptKeys.PrintActiveWindow();
+                }).Start();
+            };
+
+            ImageMenuItem menuItemDesignateArea = new ImageMenuItem("Print Designate Area");
+            //appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemDesignateArea.Image = appimg;
+            popupMenu.Add(menuItemDesignateArea);
+
+            menuItemDesignateArea.Activated += delegate
+            {
+                popupMenu.Cancel();
+                InterceptKeys.PrintDesignateArea();
             };
 
             ImageMenuItem menuItemSelectWindow = new ImageMenuItem("Select Windows");
@@ -79,36 +105,38 @@ namespace GrabTheMoment.Linux
 
             menuItemSelectWindow.Submenu.Focused += delegate
             {
-                foreach(var sc in Gdk.Screen.Default.ToplevelWindows)
+                foreach(var sc in Gdk.Screen.Default.WindowStack)
                 {
-                    Console.WriteLine(sc);
-                    //Console.WriteLine(sc.);
-                    var item = new MenuItem("asd");
+                    var item = new MenuItem(NativeLinux.GetWindowText(sc));
+
                     SItemList.Add(item);
                     Ssubmenu.Append(item);
-                    //Ssubmenu.Remove
-                    /*int x;
-                    int y;
-                    int width;
-                    int height;
-                    int depth;
-                    Rectangle rect;
 
-                    sc.GetGeometry(out x, out y, out width, out height, out depth);
-                    sc.GetRootOrigin(out x, out y);
+                    item.ButtonPressEvent += delegate
+                    {
+                        // Így rendesen felugranak az ablakok.
+                        sc.Focus(0);
+                        // Bezárja az almenüt.
+                        Ssubmenu.Cancel();
+                        // Bezárja a főmenüt.
+                        popupMenu.Cancel();
 
-                    // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
-                    // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
-                    rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
-                    new Thread(() => Screenmode.allmode.WindowPs(rect)).Start();*/
+                        new Thread(() =>
+                        {
+                            Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
+                            InterceptKeys.PrintWindow(sc);
+                        }).Start();
+
+                    };
                 }
 
                 Ssubmenu.ShowAll();
+                Ssubmenu.Popup();
             };
 
             menuItemSelectWindow.Submenu.Hidden += delegate
             {
-                foreach(var sc in Gdk.Global.WindowManagerClientWindows)
+                foreach(var sc in Gdk.Screen.Default.WindowStack)
                 {
                     foreach(var list in SItemList)
                         list.Destroy();
@@ -116,11 +144,6 @@ namespace GrabTheMoment.Linux
                     SItemList.Clear();
                 }
             };
-
-            /*menuItemSelectWindow.Activated += delegate
-            {
-
-            };*/
 
             SeparatorMenuItem separator = new SeparatorMenuItem();
             popupMenu.Add(separator);
@@ -133,6 +156,7 @@ namespace GrabTheMoment.Linux
             // Quit the application when quit has been clicked.
             menuItemQuit.Activated += delegate
             {
+                InterceptKeys.UninitLinux();
                 System.Windows.Forms.Application.Exit();
                 Application.Quit();
             };
