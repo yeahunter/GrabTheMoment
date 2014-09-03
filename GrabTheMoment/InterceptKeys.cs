@@ -95,9 +95,9 @@ namespace GrabTheMoment
                 Gtk.Clipboard clip = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
                 clip.Text = text;
             }
-            catch
+            catch(Exception e)
             {
-
+                Log.WriteEvent("setClipboard: ", e);
             }
         }
 #endif
