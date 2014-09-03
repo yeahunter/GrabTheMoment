@@ -59,7 +59,13 @@ namespace GrabTheMoment.Linux
 
             menuItemDesktopPrint.Activated += delegate
             {
-                InterceptKeys.PrintDesktop();
+                popupMenu.Cancel();
+
+                new Thread(() =>
+                {
+                    Thread.Sleep(400); // Kis késleltetés.
+                    InterceptKeys.PrintDesktop();
+                }).Start();
             };
 
             ImageMenuItem menuItemActiveWindow = new ImageMenuItem("Print Active Window");
@@ -69,7 +75,13 @@ namespace GrabTheMoment.Linux
 
             menuItemActiveWindow.Activated += delegate
             {
-                InterceptKeys.PrintActiveWindow();
+                popupMenu.Cancel();
+
+                new Thread(() =>
+                {
+                    Thread.Sleep(400); // Kis késleltetés.
+                    InterceptKeys.PrintActiveWindow();
+                }).Start();
             };
 
             ImageMenuItem menuItemDesignateArea = new ImageMenuItem("Print Designate Area");
@@ -79,6 +91,7 @@ namespace GrabTheMoment.Linux
 
             menuItemDesignateArea.Activated += delegate
             {
+                popupMenu.Cancel();
                 InterceptKeys.PrintDesignateArea();
             };
 
