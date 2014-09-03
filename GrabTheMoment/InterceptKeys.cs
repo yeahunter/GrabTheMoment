@@ -179,19 +179,13 @@ namespace GrabTheMoment
 
         public static void PrintWindow(Gdk.Window window)
         {
-            int x;
-            int y;
-            int width;
-            int height;
-            int depth;
-            Rectangle rect;
-
-            window.GetGeometry(out x, out y, out width, out height, out depth);
-            window.GetRootOrigin(out x, out y);
-
             // Ha nem látszi az ablak egy része mert kiment a képernyőről akkor az összeomlást elkerülendően
             // az ablakból annyi fog csak látszódni amennyi a képernyőn is látszik.
-            rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
+            int x = window.FrameExtents.X;
+            int y = window.FrameExtents.Y;
+            int width = window.FrameExtents.Width;
+            int height = window.FrameExtents.Height;
+            Rectangle rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
             new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
         }
 
