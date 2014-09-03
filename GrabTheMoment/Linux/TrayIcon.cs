@@ -40,7 +40,7 @@ namespace GrabTheMoment.Linux
             trayIcon.PopupMenu += OnTrayIconPopup;
 
             // A Tooltip for the Icon
-            trayIcon.Tooltip = "Hello World Icon";
+            trayIcon.Tooltip = "Grab The Moment";
         }
 
         public void SetVisible(bool Visible)
