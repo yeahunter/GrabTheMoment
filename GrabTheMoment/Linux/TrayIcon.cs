@@ -94,7 +94,7 @@ namespace GrabTheMoment.Linux
                         sc.Show();
                         new Thread(() =>
                         {
-                                Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
+                            Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
                             InterceptKeys.PrintWindow(sc);
                         }).Start();
 
