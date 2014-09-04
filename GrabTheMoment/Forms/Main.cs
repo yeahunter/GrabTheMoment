@@ -63,7 +63,7 @@ namespace GrabTheMoment
             {
                 this.Visible = Visible;
                 // Bug fix.
-                if(Visible)
+                if(this.Visible)
                     this.Activate();
             }
         }
