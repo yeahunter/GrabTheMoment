@@ -94,11 +94,10 @@ namespace GrabTheMoment
 #if __MonoCS__
             Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlőre én gépemen így jól működik.
 #endif
-            new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
 
             // Ha valaki ertelmes magassagu/szelessegu teglalapot szeretne, csak akkor keszitunk neki kepet
             if (rect.Height > 1 && rect.Width > 1)
-                new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+                new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
 
             ExitForm();
         }
