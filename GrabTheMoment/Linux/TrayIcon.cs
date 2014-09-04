@@ -116,7 +116,7 @@ namespace GrabTheMoment.Linux
             Menu Ssubmenu = new Menu();
             menuItemSelectWindow.Submenu = Ssubmenu;
 
-            menuItemSelectWindow.Submenu.Focused += delegate
+            menuItemSelectWindow.Submenu.Shown += delegate
             {
                 foreach(var sc in Gdk.Screen.Default.WindowStack)
                 {
@@ -143,7 +143,6 @@ namespace GrabTheMoment.Linux
                 }
 
                 Ssubmenu.ShowAll();
-                Ssubmenu.Popup();
             };
 
             menuItemSelectWindow.Submenu.Hidden += delegate
