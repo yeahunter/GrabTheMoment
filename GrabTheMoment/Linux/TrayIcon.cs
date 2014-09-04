@@ -52,6 +52,19 @@ namespace GrabTheMoment.Linux
         private void OnTrayIconPopup (object o, EventArgs args)
         {
             Menu popupMenu = new Menu();
+            ImageMenuItem menuItemShowMainWindow = new ImageMenuItem("Show main window");
+            //Gtk.Image appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
+            //menuItemShowMainWindow.Image = appimg;
+            popupMenu.Add(menuItemShowMainWindow);
+
+            menuItemShowMainWindow.Activated += delegate
+            {
+                InterceptKeys.windowsformoscucc.SetVisible(true);
+            };
+
+            SeparatorMenuItem separator = new SeparatorMenuItem();
+            popupMenu.Add(separator);
+
             ImageMenuItem menuItemDesktopPrint = new ImageMenuItem("Print Desktop");
             //Gtk.Image appimg = new Gtk.Image(Stock.Info, IconSize.Menu);
             //menuItemDesktopPrint.Image = appimg;
@@ -126,7 +139,6 @@ namespace GrabTheMoment.Linux
                             Thread.Sleep(400); // Kis késleltetés hogy az ablakok megtudjanak időben jelenni.
                             InterceptKeys.PrintWindow(sc);
                         }).Start();
-
                     };
                 }
 
@@ -145,8 +157,8 @@ namespace GrabTheMoment.Linux
                 }
             };
 
-            SeparatorMenuItem separator = new SeparatorMenuItem();
-            popupMenu.Add(separator);
+            SeparatorMenuItem separator2 = new SeparatorMenuItem();
+            popupMenu.Add(separator2);
 
             ImageMenuItem menuItemQuit = new ImageMenuItem("Quit");
             Gtk.Image appimg = new Gtk.Image(Stock.Quit, IconSize.Menu);
