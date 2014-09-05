@@ -70,14 +70,12 @@ namespace GrabTheMoment
                 new Thread(() => Application.Run(windowsform)).Start();
                 Gtk.Application.Init();
 
-                // Attach to the Delete Event when the window has been closed.
-                //window.DeleteEvent += delegate { Gtk.Application.Quit (); }; // bugos a WINFORM leállítása mert gtk-t nem lővi le.
                 trayicon = new TrayIcon();
                 trayicon.Init();
                 InterceptKeys.InitLinux();
 
-                // Show the main window and start the application.
-                //window.ShowAll ();
+                // Ablak induláskor minimalizálva lesz.
+                windowsform.SetVisible(false);
                 Gtk.Application.Run();
 #endif
             }
