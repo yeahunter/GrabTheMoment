@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace GrabTheMoment
 {
@@ -22,7 +24,7 @@ namespace GrabTheMoment
         {
 #if DEBUG
             if (_path == String.Empty)
-                throw new EmptyPathException(String.Format("{0}: Üres a path.", String.Empty /* Itt majd valami jo cucc lesz */));
+                throw new EmptyPathException(String.Format("{0}: Üres a path.", ClassAndMethodName()));
 
             string mappautvonal = Path.GetDirectoryName(_path);
             string CurrentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -33,15 +35,23 @@ namespace GrabTheMoment
             string sor = String.Empty;
 
             if (Information != String.Empty && e == null)
-                sor = String.Format("[{0}] [{1}] INFO: {2}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, Information.Replace(System.Environment.NewLine, " @ "));
+                sor = String.Format("[{0}] [{1}] INFO: {2}", CurrentDateTime, ClassAndMethodName(), Information.Replace(System.Environment.NewLine, " @ "));
             else if (Information != String.Empty && e != null)
-                sor = String.Format("[{0}] [{1}] INFO: {2} | ERROR:{3}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, Information.Replace(System.Environment.NewLine, " @ "), e.ToString().Replace(System.Environment.NewLine, " @ "));
+                sor = String.Format("[{0}] [{1}] INFO: {2} | ERROR:{3}", CurrentDateTime, ClassAndMethodName(), Information.Replace(System.Environment.NewLine, " @ "), e.ToString().Replace(System.Environment.NewLine, " @ "));
             else if (Information == String.Empty && e != null)
-                sor = String.Format("[{0}] [{1}] ERROR: {2}", CurrentDateTime, String.Empty /* Itt majd valami jo cucc lesz */, e.ToString().Replace(System.Environment.NewLine, " @ "));
+                sor = String.Format("[{0}] [{1}] ERROR: {2}", CurrentDateTime, ClassAndMethodName(), e.ToString().Replace(System.Environment.NewLine, " @ "));
 
             writer.WriteLine(sor);
             writer.Close();
 #endif
+        }
+
+        private static string ClassAndMethodName()
+        {
+            MethodBase method = new StackTrace().GetFrame(2).GetMethod();
+            string methodName = method.Name;
+            string className = method.ReflectedType.Name;
+            return String.Format("{0}.{1}", className, methodName);
         }
     }
 }
