@@ -23,6 +23,7 @@ namespace GrabTheMoment
         private static IntPtr _hookID = IntPtr.Zero;
 #else
         private static SpecialKeys special;
+        private static Gtk.Clipboard clip;
 #endif
 
         private static Main windowsform = null;
@@ -42,6 +43,7 @@ namespace GrabTheMoment
             special = new SpecialKeys();
             special.RegisterHandler(SpecialPrint, Gdk.ModifierType.Mod1Mask, SpecialKey.Print);
             special.RegisterHandler(SpecialPrint, Gdk.ModifierType.ControlMask, SpecialKey.Print);
+            clip = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
         }
 
         public static void UninitLinux()
@@ -92,7 +94,6 @@ namespace GrabTheMoment
         {
             try
             {
-                Gtk.Clipboard clip = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
                 clip.Text = text;
             }
             catch(Exception e)

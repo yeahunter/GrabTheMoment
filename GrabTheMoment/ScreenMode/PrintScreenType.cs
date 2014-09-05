@@ -93,6 +93,8 @@ namespace GrabTheMoment.ScreenMode
             gfx.DrawString(theString, font, brush, -(sz.Width / 2), -(sz.Height / 2));
             //Reset the graphics object Transformations.
             gfx.ResetTransform();
+            brush.Dispose();
+            font.Dispose();
         }
 
         protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
@@ -110,7 +112,6 @@ namespace GrabTheMoment.ScreenMode
 
         protected void SavePic()
         {
-
             if (Settings.Default.MLocal)
                 Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
 
@@ -122,6 +123,9 @@ namespace GrabTheMoment.ScreenMode
 
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 Savemode.allmode.MDropbox_SavePS(_bmpScreenShot, _FileName);
+
+            _bmpScreenShot.Dispose();
+            _Gfx.Dispose();
         }
     }
 }
