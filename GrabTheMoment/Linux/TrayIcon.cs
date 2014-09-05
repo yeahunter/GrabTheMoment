@@ -25,10 +25,12 @@ namespace GrabTheMoment.Linux
         public void Init()
         {
             // Creation of the Icon
-            MemoryStream memoryStream = new MemoryStream();
-            InterceptKeys.windowsformoscucc.YeahunterIcon.ToBitmap().Save(memoryStream, ImageFormat.Png);
-            trayIcon = new StatusIcon(new Pixbuf(memoryStream.ToArray()));
-            trayIcon.Visible = true;
+            using(MemoryStream memoryStream = new MemoryStream())
+            {
+                InterceptKeys.windowsformoscucc.YeahunterIcon.ToBitmap().Save(memoryStream, ImageFormat.Png);
+                trayIcon = new StatusIcon(new Pixbuf(memoryStream.ToArray()));
+                trayIcon.Visible = true;
+            }
 
             // Show/Hide the window (even from the Panel/Taskbar) when the TrayIcon has been clicked.
             trayIcon.Activate += delegate
