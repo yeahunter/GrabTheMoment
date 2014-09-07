@@ -9,11 +9,11 @@ namespace GrabTheMoment.ScreenMode
         public ActiveWindow(Rectangle rectangle)
         {
             SetFileName();
-            Height = rectangle.Height - Y;
-            Width = rectangle.Width - X;
-
             X = rectangle.X;
             Y = rectangle.Y;
+
+            Height = rectangle.Height - Y;
+            Width = rectangle.Width - X;
 
             if (X == -8 && Y == -8)
             {
