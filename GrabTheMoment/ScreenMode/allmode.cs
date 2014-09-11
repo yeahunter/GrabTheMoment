@@ -2,9 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
-#if __MonoCS__
-using Notifications;
-#endif
 
 namespace GrabTheMoment.ScreenMode
 {
