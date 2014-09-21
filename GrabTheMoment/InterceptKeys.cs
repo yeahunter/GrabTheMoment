@@ -186,7 +186,7 @@ namespace GrabTheMoment
             int y = window.FrameExtents.Y;
             int width = window.FrameExtents.Width;
             int height = window.FrameExtents.Height;
-            Rectangle rect = new Rectangle(x < 0 ? 0 : x, y < 0 ? 0 : y, x < 0 ? width + x : width, y < 0 ? height + y : height);
+            Rectangle rect = new Rectangle(x, y, width, height);
             new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
         }
 
