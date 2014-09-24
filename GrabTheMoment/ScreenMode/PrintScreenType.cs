@@ -8,6 +8,7 @@ namespace GrabTheMoment.ScreenMode
     public abstract class PrintScreenType
     {
         private string _FileName;
+        private string _PrintScreenType;
 
         private int _Height, _Width, _X, _Y;
 
@@ -47,6 +48,12 @@ namespace GrabTheMoment.ScreenMode
         {
             get { return _Width; }
             set { _Width = value; }
+        }
+
+        public string Type
+        {
+            get { return _PrintScreenType; }
+            set { _PrintScreenType = value; }
         }
 
         protected void SetXandY()
@@ -92,15 +99,18 @@ namespace GrabTheMoment.ScreenMode
             gfx.ResetTransform();
         }
 
-        protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
+        protected void notifyIcon(string ScreenMode, string tiptext)
         {
             Main fone = InterceptKeys.windowsformoscucc;
-            fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
+            int Timeout = 7 * 1000; // Ennyi masodpercig mutassa az uzenetet
+            string Title = String.Format("{0} + {1}", ScreenMode, allmode.WhatClipboard());
+            string Text = string.Format("{0} (Kattints ide, hogy a vágólapra kerüljön a link)", tiptext);
+
+            fone.notifyIcon1.ShowBalloonTip(Timeout, Title, Text, ToolTipIcon.Info);
         }
 
         protected void SavePic()
         {
-
             if (Settings.Default.MLocal)
                 Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
 
@@ -112,6 +122,10 @@ namespace GrabTheMoment.ScreenMode
 
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 Savemode.allmode.MDropbox_SavePS(_bmpScreenShot, _FileName);
+
+            notifyIcon(Type, FileName);
+
+            Log.WriteEvent(String.Format("{0}: {1} elkészült!", Type, FileName));
         }
     }
 }

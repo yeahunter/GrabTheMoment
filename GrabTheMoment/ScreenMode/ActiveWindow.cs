@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace GrabTheMoment.ScreenMode
 {
@@ -8,6 +7,7 @@ namespace GrabTheMoment.ScreenMode
     {
         public ActiveWindow(Rectangle rectangle)
         {
+            Type = "ActiveWindow";
             SetFileName();
             X = rectangle.X;
             Y = rectangle.Y;
@@ -28,9 +28,6 @@ namespace GrabTheMoment.ScreenMode
             CreatePic();
 
             SavePic();
-
-            notifyIcon(7000, "ActiveWindow" + " + " + allmode.WhatClipboard(), FileName, ToolTipIcon.Info);
-            Log.WriteEvent("ActiveWindow/Constructor: " + FileName + " elkészült!");
         }
     }
 }

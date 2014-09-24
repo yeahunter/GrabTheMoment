@@ -40,16 +40,16 @@
             this.localToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dropboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.Local = new System.Windows.Forms.CheckBox();
+            this.Ftp = new System.Windows.Forms.CheckBox();
+            this.Dropbox = new System.Windows.Forms.CheckBox();
+            this.ImgurAnon = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.LocalClipboard = new System.Windows.Forms.CheckBox();
+            this.FtpClipboard = new System.Windows.Forms.CheckBox();
+            this.DropboxClipboard = new System.Windows.Forms.CheckBox();
+            this.ImgurClipboard = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,20 +70,20 @@
             this.lastLinkToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(118, 48);
             // 
             // lastLinkToolStripMenuItem
             // 
             this.lastLinkToolStripMenuItem.Enabled = false;
             this.lastLinkToolStripMenuItem.Name = "lastLinkToolStripMenuItem";
-            this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lastLinkToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.lastLinkToolStripMenuItem.Text = "Last link";
             this.lastLinkToolStripMenuItem.Click += new System.EventHandler(this.lastLinkToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -118,7 +118,7 @@
             // 
             this.localToolStripMenuItem.Enabled = false;
             this.localToolStripMenuItem.Name = "localToolStripMenuItem";
-            this.localToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.localToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.localToolStripMenuItem.Text = "Local";
             this.localToolStripMenuItem.Click += new System.EventHandler(this.localToolStripMenuItem_Click);
             // 
@@ -126,7 +126,7 @@
             // 
             this.fTPToolStripMenuItem.Enabled = false;
             this.fTPToolStripMenuItem.Name = "fTPToolStripMenuItem";
-            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fTPToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.fTPToolStripMenuItem.Text = "FTP";
             this.fTPToolStripMenuItem.Click += new System.EventHandler(this.fTPToolStripMenuItem_Click);
             // 
@@ -134,53 +134,53 @@
             // 
             this.dropboxToolStripMenuItem.Enabled = false;
             this.dropboxToolStripMenuItem.Name = "dropboxToolStripMenuItem";
-            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dropboxToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.dropboxToolStripMenuItem.Text = "Dropbox";
             this.dropboxToolStripMenuItem.Click += new System.EventHandler(this.dropboxToolStripMenuItem_Click);
             // 
-            // checkBox1
+            // Local
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 47);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(52, 17);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.Text = "Local";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.Local.AutoSize = true;
+            this.Local.Location = new System.Drawing.Point(12, 47);
+            this.Local.Name = "Local";
+            this.Local.Size = new System.Drawing.Size(52, 17);
+            this.Local.TabIndex = 5;
+            this.Local.Text = "Local";
+            this.Local.UseVisualStyleBackColor = true;
+            this.Local.CheckedChanged += new System.EventHandler(this.LocalEnable);
             // 
-            // checkBox2
+            // Ftp
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 70);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(46, 17);
-            this.checkBox2.TabIndex = 6;
-            this.checkBox2.Text = "FTP";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.Ftp.AutoSize = true;
+            this.Ftp.Location = new System.Drawing.Point(12, 70);
+            this.Ftp.Name = "Ftp";
+            this.Ftp.Size = new System.Drawing.Size(46, 17);
+            this.Ftp.TabIndex = 6;
+            this.Ftp.Text = "FTP";
+            this.Ftp.UseVisualStyleBackColor = true;
+            this.Ftp.CheckedChanged += new System.EventHandler(this.FtpEnable);
             // 
-            // checkBox3
+            // Dropbox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(12, 93);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(66, 17);
-            this.checkBox3.TabIndex = 7;
-            this.checkBox3.Text = "Dropbox";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.Dropbox.AutoSize = true;
+            this.Dropbox.Location = new System.Drawing.Point(12, 93);
+            this.Dropbox.Name = "Dropbox";
+            this.Dropbox.Size = new System.Drawing.Size(66, 17);
+            this.Dropbox.TabIndex = 7;
+            this.Dropbox.Text = "Dropbox";
+            this.Dropbox.UseVisualStyleBackColor = true;
+            this.Dropbox.CheckedChanged += new System.EventHandler(this.DropboxEnable);
             // 
-            // checkBox4
+            // ImgurAnon
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(12, 116);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(52, 17);
-            this.checkBox4.TabIndex = 10;
-            this.checkBox4.Text = "Imgur";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            this.ImgurAnon.AutoSize = true;
+            this.ImgurAnon.Location = new System.Drawing.Point(12, 116);
+            this.ImgurAnon.Name = "ImgurAnon";
+            this.ImgurAnon.Size = new System.Drawing.Size(110, 17);
+            this.ImgurAnon.TabIndex = 10;
+            this.ImgurAnon.Text = "ImgurAnon (Anonymus)";
+            this.ImgurAnon.UseVisualStyleBackColor = true;
+            this.ImgurAnon.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // label2
             // 
@@ -200,71 +200,71 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Save to clipboard";
             // 
-            // checkBox5
+            // LocalClipboard
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Enabled = false;
-            this.checkBox5.Location = new System.Drawing.Point(139, 48);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(15, 14);
-            this.checkBox5.TabIndex = 13;
-            this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
+            this.LocalClipboard.AutoSize = true;
+            this.LocalClipboard.Enabled = false;
+            this.LocalClipboard.Location = new System.Drawing.Point(139, 48);
+            this.LocalClipboard.Name = "LocalClipboard";
+            this.LocalClipboard.Size = new System.Drawing.Size(15, 14);
+            this.LocalClipboard.TabIndex = 13;
+            this.LocalClipboard.UseVisualStyleBackColor = true;
+            this.LocalClipboard.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
-            // checkBox6
+            // FtpClipboard
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Enabled = false;
-            this.checkBox6.Location = new System.Drawing.Point(139, 71);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 14;
-            this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
+            this.FtpClipboard.AutoSize = true;
+            this.FtpClipboard.Enabled = false;
+            this.FtpClipboard.Location = new System.Drawing.Point(139, 71);
+            this.FtpClipboard.Name = "FtpClipboard";
+            this.FtpClipboard.Size = new System.Drawing.Size(15, 14);
+            this.FtpClipboard.TabIndex = 14;
+            this.FtpClipboard.UseVisualStyleBackColor = true;
+            this.FtpClipboard.CheckedChanged += new System.EventHandler(this.FtpClipboard_CheckedChanged);
             // 
-            // checkBox7
+            // DropboxClipboard
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Enabled = false;
-            this.checkBox7.Location = new System.Drawing.Point(139, 94);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(15, 14);
-            this.checkBox7.TabIndex = 15;
-            this.checkBox7.UseVisualStyleBackColor = true;
-            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+            this.DropboxClipboard.AutoSize = true;
+            this.DropboxClipboard.Enabled = false;
+            this.DropboxClipboard.Location = new System.Drawing.Point(139, 94);
+            this.DropboxClipboard.Name = "DropboxClipboard";
+            this.DropboxClipboard.Size = new System.Drawing.Size(15, 14);
+            this.DropboxClipboard.TabIndex = 15;
+            this.DropboxClipboard.UseVisualStyleBackColor = true;
+            this.DropboxClipboard.CheckedChanged += new System.EventHandler(this.DropboxClipboard_CheckedChanged);
             // 
-            // checkBox8
+            // ImgurClipboard
             // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Enabled = false;
-            this.checkBox8.Location = new System.Drawing.Point(139, 117);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(15, 14);
-            this.checkBox8.TabIndex = 16;
-            this.checkBox8.UseVisualStyleBackColor = true;
-            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
+            this.ImgurClipboard.AutoSize = true;
+            this.ImgurClipboard.Enabled = false;
+            this.ImgurClipboard.Location = new System.Drawing.Point(139, 117);
+            this.ImgurClipboard.Name = "ImgurClipboard";
+            this.ImgurClipboard.Size = new System.Drawing.Size(15, 14);
+            this.ImgurClipboard.TabIndex = 16;
+            this.ImgurClipboard.UseVisualStyleBackColor = true;
+            this.ImgurClipboard.CheckedChanged += new System.EventHandler(this.ImgurClipboard_CheckedChanged);
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.checkBox8);
-            this.Controls.Add(this.checkBox7);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
+            this.Controls.Add(this.ImgurClipboard);
+            this.Controls.Add(this.DropboxClipboard);
+            this.Controls.Add(this.FtpClipboard);
+            this.Controls.Add(this.LocalClipboard);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.ImgurAnon);
+            this.Controls.Add(this.Dropbox);
+            this.Controls.Add(this.Ftp);
+            this.Controls.Add(this.Local);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "Main";
             this.ShowInTaskbar = false;
             this.Text = "Grab The Moment";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
@@ -285,19 +285,19 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem localToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox Local;
         public System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox Ftp;
+        private System.Windows.Forms.CheckBox Dropbox;
         private System.Windows.Forms.ToolStripMenuItem fTPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dropboxToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox ImgurAnon;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox LocalClipboard;
+        private System.Windows.Forms.CheckBox FtpClipboard;
+        private System.Windows.Forms.CheckBox DropboxClipboard;
+        private System.Windows.Forms.CheckBox ImgurClipboard;
         public System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
     }
 }

@@ -28,6 +28,8 @@ namespace GrabTheMoment
 
             string mappautvonal = Path.GetDirectoryName(_path);
             string CurrentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Ha nincs mappa, akkor létrehozzuk
             if ((mappautvonal.Length > 0) && (!Directory.Exists(mappautvonal)))
                 Directory.CreateDirectory(mappautvonal);
 
@@ -46,6 +48,7 @@ namespace GrabTheMoment
 #endif
         }
 
+        // Ezzel meg lehet tudni, az adott osztalyt/metodust, ahonnan a WriteEvent-et hívták
         private static string ClassAndMethodName()
         {
             MethodBase method = new StackTrace().GetFrame(2).GetMethod();

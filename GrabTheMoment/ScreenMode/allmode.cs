@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
@@ -15,7 +14,7 @@ namespace GrabTheMoment.ScreenMode
             Local,
             FTP,
             Dropbox,
-            Imgur
+            ImgurAnon
         }
 
         public static string WhatClipboard()
