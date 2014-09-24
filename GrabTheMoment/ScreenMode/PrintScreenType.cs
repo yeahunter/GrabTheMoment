@@ -103,7 +103,7 @@ namespace GrabTheMoment.ScreenMode
         {
             Main fone = InterceptKeys.windowsformoscucc;
             int Timeout = 7 * 1000; // Ennyi masodpercig mutassa az uzenetet
-            string Title = String.Format("{0} + {1}", ScreenMode, allmode.WhatClipboard());
+            string Title = String.Format("{0} + {1}", ScreenMode, Main.WhatClipboard());
             string Text = string.Format("{0} (Kattints ide, hogy a vágólapra kerüljön a link)", tiptext);
 
             fone.notifyIcon1.ShowBalloonTip(Timeout, Title, Text, ToolTipIcon.Info);
@@ -112,16 +112,16 @@ namespace GrabTheMoment.ScreenMode
         protected void SavePic()
         {
             if (Settings.Default.MLocal)
-                Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.Local(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MFtp)
-                Savemode.allmode.MFtp_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.FTP(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MImgur)
-                Savemode.allmode.MImgur_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.ImgurAnon(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
-                Savemode.allmode.MDropbox_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.Dropbox(_bmpScreenShot, _FileName);
 
             notifyIcon(Type, FileName);
 

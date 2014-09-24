@@ -6,31 +6,49 @@ namespace GrabTheMoment
 {
     public partial class Main : Form
     {
+        public enum CopyType
+        {
+            Disabled,
+            Local,
+            FTP,
+            Dropbox,
+            ImgurAnon
+        }
+
         public Main()
         {
             InitializeComponent();
             Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
-            localToolStripMenuItem.Enabled      = LocalClipboard.Enabled = Local.Checked = Settings.Default.MLocal;
-            fTPToolStripMenuItem.Enabled        = FtpClipboard.Enabled = Ftp.Checked = Settings.Default.MFtp;
-            dropboxToolStripMenuItem.Enabled    = DropboxClipboard.Enabled = Dropbox.Checked = Settings.Default.MDropbox;
+            ConfigLoad();
+        }
+
+        public static string WhatClipboard()
+        {
+            return ((CopyType)Settings.Default.CopyLink).ToString();
+        }
+
+        private void ConfigLoad()
+        {
+            localToolStripMenuItem.Enabled = LocalClipboard.Enabled = Local.Checked = Settings.Default.MLocal;
+            fTPToolStripMenuItem.Enabled = FtpClipboard.Enabled = Ftp.Checked = Settings.Default.MFtp;
+            dropboxToolStripMenuItem.Enabled = DropboxClipboard.Enabled = Dropbox.Checked = Settings.Default.MDropbox;
             ImgurClipboard.Enabled = ImgurAnon.Checked = Settings.Default.MImgur;
 
-            switch (Settings.Default.CopyLink)
+            switch ((CopyType)Settings.Default.CopyLink)
             {
-                case 1:
+                case CopyType.Local:
                     LocalClipboard.Checked = true;
                     break;
-                case 2:
+                case CopyType.FTP:
                     FtpClipboard.Checked = true;
                     break;
-                case 3:
+                case CopyType.Dropbox:
                     DropboxClipboard.Checked = true;
                     break;
-                case 4:
+                case CopyType.ImgurAnon:
                     ImgurClipboard.Checked = true;
                     break;
             }
-
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -138,10 +156,10 @@ namespace GrabTheMoment
                 FtpClipboard.Checked = false;
                 DropboxClipboard.Checked = false;
                 ImgurClipboard.Checked = false;
-                SetClipboardType(ScreenMode.allmode.CopyType.Local);
+                SetClipboardType(CopyType.Local);
             }
             else
-                SetClipboardType(ScreenMode.allmode.CopyType.Disabled);
+                SetClipboardType(CopyType.Disabled);
         }
 
         private void FtpClipboard_CheckedChanged(object sender, EventArgs e)
@@ -151,10 +169,10 @@ namespace GrabTheMoment
                 LocalClipboard.Checked = false;
                 DropboxClipboard.Checked = false;
                 ImgurClipboard.Checked = false;
-                SetClipboardType(ScreenMode.allmode.CopyType.FTP);
+                SetClipboardType(CopyType.FTP);
             }
             else
-                SetClipboardType(ScreenMode.allmode.CopyType.Disabled);
+                SetClipboardType(CopyType.Disabled);
         }
 
         private void DropboxClipboard_CheckedChanged(object sender, EventArgs e)
@@ -164,10 +182,10 @@ namespace GrabTheMoment
                 LocalClipboard.Checked = false;
                 FtpClipboard.Checked = false;
                 ImgurClipboard.Checked = false;
-                SetClipboardType(ScreenMode.allmode.CopyType.Dropbox);
+                SetClipboardType(CopyType.Dropbox);
             }
             else
-                SetClipboardType(ScreenMode.allmode.CopyType.Disabled);
+                SetClipboardType(CopyType.Disabled);
         }
 
         private void ImgurClipboard_CheckedChanged(object sender, EventArgs e)
@@ -177,10 +195,10 @@ namespace GrabTheMoment
                 LocalClipboard.Checked = false;
                 FtpClipboard.Checked = false;
                 DropboxClipboard.Checked = false;
-                SetClipboardType(ScreenMode.allmode.CopyType.ImgurAnon);
+                SetClipboardType(CopyType.ImgurAnon);
             }
             else
-                SetClipboardType(ScreenMode.allmode.CopyType.Disabled);
+                SetClipboardType(CopyType.Disabled);
         }
 
         private void lastLinkToolStripMenuItem_Click(object sender, EventArgs e)
@@ -194,7 +212,7 @@ namespace GrabTheMoment
         }
 
         // Beallitja a CopyLink erteket
-        private void SetClipboardType(ScreenMode.allmode.CopyType Type)
+        private void SetClipboardType(CopyType Type)
         {
             Settings.Default.CopyLink = (int)Type;
             Settings.Default.Save();

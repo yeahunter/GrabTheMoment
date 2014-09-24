@@ -9,15 +9,15 @@ namespace GrabTheMoment.Savemode.Forms
         public local()
         {
             InitializeComponent();
-            textBox1.Text = Settings.Default.MLocal_path;
+            Path.Text = Settings.Default.MLocal_path;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            if (FolderBrowser.ShowDialog() == DialogResult.OK)
             {
-                textBox1.Text = folderBrowserDialog1.SelectedPath;
-                Settings.Default.MLocal_path = textBox1.Text;
+                Path.Text = FolderBrowser.SelectedPath;
+                Settings.Default.MLocal_path = Path.Text;
                 Settings.Default.Save();
             }
         }

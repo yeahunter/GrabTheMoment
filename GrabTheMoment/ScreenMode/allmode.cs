@@ -1,26 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using GrabTheMoment.Properties;
 
 namespace GrabTheMoment.ScreenMode
 {
     static class allmode
     {
         public static int x, y;
-
-        public enum CopyType
-        {
-            Disabled,
-            Local,
-            FTP,
-            Dropbox,
-            ImgurAnon
-        }
-
-        public static string WhatClipboard()
-        {
-            return ((CopyType)Settings.Default.CopyLink).ToString();
-        }
 
         public static void mekkoraazxesazy()
         {

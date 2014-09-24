@@ -94,7 +94,7 @@
             this.saveModeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(260, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -178,7 +178,7 @@
             this.ImgurAnon.Name = "ImgurAnon";
             this.ImgurAnon.Size = new System.Drawing.Size(110, 17);
             this.ImgurAnon.TabIndex = 10;
-            this.ImgurAnon.Text = "ImgurAnon (Anonymus)";
+            this.ImgurAnon.Text = "Imgur (Anonymus)";
             this.ImgurAnon.UseVisualStyleBackColor = true;
             this.ImgurAnon.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
@@ -248,7 +248,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(260, 149);
             this.Controls.Add(this.ImgurClipboard);
             this.Controls.Add(this.DropboxClipboard);
             this.Controls.Add(this.FtpClipboard);
