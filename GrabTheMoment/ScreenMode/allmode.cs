@@ -12,7 +12,7 @@ namespace GrabTheMoment.ScreenMode
             foreach (Screen asztal in Screen.AllScreens)
             {
                 int iksz = asztal.Bounds.X;
-                if (asztal.Bounds.X < x)
+                if (iksz < x)
                     x = iksz;
                 int ipszilon = asztal.Bounds.Y;
                 if (ipszilon < y)
