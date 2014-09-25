@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using System.Web;
 using GrabTheMoment.Properties;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace GrabTheMoment.API
@@ -46,14 +45,13 @@ namespace GrabTheMoment.API
             var response = request.GetResponse();
 
             var queryString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            Log.WriteEvent("Dropbox_oauth1/requestToken: requestToken: " + queryString);
-            Console.WriteLine(queryString);
+            Log.WriteEvent(string.Format("queryString: {0}", queryString));
 
             var parts = queryString.Split('&');
             reqtoken = parts[1].Substring(parts[1].IndexOf('=') + 1);
             reqsecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
 
-            Log.WriteEvent("Dropbox_oauth1/requestToken: reqtoken:" + reqtoken + " reqsecret:" + reqsecret);
+            Log.WriteEvent(string.Format("reqtoken: {0} reqsecret: {1}", reqtoken, reqsecret));
         }
 
         public static void Authorize(string token)
@@ -97,12 +95,12 @@ namespace GrabTheMoment.API
                 var reader = new StreamReader(response.GetResponseStream());
                 var accessToken = reader.ReadToEnd();
 
-                Log.WriteEvent("Dropbox_oauth1/AccessToken: accessToken: " + accessToken);
+                Log.WriteEvent(string.Format("accessToken: {0}", accessToken));
 
                 var parts = accessToken.Split('&');
                 var actoken = parts[1].Substring(parts[1].IndexOf('=') + 1);
                 var acsecret = parts[0].Substring(parts[0].IndexOf('=') + 1);
-                Log.WriteEvent("Dropbox_oauth1/AccessToken: actoken: " + actoken + " acsecret: " + acsecret);
+                Log.WriteEvent(string.Format("actoken: {0} acsecret: {1}", actoken, acsecret));
                 eventecske = "OK";
                 Settings.Default.MDropbox_accesstoken = actoken;
                 Settings.Default.MDropbox_accesssecret = acsecret;

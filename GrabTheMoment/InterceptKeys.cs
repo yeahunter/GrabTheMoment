@@ -119,30 +119,25 @@ namespace GrabTheMoment
             }
         }
 
-        private static IntPtr HookCallback(
-            int nCode, IntPtr wParam, IntPtr lParam)
+        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 &&
-                (wParam == (IntPtr)WM_KEYDOWN ||
-                wParam == (IntPtr)WM_SYSKEYDOWN))
+            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {
                 Keys number = (Keys)Marshal.ReadInt32(lParam);
-                //MessageBox.Show(nCode.ToString() + " | " + wParam.ToString() + " | " + lParam.ToString());
 
-                string cucc = nCode.ToString() + " | " + wParam.ToString() + " | " + lParam.ToString() + " | " + number.ToString() + " | " + Control.ModifierKeys.ToString();
-                //windowsform.notifyIcon1.ShowBalloonTip(1000, "Debug", cucc, ToolTipIcon.Info);
+                string cucc = nCode.ToString() + " | " + 
+                            wParam.ToString() + " | " + 
+                            lParam.ToString() + " | " + 
+                            number.ToString() + " | " + 
+                            Control.ModifierKeys.ToString();
 
-                //MessageBox.Show(Control.ModifierKeys.ToString());
                 if (number == Keys.PrintScreen)
                 {
-                    //MessageBox.Show(lParam.ToString());
                     if ((wParam == (IntPtr)256 && number == Keys.PrintScreen && Keys.None == Control.ModifierKeys))
                     {
                         Thread fullps = new Thread(() => new ScreenMode.FullScreen());
                         fullps.SetApartmentState(ApartmentState.STA);
                         fullps.Start();
-                        //new Thread(() => ScreenMode.FullPS()).Start();
-                        //windowsform.DXFullPS();
                     }
                     else if ((wParam == (IntPtr)260 && Keys.Alt == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
@@ -151,12 +146,8 @@ namespace GrabTheMoment
                         NativeWin32.GetWindowRect(hWnd, out rect);
                         new Thread(() => new ScreenMode.ActiveWindow(rect)).Start();
                     }
-                    // Lassan rajzolja újra a téglalapot, így msot ezt a funkciót egyenlőre nem használom
                     else if ((wParam == (IntPtr)256 && Keys.Control == Control.ModifierKeys && number == Keys.PrintScreen))
                     {
-                        //Thread areaps = new Thread(() => new Form2());
-                        //areaps.SetApartmentState(ApartmentState.STA);
-                        //areaps.Start();
                         DesignateArea secondForm = new DesignateArea();
                         secondForm.Show();
                     }

@@ -20,10 +20,10 @@ namespace GrabTheMoment
 #endif
         static Main windowsform;
         static string AppGUID = Assembly.GetExecutingAssembly().GetType().GUID.ToString();
-        static bool futhatoke = false;
 #if __MonoCS__
         static string AppName = Assembly.GetExecutingAssembly().ManifestModule.Name;
 #endif
+        static bool CanIRun = false;
 
         /// <summary>
         /// The main entry point for the application.
@@ -39,6 +39,7 @@ namespace GrabTheMoment
             try
             {
                 Mutex mutex = new Mutex(false, "Local\\" + AppGUID);
+
                 if (!mutex.WaitOne(0, false))
                 {
                     MessageBox.Show("Már fut a program!");
@@ -47,17 +48,15 @@ namespace GrabTheMoment
                     return;
                 }
                 else
-                {
-                    futhatoke = true;
-                }
+                    CanIRun = true;
                 
             }
             catch (Exception)
             {
-                futhatoke = true;
+                CanIRun = true;
             }
 
-            if (futhatoke)
+            if (CanIRun)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

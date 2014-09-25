@@ -11,6 +11,7 @@ namespace GrabTheMoment.ScreenMode
     public abstract class PrintScreenType
     {
         private string _FileName;
+        private string _PrintScreenType;
 
         private int _Height, _Width, _X, _Y;
 
@@ -50,6 +51,12 @@ namespace GrabTheMoment.ScreenMode
         {
             get { return _Width; }
             set { _Width = value; }
+        }
+
+        public string Type
+        {
+            get { return _PrintScreenType; }
+            set { _PrintScreenType = value; }
         }
 
         protected void SetXandY()
@@ -97,15 +104,21 @@ namespace GrabTheMoment.ScreenMode
             font.Dispose();
         }
 
-        protected void notifyIcon(int timeout, string tiptitle, string tiptext, ToolTipIcon tipicon)
+        protected void notifyIcon(string ScreenMode, string tiptext)
         {
 #if !__MonoCS__
             Main fone = InterceptKeys.windowsformoscucc;
-            fone.notifyIcon1.ShowBalloonTip(timeout, tiptitle, tiptext + " (Kattints ide, hogy a vágólapra kerüljön a link)", tipicon);
+#endif
+            int Timeout = 7 * 1000; // Ennyi masodpercig mutassa az uzenetet
+            string Title = String.Format("{0} + {1}", ScreenMode, Main.WhatClipboard());
+            string Text = string.Format("{0} (Kattints ide, hogy a vágólapra kerüljön a link)", tiptext);
+
+#if !__MonoCS__
+            fone.notifyIcon1.ShowBalloonTip(Timeout, Title, Text, ToolTipIcon.Info);
 #else
-            Notification n = new Notification(tiptitle, tiptext);
+            Notification n = new Notification(Title, Text);
             n.AddHint("x-canonical-append", "");
-            n.Timeout = 15;
+            n.Timeout = Timeout / 1000; // Szerintem nem igen reagál rá. De attól még egész türhető amíg megjeleníti.
             n.Show();
 #endif
         }
@@ -113,19 +126,23 @@ namespace GrabTheMoment.ScreenMode
         protected void SavePic()
         {
             if (Settings.Default.MLocal)
-                Savemode.allmode.MLocal_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.Local(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MFtp)
-                Savemode.allmode.MFtp_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.FTP(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MImgur)
-                Savemode.allmode.MImgur_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.ImgurAnon(_bmpScreenShot, _FileName);
 
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
-                Savemode.allmode.MDropbox_SavePS(_bmpScreenShot, _FileName);
+                SaveMode.Dropbox(_bmpScreenShot, _FileName);
 
             _bmpScreenShot.Dispose();
             _Gfx.Dispose();
+
+            notifyIcon(Type, FileName);
+
+            Log.WriteEvent(String.Format("{0}: {1} elkészült!", Type, FileName));
         }
     }
 }

@@ -4,33 +4,32 @@ using System.Drawing.Imaging;
 using GrabTheMoment.Properties;
 using System.IO;
 using System.Net;
-using System.Web;
 using System.Collections.Specialized;
 using System.Xml;
 
-namespace GrabTheMoment.Savemode
+namespace GrabTheMoment
 {
-    static class allmode
+    static class SaveMode
     {
-        public static void MLocal_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void Local(Bitmap bmpScreenShot, string neve)
         {
             try
             {
                 string path = Path.Combine(Settings.Default.MLocal_path, neve + ".png");
                 bmpScreenShot.Save(path, ImageFormat.Png);
-                if (Settings.Default.CopyLink == 1)
+                if (Settings.Default.CopyLink == (int)Main.CopyType.Local)
                 {
-                    Log.WriteEvent("Form1/MLocal_SavePS: ertek: " + path);
+                    Log.WriteEvent(string.Format("path: {0}", path));
                     InterceptKeys.Klipbood(path);
                 }
             }
             catch (Exception e)
             {
-                Log.WriteEvent("Form1/MLocal_SavePS: ", e);
+                Log.WriteEvent(String.Empty, e);
             }
         }
 
-        public static void MDropbox_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void Dropbox(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -47,19 +46,19 @@ namespace GrabTheMoment.Savemode
 
                 API.Dropbox_oauth1.Upload(filedata, neve);
 
-                if (Settings.Default.CopyLink == 3)
+                if (Settings.Default.CopyLink == (int)Main.CopyType.Dropbox)
                     InterceptKeys.Klipbood(API.Dropbox_oauth1.Share(neve));
             }
             catch (Exception e)
             {
-                Log.WriteEvent("Form1/MDropbox_SavePS: ", e);
+                Log.WriteEvent(String.Empty, e);
             }
             //if (!File.Exists(Settings.Default.MDropbox_path))
             //    System.IO.Directory.CreateDirectory(Settings.Default.MDropbox_path);
             //bmpScreenShot.Save(Settings.Default.MDropbox_path + "\\" + neve + ".png", ImageFormat.Png);
         }
 
-        public static void MFtp_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void FTP(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -87,16 +86,16 @@ namespace GrabTheMoment.Savemode
                     resp.Close();
                 }
 
-                if (Settings.Default.CopyLink == 2)
+                if (Settings.Default.CopyLink == (int)Main.CopyType.FTP)
                     InterceptKeys.Klipbood(HttpLink.OriginalString);
             }
             catch (Exception e)
             {
-                Log.WriteEvent("Form1/MFtp_SavePS: ",e);
+                Log.WriteEvent(String.Empty, e);
             }
         }
 
-        public static void MImgur_SavePS(Bitmap bmpScreenShot, string neve)
+        public static void ImgurAnon(Bitmap bmpScreenShot, string neve)
         {
             try
             {
@@ -138,15 +137,15 @@ namespace GrabTheMoment.Savemode
                 }
                 catch
                 {
-                    Log.WriteEvent("Form1/MImgur_SavePS: Rossz response!");
+                    Log.WriteEvent("Rossz response!");
                 }
 
-                if (Settings.Default.CopyLink == 4)
+                if (Settings.Default.CopyLink == (int)Main.CopyType.ImgurAnon)
                     InterceptKeys.Klipbood(holakep);
             }
             catch (Exception e)
             {
-                Log.WriteEvent("Form1/MImgur_SavePS: ", e);
+                Log.WriteEvent(String.Empty, e);
             }
         }
     }

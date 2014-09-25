@@ -7,6 +7,7 @@ namespace GrabTheMoment.ScreenMode
     {
         public FullScreen()
         {
+            Type = "FullScreen";
             SetFileName();
             Height = SystemInformation.VirtualScreen.Height;
             Width = SystemInformation.VirtualScreen.Width;
@@ -15,9 +16,6 @@ namespace GrabTheMoment.ScreenMode
             CreatePic();
 
             SavePic();
-
-            notifyIcon(7000, "FullScreen" + " + " + allmode.WhatClipboard(), FileName, ToolTipIcon.Info);
-            Log.WriteEvent("FullScreen/Constructor: " + FileName + " elkészült!");
         }
     }
 }

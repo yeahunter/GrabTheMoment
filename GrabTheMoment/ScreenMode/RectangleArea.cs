@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace GrabTheMoment.ScreenMode
 {
     public class RectangleArea : PrintScreenType
     {
+        public const int LineWidth = 1;
+
         public RectangleArea(Rectangle rectangle)
         {
+            Type = "RectangleArea";
             SetFileName();
-            Height = rectangle.Height - 1;
-            Width = rectangle.Width - 1;
+            Height = rectangle.Height - LineWidth;
+            Width = rectangle.Width - LineWidth;
 
             SetXandY();
-            X += rectangle.X + 1;
-            Y += rectangle.Y + 1;
+            X += rectangle.X + LineWidth;
+            Y += rectangle.Y + LineWidth;
 
             CreatePic();
             SavePic();
-
-            notifyIcon(7000, "RectangleArea" + " + " + allmode.WhatClipboard(), FileName, ToolTipIcon.Info);
-            Log.WriteEvent("RectangleArea/Constructor: " + FileName + " elkészült!");
         }
     }
 }
