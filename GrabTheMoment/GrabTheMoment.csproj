@@ -50,15 +50,20 @@
     <ApplicationIcon>oldyeahico.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="notify-sharp, Version=0.4.0.0, Culture=neutral, PublicKeyToken=2df29c54e245917a" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Dropbox_oauth1.cs" />
@@ -138,12 +143,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Linux\TrayIcon.cs" />
+    <Compile Include="Linux\SpecialKey.cs" />
+    <Compile Include="Linux\SpecialKeyPressedHandler.cs" />
+    <Compile Include="Linux\SpecialKeys.cs" />
+    <Compile Include="Linux\XKeyEvent.cs" />
+    <Compile Include="Linux\XEventName.cs" />
+    <Compile Include="Linux\XGrabMode.cs" />
+    <Compile Include="Linux\Runtime.cs" />
+    <Compile Include="Linux\HookKey.cs" />
+    <Compile Include="Linux\NativeLinux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="oldyeahico.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -171,4 +183,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Linux\" />
+  </ItemGroup>
 </Project>
