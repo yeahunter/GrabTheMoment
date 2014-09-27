@@ -25,7 +25,7 @@ namespace GrabTheMoment.Linux
         public void Init()
         {
             // Creation of the Icon
-            using(MemoryStream memoryStream = new MemoryStream())
+            using (MemoryStream memoryStream = new MemoryStream())
             {
                 InterceptKeys.windowsformoscucc.YeahunterIcon.ToBitmap().Save(memoryStream, ImageFormat.Png);
                 trayIcon = new StatusIcon(new Pixbuf(memoryStream.ToArray()));
@@ -35,7 +35,10 @@ namespace GrabTheMoment.Linux
             // Show/Hide the window (even from the Panel/Taskbar) when the TrayIcon has been clicked.
             trayIcon.Activate += delegate
             {
-                InterceptKeys.windowsformoscucc.SetVisible(!InterceptKeys.windowsformoscucc.Visible);
+                if (InterceptKeys.windowsformoscucc.WindowState == System.Windows.Forms.FormWindowState.Minimized || InterceptKeys.windowsformoscucc.CopyWindowState == System.Windows.Forms.FormWindowState.Minimized)
+                    InterceptKeys.windowsformoscucc.SetWindowState(System.Windows.Forms.FormWindowState.Normal);
+                else
+                    InterceptKeys.windowsformoscucc.SetWindowState(System.Windows.Forms.FormWindowState.Minimized);
             };
 
             // Show a pop up menu when the icon has been right clicked.
@@ -61,7 +64,7 @@ namespace GrabTheMoment.Linux
 
             menuItemShowMainWindow.Activated += delegate
             {
-                InterceptKeys.windowsformoscucc.SetVisible(true);
+                InterceptKeys.windowsformoscucc.SetWindowState(System.Windows.Forms.FormWindowState.Normal);
             };
 
             SeparatorMenuItem separator = new SeparatorMenuItem();

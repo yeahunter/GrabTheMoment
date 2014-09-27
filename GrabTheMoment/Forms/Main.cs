@@ -11,9 +11,12 @@ namespace GrabTheMoment
     public partial class Main : Form
     {
 #if __MonoCS__
-        delegate void SetVisibleCallback(bool Visible);
+        delegate void SetWindowStateCallback(FormWindowState State);
 #endif
         public Icon YeahunterIcon { get; private set; }
+        // Linux bug fix. Sajnos amikor megkapja a WindowState az új értéket akkor nem menti el ezért kell egy külön változó.
+        // Szerencsére azért a minimalizálást elvégzi.
+        public FormWindowState CopyWindowState { get; private set; }
 
         public enum CopyType
         {
@@ -27,6 +30,7 @@ namespace GrabTheMoment
         public Main()
         {
             InitializeComponent();
+            CopyWindowState = this.WindowState;
 #if __MonoCS__
             this.FormClosed += Form1_FormClosed;
 #endif
@@ -68,22 +72,30 @@ namespace GrabTheMoment
 
 #if __MonoCS__
         // Külön szálon való futtathatóság miatt kell.
-        public void SetVisible(bool Visible)
+        public void SetWindowState(FormWindowState State)
         {
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             if (this.InvokeRequired)
             {
-                SetVisibleCallback d = new SetVisibleCallback(SetVisible);
-                this.Invoke(d, new object[] { Visible });
+                SetWindowStateCallback d = new SetWindowStateCallback(SetWindowState);
+                this.Invoke(d, new object[] { State });
             }
             else
             {
-                this.Visible = Visible;
-                // Bug fix.
-                if(this.Visible)
+                this.WindowState = State;
+                CopyWindowState = State;
+
+                if (State != FormWindowState.Minimized)
+                {
+                    this.ShowInTaskbar = true;
+#if !__MonoCS__
+                    notifyIcon1.Visible = false;
+#else
                     this.Activate();
+#endif
+                }
             }
         }
 
@@ -99,21 +111,7 @@ namespace GrabTheMoment
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
-            {
-                //this.Show();
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-                //this.Activate();
-            }
-            //else
-            //{
-            //    this.ShowInTaskbar = false;
-            //    //this.Hide();
-            //    this.WindowState = FormWindowState.Minimized;
-            //    this.WindowState = FormWindowState.Normal;
-
-            //}
+                SetWindowState(FormWindowState.Normal);
         }
 #endif
 
