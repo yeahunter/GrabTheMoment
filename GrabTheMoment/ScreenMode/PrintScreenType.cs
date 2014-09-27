@@ -2,6 +2,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+#if __MonoCS__
+using Notifications;
+#endif
 
 namespace GrabTheMoment.ScreenMode
 {
@@ -97,16 +100,27 @@ namespace GrabTheMoment.ScreenMode
             gfx.DrawString(theString, font, brush, -(sz.Width / 2), -(sz.Height / 2));
             //Reset the graphics object Transformations.
             gfx.ResetTransform();
+            brush.Dispose();
+            font.Dispose();
         }
 
         protected void notifyIcon(string ScreenMode, string tiptext)
         {
+#if !__MonoCS__
             Main fone = InterceptKeys.windowsformoscucc;
+#endif
             int Timeout = 7 * 1000; // Ennyi masodpercig mutassa az uzenetet
             string Title = String.Format("{0} + {1}", ScreenMode, Main.WhatClipboard());
             string Text = string.Format("{0} (Kattints ide, hogy a vágólapra kerüljön a link)", tiptext);
 
+#if !__MonoCS__
             fone.notifyIcon1.ShowBalloonTip(Timeout, Title, Text, ToolTipIcon.Info);
+#else
+            Notification n = new Notification(Title, Text);
+            n.AddHint("x-canonical-append", "");
+            n.Timeout = Timeout / 1000; // Szerintem nem igen reagál rá. De attól még egész türhető amíg megjeleníti.
+            n.Show();
+#endif
         }
 
         protected void SavePic()
@@ -122,6 +136,9 @@ namespace GrabTheMoment.ScreenMode
 
             if (Settings.Default.MDropbox && Settings.Default.MDropbox_upload)
                 SaveMode.Dropbox(_bmpScreenShot, _FileName);
+
+            _bmpScreenShot.Dispose();
+            _Gfx.Dispose();
 
             notifyIcon(Type, FileName);
 
