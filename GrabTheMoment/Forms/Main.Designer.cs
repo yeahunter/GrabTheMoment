@@ -268,6 +268,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Grab The Moment";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

@@ -88,6 +88,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Dropbox";
             this.Text = "Dropbox";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Dropbox_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
