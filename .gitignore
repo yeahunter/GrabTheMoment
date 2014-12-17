@@ -42,3 +42,7 @@ _ReSharper*/
 UpgradeLog.XML
 *.ReSharper
 *.userprefs
+
+#GTM specific
+.gtm-version
+

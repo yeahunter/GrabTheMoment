@@ -50,6 +50,8 @@
             this.FtpClipboard = new System.Windows.Forms.CheckBox();
             this.DropboxClipboard = new System.Windows.Forms.CheckBox();
             this.ImgurClipboard = new System.Windows.Forms.CheckBox();
+            this.VersionLabel1 = new System.Windows.Forms.Label();
+            this.VersionLabel2 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -244,11 +246,30 @@
             this.ImgurClipboard.UseVisualStyleBackColor = true;
             this.ImgurClipboard.CheckedChanged += new System.EventHandler(this.ImgurClipboard_CheckedChanged);
             // 
+            // VersionLabel1
+            // 
+            this.VersionLabel1.AutoSize = true;
+            this.VersionLabel1.Location = new System.Drawing.Point(12, 140);
+            this.VersionLabel1.Name = "VersionLabel1";
+            this.VersionLabel1.Size = new System.Drawing.Size(45, 13);
+            this.VersionLabel1.TabIndex = 17;
+            this.VersionLabel1.Text = "Version:";
+            // 
+            // VersionLabel2
+            // 
+            this.VersionLabel2.AutoSize = true;
+            this.VersionLabel2.Location = new System.Drawing.Point(54, 140);
+            this.VersionLabel2.Name = "VersionLabel2";
+            this.VersionLabel2.Size = new System.Drawing.Size(0, 13);
+            this.VersionLabel2.TabIndex = 18;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 149);
+            this.ClientSize = new System.Drawing.Size(260, 163);
+            this.Controls.Add(this.VersionLabel2);
+            this.Controls.Add(this.VersionLabel1);
             this.Controls.Add(this.ImgurClipboard);
             this.Controls.Add(this.DropboxClipboard);
             this.Controls.Add(this.FtpClipboard);
@@ -299,6 +320,8 @@
         private System.Windows.Forms.CheckBox DropboxClipboard;
         private System.Windows.Forms.CheckBox ImgurClipboard;
         public System.Windows.Forms.ToolStripMenuItem lastLinkToolStripMenuItem;
+        private System.Windows.Forms.Label VersionLabel1;
+        private System.Windows.Forms.Label VersionLabel2;
     }
 }
 
