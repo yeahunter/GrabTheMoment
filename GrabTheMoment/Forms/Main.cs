@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.ComponentModel;
 #endif
 using GrabTheMoment.Properties;
+using System.Reflection;
+using System.IO;
 
 namespace GrabTheMoment
 {
@@ -39,6 +41,8 @@ namespace GrabTheMoment
 
             Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
             ConfigLoad();
+
+            VersionLabel2.Text = GtmVersion();
         }
 
         public static string WhatClipboard()
@@ -265,6 +269,22 @@ namespace GrabTheMoment
         {
             Settings.Default.CopyLink = (int)Type;
             Settings.Default.Save();
+        }
+
+        private string GtmVersion()
+        {
+            string version = String.Empty;
+
+            string version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
+            Console.WriteLine(version_file);
+
+            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(version_file))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                version = reader.ReadToEnd();
+            }
+
+            return version;
         }
     }
 }

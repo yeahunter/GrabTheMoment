@@ -134,6 +134,7 @@
     <EmbeddedResource Include="Forms\SaveMode\local.resx">
       <DependentUpon>local.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\.gtm-version" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -176,6 +177,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PreBuildEvent>"C:\Program Files (x86)\Git\bin\git.exe" describe --long --dirty &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <PreBuildEvent>git describe --long --dirty &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
