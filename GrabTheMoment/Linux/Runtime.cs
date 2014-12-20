@@ -1,6 +1,7 @@
 ﻿#if __MonoCS__
 using System;
 using System.Text;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace GrabTheMoment.Linux
@@ -45,6 +46,24 @@ namespace GrabTheMoment.Linux
 
                 }
             }
+        }
+
+        public static Version GetMonoVersion()
+        {
+            Type type = Type.GetType("Mono.Runtime");
+
+            if (type != null)
+            {
+                MethodInfo displayName = type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
+
+                if (displayName != null)
+                {
+                    string dn = displayName.Invoke(null, null).ToString();
+                    return new Version(dn.Substring(0, dn.IndexOf(" ")));
+                }
+            }
+
+            return new Version(0, 0, 0);
         }
     }
 }
