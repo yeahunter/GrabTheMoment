@@ -35,6 +35,7 @@ namespace GrabTheMoment
             if (File.Exists(AppName + ".config"))
                 File.Delete(AppName + ".config");
 #endif
+
             try
             {
                 Mutex mutex = new Mutex(false, "Local\\" + AppGUID);
