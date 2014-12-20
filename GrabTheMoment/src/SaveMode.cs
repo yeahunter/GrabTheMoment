@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using GrabTheMoment.Forms;
 using GrabTheMoment.Properties;
 using System.IO;
 using System.Net;

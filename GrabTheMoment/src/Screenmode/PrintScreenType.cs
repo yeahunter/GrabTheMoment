@@ -1,4 +1,5 @@
 ﻿using GrabTheMoment.Properties;
+using GrabTheMoment.Forms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

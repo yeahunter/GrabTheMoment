@@ -1,4 +1,5 @@
 ﻿using GrabTheMoment.API;
+using GrabTheMoment.Forms;
 using GrabTheMoment.Properties;
 using System;
 using System.Diagnostics;

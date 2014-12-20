@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace GrabTheMoment
+namespace GrabTheMoment.Forms
 {
     public partial class DesignateArea : Form
     {
