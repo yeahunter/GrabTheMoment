@@ -274,9 +274,11 @@ namespace GrabTheMoment
         private string GtmVersion()
         {
             string version = String.Empty;
-
+#if !__MonoCS__
             string version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
-            Console.WriteLine(version_file);
+#else
+            string version_file = Assembly.GetCallingAssembly().GetName().Name + "..gtm-version";
+#endif
 
             using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(version_file))
             using (StreamReader reader = new StreamReader(stream))
