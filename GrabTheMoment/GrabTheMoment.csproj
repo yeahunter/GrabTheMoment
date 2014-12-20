@@ -74,6 +74,12 @@
     <Reference Include="notify-sharp">
       <HintPath>..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="dbus-sharp">
+      <HintPath>..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="dbus-sharp-glib">
+      <HintPath>..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Dropbox_oauth1.cs" />
@@ -186,6 +192,16 @@
     </None>
     <None Include="..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll.config">
       <Link>notify-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll.config">
+      <Link>dbus-sharp.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Include="..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll.config">
+      <Link>dbus-sharp-glib.dll.config</Link>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
