@@ -61,7 +61,7 @@ namespace GrabTheMoment.ScreenMode
             foreach (Screen Kijelzo in Screen.AllScreens)
             {
                 int iksz = Kijelzo.Bounds.X;
-                if (Kijelzo.Bounds.X < _X)
+                if (iksz < _X)
                     _X = iksz;
                 int ipszilon = Kijelzo.Bounds.Y;
                 if (ipszilon < _Y)
