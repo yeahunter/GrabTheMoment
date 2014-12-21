@@ -238,17 +238,5 @@ namespace GrabTheMoment.Properties {
                 this["InstantClipboard"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool StartupMinimized {
-            get {
-                return ((bool)(this["StartupMinimized"]));
-            }
-            set {
-                this["StartupMinimized"] = value;
-            }
-        }
     }
 }

@@ -237,5 +237,11 @@ namespace GrabTheMoment.Forms
 
             return version;
         }
+
+        private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.Show();
+        }
     }
 }

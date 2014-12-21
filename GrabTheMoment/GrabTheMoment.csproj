@@ -83,6 +83,7 @@
     <Compile Include="src\Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\General.cs" />
     <Compile Include="src\InterceptKeys.cs" />
     <Compile Include="src\Log.cs" />
     <Compile Include="src\Program.cs" />
@@ -137,9 +138,12 @@
       <DependentUpon>local.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\.gtm-version" />
+    <EmbeddedResource Include="src\Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
