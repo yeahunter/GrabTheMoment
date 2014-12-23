@@ -1,4 +1,4 @@
-﻿namespace GrabTheMoment
+﻿namespace GrabTheMoment.Forms
 {
     partial class Main
     {

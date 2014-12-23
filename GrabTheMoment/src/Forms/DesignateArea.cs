@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using GrabTheMoment.Linux;
 #endif
 
-namespace GrabTheMoment
+namespace GrabTheMoment.Forms
 {
     public partial class DesignateArea : Form
     {

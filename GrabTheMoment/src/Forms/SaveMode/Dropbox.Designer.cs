@@ -1,4 +1,4 @@
-﻿namespace GrabTheMoment.Savemode.Forms
+﻿namespace GrabTheMoment.Forms.Savemode
 {
     partial class Dropbox
     {

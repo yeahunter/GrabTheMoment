@@ -5,10 +5,11 @@ using System.Windows.Forms;
 using System.ComponentModel;
 #endif
 using GrabTheMoment.Properties;
+using GrabTheMoment.Forms.Savemode;
 using System.Reflection;
 using System.IO;
 
-namespace GrabTheMoment
+namespace GrabTheMoment.Forms
 {
     public partial class Main : Form
     {
@@ -145,7 +146,7 @@ namespace GrabTheMoment
 
         private void localToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.Forms.local localForm = new Savemode.Forms.local();
+            local localForm = new local();
             localForm.Show();
         }
 
@@ -171,7 +172,7 @@ namespace GrabTheMoment
 
         private void fTPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.Forms.FTP ftpForm = new Savemode.Forms.FTP();
+            FTP ftpForm = new FTP();
             ftpForm.Show();
         }
 
@@ -187,7 +188,7 @@ namespace GrabTheMoment
 
         private void dropboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Savemode.Forms.Dropbox dropboxForm = new Savemode.Forms.Dropbox();
+            Dropbox dropboxForm = new Dropbox();
             dropboxForm.Show();
         }
 

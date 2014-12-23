@@ -1,14 +1,15 @@
+using GrabTheMoment.API;
+using GrabTheMoment.Forms;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
+using GrabTheMoment.Properties;
 using System;
 using System.Drawing;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-﻿using GrabTheMoment.API;
-#if __MonoCS__
-using GrabTheMoment.Linux;
-#endif
-using GrabTheMoment.Properties;
 
 namespace GrabTheMoment
 {

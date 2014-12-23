@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using GrabTheMoment.Properties;
 
-namespace GrabTheMoment.Savemode.Forms
+namespace GrabTheMoment.Forms.Savemode
 {
     public partial class local : Form
     {

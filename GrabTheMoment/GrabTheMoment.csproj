@@ -47,11 +47,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>oldyeahico.ico</ApplicationIcon>
+    <ApplicationIcon>Properties\oldyeahico.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -82,53 +83,59 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Dropbox_oauth1.cs" />
-    <Compile Include="API\NativeWin32.cs" />
-    <Compile Include="API\OAuthBase.cs" />
-    <Compile Include="Forms\Main.cs">
+    <Compile Include="src\API\Dropbox_oauth1.cs" />
+    <Compile Include="src\API\NativeWin32.cs" />
+    <Compile Include="src\API\OAuthBase.cs" />
+    <Compile Include="src\Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Main.Designer.cs">
+    <Compile Include="src\Forms\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DesignateArea.cs">
+    <Compile Include="src\Forms\DesignateArea.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DesignateArea.Designer.cs">
+    <Compile Include="src\Forms\DesignateArea.Designer.cs">
       <DependentUpon>DesignateArea.cs</DependentUpon>
     </Compile>
-    <Compile Include="InterceptKeys.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveMode.cs" />
-    <Compile Include="Forms\SaveMode\Dropbox.cs">
+    <Compile Include="src\Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SaveMode\Dropbox.Designer.cs">
+    <Compile Include="src\Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\InterceptKeys.cs" />
+    <Compile Include="src\Log.cs" />
+    <Compile Include="src\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\SaveMode.cs" />
+    <Compile Include="src\Forms\SaveMode\Dropbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SaveMode\Dropbox.Designer.cs">
       <DependentUpon>Dropbox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SaveMode\FTP.cs">
+    <Compile Include="src\Forms\SaveMode\FTP.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SaveMode\FTP.Designer.cs">
+    <Compile Include="src\Forms\SaveMode\FTP.Designer.cs">
       <DependentUpon>FTP.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SaveMode\local.cs">
+    <Compile Include="src\Forms\SaveMode\local.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SaveMode\local.Designer.cs">
+    <Compile Include="src\Forms\SaveMode\local.Designer.cs">
       <DependentUpon>local.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScreenMode\ActiveWindow.cs" />
-    <Compile Include="ScreenMode\allmode.cs" />
-    <Compile Include="ScreenMode\FullScreen.cs" />
-    <Compile Include="ScreenMode\PrintScreenType.cs" />
-    <Compile Include="ScreenMode\RectangleArea.cs" />
-    <EmbeddedResource Include="Forms\Main.resx">
+    <Compile Include="src\ScreenMode\ActiveWindow.cs" />
+    <Compile Include="src\ScreenMode\allmode.cs" />
+    <Compile Include="src\ScreenMode\FullScreen.cs" />
+    <Compile Include="src\ScreenMode\PrintScreenType.cs" />
+    <Compile Include="src\ScreenMode\RectangleArea.cs" />
+    <EmbeddedResource Include="src\Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DesignateArea.resx">
+    <EmbeddedResource Include="src\Forms\DesignateArea.resx">
       <DependentUpon>DesignateArea.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,13 +148,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Forms\SaveMode\Dropbox.resx">
+    <EmbeddedResource Include="src\Forms\SaveMode\Dropbox.resx">
       <DependentUpon>Dropbox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SaveMode\FTP.resx">
+    <EmbeddedResource Include="src\Forms\SaveMode\FTP.resx">
       <DependentUpon>FTP.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SaveMode\local.resx">
+    <EmbeddedResource Include="src\Forms\SaveMode\local.resx">
       <DependentUpon>local.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\.gtm-version" />
@@ -229,7 +236,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <PreBuildEvent>"C:\Program Files (x86)\Git\bin\git.exe" describe --long --dirty &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)\pre-build.bat &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <PreBuildEvent>git describe --long --dirty &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
