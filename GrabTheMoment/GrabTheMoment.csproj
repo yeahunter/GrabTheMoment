@@ -167,16 +167,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Linux\TrayIcon.cs" />
-    <Compile Include="Linux\SpecialKey.cs" />
-    <Compile Include="Linux\SpecialKeyPressedHandler.cs" />
-    <Compile Include="Linux\SpecialKeys.cs" />
-    <Compile Include="Linux\XKeyEvent.cs" />
-    <Compile Include="Linux\XEventName.cs" />
-    <Compile Include="Linux\XGrabMode.cs" />
-    <Compile Include="Linux\Runtime.cs" />
-    <Compile Include="Linux\HookKey.cs" />
-    <Compile Include="Linux\NativeLinux.cs" />
     <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll.config">
       <Link>glib-sharp.dll.config</Link>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
@@ -212,6 +202,16 @@
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="src\Linux\HookKey.cs" />
+    <Compile Include="src\Linux\NativeLinux.cs" />
+    <Compile Include="src\Linux\Runtime.cs" />
+    <Compile Include="src\Linux\SpecialKey.cs" />
+    <Compile Include="src\Linux\SpecialKeyPressedHandler.cs" />
+    <Compile Include="src\Linux\SpecialKeys.cs" />
+    <Compile Include="src\Linux\TrayIcon.cs" />
+    <Compile Include="src\Linux\XEventName.cs" />
+    <Compile Include="src\Linux\XGrabMode.cs" />
+    <Compile Include="src\Linux\XKeyEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -248,7 +248,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Linux\" />
-  </ItemGroup>
 </Project>
