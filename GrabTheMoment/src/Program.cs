@@ -75,9 +75,7 @@ namespace GrabTheMoment
                 InterceptKeys.InitLinux();
 
                 // Ablak induláskor minimalizálva lesz.
-#if !DEBUG
                 windowsform.SetWindowState(FormWindowState.Minimized);
-#endif
                 Gtk.Application.Run();
 #endif
             }
