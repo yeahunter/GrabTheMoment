@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 #if __MonoCS__
 using System.ComponentModel;
+using GrabTheMoment.Linux;
 #endif
 using GrabTheMoment.Properties;
 using GrabTheMoment.Forms.Savemode;
@@ -278,7 +279,12 @@ namespace GrabTheMoment.Forms
 #if !__MonoCS__
             string version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
 #else
-            string version_file = Assembly.GetCallingAssembly().GetName().Name + "..gtm-version";
+            string version_file = string.Empty;
+
+            if(Runtime.GetMonoVersion() >= new Version(3, 10, 0))
+                version_file = Assembly.GetCallingAssembly().GetName().Name + "..gtm-version";
+            else
+                version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
 #endif
 
             using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(version_file))
