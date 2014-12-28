@@ -28,19 +28,19 @@ namespace GrabTheMoment.Linux
         [DllImport("libX11", EntryPoint = "XFree")]
         public static extern int XFree(IntPtr data);
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         public static extern IntPtr gdk_x11_drawable_get_xid(IntPtr window);
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         public static extern IntPtr gdk_x11_get_default_xdisplay();
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         public static extern void gdk_error_trap_push();
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         public static extern int gdk_error_trap_pop();
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         public static extern void gdk_flush();
 
         /// <summary>
