@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
+#if __MonoCS__
+using GrabTheMoment.Linux;
+#endif
 
 namespace GrabTheMoment.Forms
 {
     public partial class DesignateArea : Form
     {
-        private System.Drawing.Graphics formGraphics;
+        private Graphics formGraphics;
         private bool isDown = false;
         private int initialX;
         private int initialY;
@@ -15,8 +19,16 @@ namespace GrabTheMoment.Forms
         public DesignateArea()
         {
             InitializeComponent();
+#if !__MonoCS__
             ScreenMode.allmode.mekkoraazxesazy();
             API.NativeWin32.SetWinFullScreen(this.Handle, ScreenMode.allmode.x, ScreenMode.allmode.y);
+#else
+            this.TopMost = true;
+            this.Location = new Point(0, 0);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Width = SystemInformation.VirtualScreen.Width;
+            this.Height = SystemInformation.VirtualScreen.Height;
+#endif
             this.Activate();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.BackColor = Color.Transparent;
@@ -70,11 +82,17 @@ namespace GrabTheMoment.Forms
 
         private void Form2_MouseUp(object sender, MouseEventArgs e)
         {
+#if __MonoCS__
+            this.Visible = false;
+#endif
             isDown = false;
+#if __MonoCS__
+            Thread.Sleep(100); // Kis késleltetés nem árt. Lehet kicsit több is kellene de egyenlőre én gépemen így jól működik.
+#endif
 
             // Ha valaki ertelmes magassagu/szelessegu teglalapot szeretne, csak akkor keszitunk neki kepet
             if (rect.Height > 1 && rect.Width > 1)
-                new System.Threading.Thread(() => new ScreenMode.RectangleArea(rect)).Start();
+                new Thread(() => new ScreenMode.RectangleArea(rect)).Start();
 
             ExitForm();
         }

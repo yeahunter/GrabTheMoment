@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+#if __MonoCS__
+using System.ComponentModel;
+using GrabTheMoment.Linux;
+#endif
 using GrabTheMoment.Properties;
 using GrabTheMoment.Forms.Savemode;
 using System.Reflection;
@@ -9,6 +14,14 @@ namespace GrabTheMoment.Forms
 {
     public partial class Main : Form
     {
+#if __MonoCS__
+        delegate void SetWindowStateCallback(FormWindowState State);
+#endif
+        public Icon YeahunterIcon { get; private set; }
+        // Linux bug fix. Sajnos amikor megkapja a WindowState az új értéket akkor nem menti el ezért kell egy külön változó.
+        // Szerencsére azért a minimalizálást elvégzi.
+        public FormWindowState CopyWindowState { get; private set; }
+
         public enum CopyType
         {
             Disabled,
@@ -21,6 +34,13 @@ namespace GrabTheMoment.Forms
         public Main()
         {
             InitializeComponent();
+            CopyWindowState = this.WindowState;
+#if __MonoCS__
+            this.FormClosed += Form1_FormClosed;
+#endif
+            // Középre helyezi az ablakot induláskor.
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             Log.LogPath = string.Format("DEBUG-{0}.log", DateTime.Now.ToString("yyyy-MM"));
             ConfigLoad();
 
@@ -56,43 +76,72 @@ namespace GrabTheMoment.Forms
             }
         }
 
+#if __MonoCS__
+        // Külön szálon való futtathatóság miatt kell.
+        public void SetWindowState(FormWindowState State)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.InvokeRequired)
+            {
+                SetWindowStateCallback d = new SetWindowStateCallback(SetWindowState);
+                this.Invoke(d, new object[] { State });
+            }
+            else
+            {
+                this.WindowState = State;
+                CopyWindowState = State;
+
+                if (State != FormWindowState.Minimized)
+                {
+                    this.ShowInTaskbar = true;
+#if !__MonoCS__
+                    notifyIcon1.Visible = false;
+#else
+                    this.Activate();
+#endif
+                }
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            InterceptKeys.UninitLinux();
+            Gtk.Application.Quit();
+            //Application.Exit();
+        }
+#endif
+
+#if !__MonoCS__
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
-            {
-                //this.Show();
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-                //this.Activate();
-            }
-            //else
-            //{
-            //    this.ShowInTaskbar = false;
-            //    //this.Hide();
-            //    this.WindowState = FormWindowState.Minimized;
-            //    this.WindowState = FormWindowState.Normal;
-
-            //}
+                SetWindowState(FormWindowState.Normal);
         }
+#endif
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+#if !__MonoCS__
         private void notifyIcon1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
                 contextMenuStrip1.Show(Control.MousePosition);
         }
+#endif
 
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
                 this.ShowInTaskbar = false;
+#if !__MonoCS__
                 notifyIcon1.Visible = true;
+#endif
             }
         }
 
@@ -205,7 +254,7 @@ namespace GrabTheMoment.Forms
             else
                 SetClipboardType(CopyType.Disabled);
         }
-
+#if !__MonoCS__
         private void lastLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InterceptKeys.Klipbood();
@@ -215,6 +264,7 @@ namespace GrabTheMoment.Forms
         {
             InterceptKeys.Klipbood();
         }
+#endif
 
         // Beallitja a CopyLink erteket
         private void SetClipboardType(CopyType Type)
@@ -226,8 +276,16 @@ namespace GrabTheMoment.Forms
         private string GtmVersion()
         {
             string version = String.Empty;
-
+#if !__MonoCS__
             string version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
+#else
+            string version_file = string.Empty;
+
+            if(Runtime.GetMonoVersion() >= new Version(3, 10, 0))
+                version_file = Assembly.GetCallingAssembly().GetName().Name + "..gtm-version";
+            else
+                version_file = Assembly.GetCallingAssembly().GetName().Name + ".Properties..gtm-version";
+#endif
 
             using (Stream stream = this.GetType().Assembly.GetManifestResourceStream(version_file))
             using (StreamReader reader = new StreamReader(stream))

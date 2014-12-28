@@ -50,9 +50,6 @@
     <ApplicationIcon>Properties\oldyeahico.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -60,6 +57,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="notify-sharp">
+      <HintPath>..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="dbus-sharp">
+      <HintPath>..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="dbus-sharp-glib">
+      <HintPath>..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\API\Dropbox_oauth1.cs" />
@@ -146,12 +159,34 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll.config">
+      <Link>notify-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll.config">
+      <Link>dbus-sharp.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll.config">
+      <Link>dbus-sharp-glib.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Compile Include="src\Linux\HookKey.cs" />
+    <Compile Include="src\Linux\NativeLinux.cs" />
+    <Compile Include="src\Linux\Runtime.cs" />
+    <Compile Include="src\Linux\SpecialKey.cs" />
+    <Compile Include="src\Linux\SpecialKeyPressedHandler.cs" />
+    <Compile Include="src\Linux\SpecialKeys.cs" />
+    <Compile Include="src\Linux\TrayIcon.cs" />
+    <Compile Include="src\Linux\XEventName.cs" />
+    <Compile Include="src\Linux\XGrabMode.cs" />
+    <Compile Include="src\Linux\XKeyEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Properties\oldyeahico.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -174,6 +209,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <PreBuildEvent>$(SolutionDir)\pre-build.bat &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <PreBuildEvent>git describe --long --dirty &gt; "$(ProjectDir)\Properties\.gtm-version"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
