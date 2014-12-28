@@ -69,10 +69,10 @@
     <Reference Condition="'$(OS)' != 'Windows_NT'" Include="dbus-sharp-glib">
       <HintPath>..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll</HintPath>
     </Reference>
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\API\Dropbox_oauth1.cs" />
@@ -159,26 +159,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll.config">
-      <Link>glib-sharp.dll.config</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll.config">
-      <Link>atk-sharp.dll.config</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll.config">
-      <Link>gdk-sharp.dll.config</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll.config">
-      <Link>gtk-sharp.dll.config</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll.config">
       <Link>notify-sharp.dll.config</Link>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
