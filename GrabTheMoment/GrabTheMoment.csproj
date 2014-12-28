@@ -60,15 +60,27 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="atk-sharp">
+      <HintPath>..\libs\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gdk-sharp">
+      <HintPath>..\libs\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="glib-sharp">
+      <HintPath>..\libs\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="gtk-sharp">
+      <HintPath>..\libs\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+    </Reference>
     <Reference Condition="'$(OS)' != 'Windows_NT'" Include="notify-sharp">
       <HintPath>..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="dbus-sharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5675b0c3093115b5" />
-    <Reference Include="dbus-sharp-glib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5675b0c3093115b5" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="dbus-sharp">
+      <HintPath>..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(OS)' != 'Windows_NT'" Include="dbus-sharp-glib">
+      <HintPath>..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\API\Dropbox_oauth1.cs" />
@@ -155,8 +167,38 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll.config">
+      <Link>glib-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll.config">
+      <Link>atk-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll.config">
+      <Link>gdk-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll.config">
+      <Link>gtk-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\notify-sharp\0.4.0.0__2df29c54e245917a\notify-sharp.dll.config">
       <Link>notify-sharp.dll.config</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\dbus-sharp\1.0.0.0__5675b0c3093115b5\dbus-sharp.dll.config">
+      <Link>dbus-sharp.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Condition="'$(OS)' != 'Windows_NT'" Include="..\libs\dbus-sharp-glib\1.0.0.0__5675b0c3093115b5\dbus-sharp-glib.dll.config">
+      <Link>dbus-sharp-glib.dll.config</Link>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
